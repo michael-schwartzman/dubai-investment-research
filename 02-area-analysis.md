@@ -36,18 +36,32 @@ Dubai's average gross rental yield for apartments sits at **6.5–8.5%** as of 2
 
 | Metric | Data |
 |---|---|
-| **Average Studio Price (2024-2025)** | AED 350,000 – 550,000 |
-| **Average Studio Rent (Annual)** | AED 30,000 – 42,000 |
-| **Gross Rental Yield** | **8.0% – 9.5%** |
-| **Capital Appreciation (2021-2025)** | +35-45% |
+| **Average Studio Price (Feb 2026, PF)** | AED 760,876 (avg) / 449K–812K range |
+| **Average Price/sqft** | AED 1,645 |
+| **YoY Price Change (per sqft)** | +40.54% |
+| **Average Studio Rent (Annual)** | AED 42,000 – 55,000 |
+| **Gross Rental Yield (PF)** | **9.43%** — highest across all areas |
+| **Total Listings (Feb 2026)** | 123 |
 | **Occupancy Rate** | 85-90% |
 | **Target Tenant** | Tech workers, students (near universities), budget-conscious professionals |
 
-**Why DSO:** Free zone with tech companies, universities (Rochester Institute, BITS Pilani), and a self-contained community. Lower prices mean higher yields. Growing area with improving connectivity.
+**Why DSO:** Free zone with tech companies, universities (Rochester Institute, BITS Pilani), and a self-contained community. Lower prices mean higher yields. Growing area with improving connectivity. **Cheapest ready studios** in all of Dubai — Silicon Gates 1 at just 449K AED.
+
+**Key Buildings (Feb 2026 avg prices):**
+- Silicon Gates 1 — **410,614 AED** (cheapest entry point)
+- Palace Tower 2 — **414,115 AED**
+- Arabian Gate — **513,633 AED**
+- Binghatti Crystals — **521,800 AED**
+- Oasis Lofts (Uniestate) — **592,960 AED**
+- Tria by Deyaar — **606,115 AED**
+- Serenova — **640,677 AED**
+- Belle Vie by Zimaya — **682,030 AED**
+- Oasiz by Danube — **759,810 AED**
+- Timez by Danube — **842,960 AED**
 
 **Key Sub-areas:** Near Silicon Central Mall, Cedre Villas area, Academic City proximity
 
-**Risks:** Peripheral location (not near metro currently), competition from Dubailand, limited nightlife/lifestyle appeal
+**Risks:** Peripheral location (not near metro currently), competition from Dubailand, limited nightlife/lifestyle appeal. Note: -64.86% YoY avg price swing appears distorted by mix shift — price/sqft is a better indicator (+40.54%).
 
 ---
 
@@ -368,6 +382,46 @@ Dubai's average gross rental yield for apartments sits at **6.5–8.5%** as of 2
 
 ---
 
+### 15. Wasl Gate
+
+| Metric | Data |
+|---|---|
+| **Average Studio Price (Feb 2026)** | AED 577,500 – 850,000 |
+| **Average Studio Price (PropertyFinder)** | AED 645,722 |
+| **Average Price/sqft** | AED 1,552 |
+| **YoY Price Change** | +1.8% (Avg price), +2.7% (per sqft) |
+| **Total Listings** | 45 |
+| **Key Buildings** | Hills View, Hammock Park, South Garden A/B/C, Taiyo Residences, Sola Residences, The Nook 2 |
+| **Target Tenant** | Healthcare workers, families, professionals near Creek & Healthcare City |
+
+**Why Wasl Gate:**
+- **Government-backed developer** — Wasl Asset Management Group (owned by Dubai's ruling family) develops and manages the community, providing long-term stability and quality assurance
+- **Strategic location** — Near Al Jadaf, Dubai Healthcare City, and Dubai Creek, with easy access to Downtown Dubai (10-15 min drive)
+- **Blue Line Metro proximity** — The upcoming Blue Line extension will serve Al Jadaf/Healthcare City area, boosting connectivity and values
+- **Healthcare City adjacency** — Massive demand driver from medical professionals, patients' families, and healthcare workers
+- **Dubai Creek proximity** — Cultural and heritage significance, plus the upcoming Dubai Creek Tower/Harbour mega-development
+- **Moderate pricing** — Average 645K with entry from ~577K (The Nook 2), offering reasonable value vs more established areas
+- **Newer buildings** — Most towers are recently completed or under construction, meaning modern finishes and lower maintenance
+
+**Key Projects:**
+- **Hammock Park** — Ready, 394-395 sqft, 740K-850K (premium positioning)
+- **Hills View** — Off-plan/near-ready, 425-458 sqft, 625K-825K range
+- **South Garden A/B/C** — Ready, 438 sqft, 599K-750K (best value picks)
+- **Taiyo Residences** — Off-plan, ~400 sqft, 639K
+- **Sola Residences** — Off-plan, 386-387 sqft, 722K-794K
+- **The Nook 2** — Avg 577K (lowest entry point in Wasl Gate)
+
+**Risks:**
+- Still developing — limited retail/dining options within the community itself
+- Smaller community with fewer listings (45 vs 2,750 in JVC) — less liquidity
+- No published rental yield data on PropertyFinder — market still maturing
+- Moderate YoY appreciation (+1.8%) compared to high-growth areas like Motor City (+32.8%)
+- Some projects are off-plan with uncertain handover timing
+
+**Investment Verdict:** Wasl Gate is a **long-term government-backed play**. The low supply, stable pricing, and upcoming metro access make it interesting for patient investors. However, it lacks the proven rental track record and yield data of more established areas like JVC, Arjan, or DSO. Best suited for investors who value developer quality and location fundamentals over immediate yield.
+
+---
+
 ## Comparative Summary Table
 
 | Area | Studio Price Range (AED) | Annual Rent (AED) | Gross Yield | 5Y Appreciation | Metro? | Off-Plan Supply | Best For |
@@ -382,6 +436,7 @@ Dubai's average gross rental yield for apartments sits at **6.5–8.5%** as of 2
 | **Business Bay** | 650K-1.2M | 45K-70K | 6.5-7.5% | +50-65% | ✅ | 🟡 Medium | Appreciation |
 | **Dubai Marina** | 700K-1.5M | 55K-85K | 6.0-7.0% | +45-55% | ✅ | 🟢 Low | Lifestyle |
 | **JLT** | 550K-900K | 42K-60K | 7.0-8.0% | +40-50% | ✅ | 🟢 Low | Balance |
+| **Wasl Gate** | 577K-850K | ~38K-48K | ~6.5-7.5%* | +1.8% | ❌ (planned) | 🟡 Medium | Long-term |
 | **JVT** | 420K-750K | 45K-60K | 7.5-8.5% | +35-45% | ❌ | 🟡 Medium | Yield + Community |
 | **Motor City** | 400K-650K | 37.5K-70K | 9.0-10.5% | +25-35% | ❌ | 🟢 Low | High Yield |
 | **Discovery Gdns** | 280K-450K | 25K-38K | 8.0-9.5% | +25-35% | ✅ | 🟢 Low | Budget yield |

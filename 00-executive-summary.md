@@ -21,6 +21,7 @@
 - **Best future bet:** Dubai South / Expo City (cheap now, massive government investment ahead)
 - **Hidden gem:** Motor City (~10.2% yield, spacious studios, low supply risk, established community)
 - **Community pick:** JVT (Nakheel gated community, ~8.3% yield, family-friendly, quieter alternative to JVC)
+- **Government-backed newcomer:** Wasl Gate (Wasl Asset Management, 645K avg, near Al Jadaf/Healthcare City/Dubai Creek, planned Blue Line Metro)
 - **Biggest risk:** JVC and Arjan (heavy oversupply of 15,000+ units expected 2025-2027)
 
 ### 3. Market Timing
