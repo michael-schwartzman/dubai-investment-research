@@ -166,12 +166,12 @@ Over **70,000 residential units** are expected to be delivered across Dubai in t
 *Source: [RERA project registration data](https://www.rera.gov.ae), [PropertyFinder](https://www.propertyfinder.ae)*
 
 #### JVT (Jumeirah Village Triangle)
-- **Expected deliveries 2025-2027:** ~3,000-5,000 new residential units
-- **Risk level:** MEDIUM (trending toward HIGH)
-- **Why:** Originally a Nakheel master-planned community with moderate density, JVT is now seeing new off-plan activity. **Binghatti Luxuria JVT** is a major new launch, and several other developers are adding projects. Supply risk is rising.
+- **Expected deliveries 2025-2027:** ~2,000-3,000 new residential units
+- **Risk level:** MEDIUM
+- **Why:** A mature Nakheel-master-planned community with significantly fewer new off-plan launches than neighboring JVC. Some new projects like **Binghatti Luxuria JVT** are launching, but the pipeline is far smaller than JVC's 15,000+ units.
 - **Key projects:** Binghatti Luxuria JVT (launch price from AED 766K, handover July 2027)
-- **Mitigating factors:** Nakheel master plan provides infrastructure confidence, family-friendly gated community character differentiates from JVC, lower density than JVC.
-- **Impact:** The area's quieter character could attract a different tenant demographic, but the absorption of 3,000-5,000 new units is uncertain. Watch pricing closely — if developers start discounting, it signals absorption problems.
+- **Mitigating factors:** Nakheel master plan provides infrastructure confidence, family-friendly gated community character differentiates from JVC, lower density than JVC, established tenant base.
+- **Impact:** The moderate supply pipeline should be manageable given JVT's distinct community character and growing demand. Less competitive pressure than JVC.
 
 *Source: [DXBinteract](https://dxbinteract.com), [Bayut](https://www.bayut.com/mybayut/dubai-market-reports/)*
 
@@ -320,7 +320,7 @@ Worst-hit segment: Studios & 1BR in affordable areas (JVC, Arjan)
 | Area | Supply vs. Demand | Supply Pipeline (2025-27) | Investor Verdict |
 |---|---|---|---|
 | **JVC** | Supply EXCEEDS near-term demand | 15,000-20,000 units | ⚠️ Proceed with caution; pick quality developers |
-| **JVT** | Supply RISING vs demand | 3,000-5,000 units | ⚠️ Watch carefully; Nakheel master plan helps |
+| **JVT** | Supply manageable at current levels | 2,000-3,000 units | ✅ Moderate; Nakheel master plan helps |
 | **Arjan** | Supply SLIGHTLY exceeds demand | 8,000-12,000 units | Good entry point if infrastructure develops |
 | **Business Bay** | Supply MATCHES demand | 8,000-10,000 units | ✅ Safer bet, premium positioning |
 | **Motor City** | Demand EXCEEDS supply | 500-1,000 units | ✅ Best supply-demand balance for yield |
@@ -360,7 +360,7 @@ Worst-hit segment: Studios & 1BR in affordable areas (JVC, Arjan)
 4. **Historical lesson:** Dubai's previous cycles saw 25-60% corrections followed by 5-year recoveries
 5. **JVC has the highest oversupply risk** (15,000+ units) but also the highest volume of options; pick quality over price
 6. **Motor City has the best supply-demand dynamics** — lowest supply risk with highest yields
-7. **JVT supply risk is rising** — Nakheel master plan helps but watch for absorption issues
+7. **JVT supply risk is moderate** — mature Nakheel community with ~2,000-3,000 unit pipeline, significantly less than JVC
 8. **Business Bay** offers the safest supply-demand balance at premium pricing
 9. **Al Furjan** is undersupplied but has limited off-plan studio inventory
 10. **Avoid** very new developers with no track record (Object 1, some Tiger projects)

@@ -1,7 +1,7 @@
 # 🦊 Pip's Personal Investment Recommendations for Michael
 
 *Written by Pip, your fox-brained research assistant*
-*February 2026*
+*February 2026 — Updated with mortgage analysis for 300-400K AED own capital*
 
 ---
 
@@ -28,11 +28,15 @@ Here's the situation:
 
 **Does this mean don't buy?** No. It means **buy smart, buy for cash flow, and plan to hold 7-10 years minimum**. Don't buy for a quick flip.
 
-### Budget Assessment: 750K AED
+### Budget Assessment: 300-400K AED Own Capital + Mortgage
 
-- 💰 **Tight** for premium areas (Business Bay, Marina, Downtown — studios start at 700K+)
-- ✅ **Perfect** for emerging areas (JVC, Arjan, Motor City, JVT — sweet spot of the market)
-- ⚠️ **Remember:** Your real budget is **AED 830K+** when you add DLD fees (4%), agency commission, trustee fees, furnishing, and reserves. Make sure you have this.
+- 💰 **300-400K is your real cash** — this must cover down payment + DLD fees (4%) + agent + furnishing + reserves
+- 🏦 **Non-resident mortgage:** Max 50% LTV (you put down 50%, bank finances 50%)
+- 🏦 **Resident mortgage:** Max 80% LTV (20% down) — much more favorable
+- 📊 **Current rates:** 5-6% variable, 5.5-6.5% fixed, 20-25 year terms
+- ⚠️ **DLD fee (4%) NOT included in mortgage** — must pay from own capital
+- ⚠️ **Total acquisition cost = property + ~7% on top** (DLD + agent + admin fees)
+- ⚠️ **Off-plan: Can't get mortgage until handover** — during construction you pay from own capital per payment plan
 
 ### Visa Reality Check
 
@@ -41,33 +45,38 @@ Let me be blunt:
 - ❌ **NOT a Golden Visa** — you need AED 2,000,000 for that
 - The 2-year visa is nice but not life-changing — it's renewable, so it works if you plan to visit regularly
 - Don't let visa FOMO drive your investment decision — **buy because the numbers work, not for the visa**
-- Strategy: Buy one at 750K now → accumulate → buy second property → cross the 2M threshold for Golden Visa
+- Strategy: Buy one at 500-600K now → accumulate → buy second property → cross the 2M threshold for Golden Visa
 
 ---
 
 ## 🏆 Pip's Top 3 Picks (Ranked)
 
-### 🥇 #1: Motor City Ready Studio (~AED 550,000)
+### 🥇 #1: Motor City Ready Studio (~AED 500,000) — BEST PICK
 
-**Pip's #1 pick — and here's why: it's boring, and boring makes money.**
+**Pip's #1 pick — and here's why: lowest risk, immediate income, and it works perfectly with your capital.**
 
 | Detail | Info |
 |---|---|
-| **Budget** | ~AED 550,000 (+ ~AED 80K costs = ~AED 630K total) |
+| **Purchase Price** | ~AED 500,000 |
+| **Down Payment** | AED 400K (can nearly buy outright, or mortgage ~100K) |
+| **Mortgage (if any)** | AED 100K → ~AED 650/month |
+| **Total Acquisition Cost** | ~AED 535K (+ DLD + fees) |
 | **Type** | Ready (immediate possession) |
 | **Size** | 600-880 sqft — these are SPACIOUS studios |
-| **Expected rent** | AED 45,000-56,000/year |
-| **Gross yield** | **~10%+** |
+| **Expected rent** | AED 56,000/year (validated Feb 2026: range 37,500-70,000) |
+| **Gross yield** | **~9-10%** |
+| **Net yield after all costs** | **~8-9%** |
+| **Annual costs** | ~AED 12,000 (service charges, maintenance, vacancy) |
+| **Net cash flow** | **~AED +38,000/year** (minimal mortgage) |
 | **Supply risk** | 🟢 LOW — only ~500-1,000 new units from "The Community" by Aqua Properties |
-| **Savings vs budget** | ~AED 200K left over → emergency fund + future investment |
 
 **Why I love this:**
-1. **Immediate rental income** — no waiting 18-24 months for handover. Start earning from Month 1.
-2. **Best yields in Dubai** — 10%+ gross is outstanding by any global standard
-3. **Low supply risk** — Motor City is built out. Nobody is flooding your market with competing studios.
+1. **You can almost buy it CASH** — 400K capital covers most of the purchase. Tiny mortgage or none at all.
+2. **Immediate rental income** — no waiting 18-24 months for handover. Start earning from Month 1.
+3. **56K/year rent** — validated against real PropertyFinder Feb 2026 transactions
 4. **Huge units** — 600-880 sqft studios are practically 1-bedrooms anywhere else. Tenants love the space.
-5. **AED 200K safety net** — you keep serious cash reserves for unexpected costs, vacancy, or the next opportunity
-6. **Established community** — schools, Dubai Autodrome, Kartodrome, parks, established tenant base
+5. **Low supply risk** — Motor City is built out. Nobody is flooding your market with competing studios.
+6. **Best net cash flow** — minimal/no mortgage means almost all rent goes to your pocket
 7. **No developer risk** — it's ready. No construction delays. No escrow worries. You see exactly what you get.
 
 **What I don't love:**
@@ -77,116 +86,120 @@ Let me be blunt:
 - ❌ Not glamorous — no infinity pool photos for Instagram
 
 **My strategy:**
-1. Buy a ready studio at ~550K
+1. Buy a ready studio at ~500K
 2. Furnish it nicely for AED 20-25K (IKEA/Home Centre budget)
 3. List it within 2 weeks of purchase
 4. Expect to have a tenant within 1-2 months
-5. Bank the AED 200K difference as your emergency fund
+5. Start earning from Day 1
 6. Collect rent. Sleep well. Re-evaluate in 2-3 years.
 
-**Who this is for:** Conservative investors who want cash flow over speculation.
+**Who this is for:** Conservative investors who want cash flow over speculation. Start earning immediately.
 
 ---
 
-### 🥈 #2: Business Bay Off-Plan (~AED 750,000)
+### 🥈 #2: JVC Ready/Near-Ready Studio (~AED 500-600K)
 
-**Best appreciation play — if you can stomach the wait and the risk.**
+**Best balance of yield, location, and future growth — with manageable mortgage.**
 
 | Detail | Info |
 |---|---|
-| **Budget** | ~AED 750,000 (off-plan, payment plan) |
-| **Type** | Off-plan — handover Q2-Q4 2026 |
-| **Size** | 350-450 sqft (smaller for the money) |
-| **Expected rent** | AED 50,000-57,500/year |
-| **Gross yield** | **~7.0%** |
-| **Supply risk** | 🟡 MEDIUM — but proven absorption capacity |
-| **Best projects** | Danube Bayz 101 (1% monthly), Binghatti Skyrise (20/60/20) |
+| **Purchase Price** | ~AED 500-600K |
+| **Down Payment** | AED 300K (50% LTV as non-resident) |
+| **Mortgage** | AED 200-300K → ~AED 1,300-1,950/month |
+| **Type** | Ready or near-ready |
+| **Expected rent** | AED 54,000/year (validated Feb 2026: range 40,000-61,000) |
+| **Annual costs** | ~AED 14,000 |
+| **Net cash flow after mortgage** | ~AED +24,400 - 16,600/year |
+| **Net yield after mortgage** | **~5-6%** on your cash invested |
+| **Supply risk** | 🔴 HIGH — 15,000-20,000 units expected |
 
 **Why I like this:**
-1. **Prime location** — adjacent to Downtown Dubai, Burj Khalifa, Dubai Mall. This is A-grade real estate.
-2. **Metro access** — Business Bay station on the Red Line. Huge tenant pool advantage.
-3. **Corporate + tourism demand** — strong demand from business professionals and short-term renters
-4. **Capital appreciation** — Business Bay has seen +50-65% growth (2021-2025). Best appreciation in budget.
-5. **Payment plan flexibility** — Danube's 1% monthly (~AED 7,500/month) is very manageable
-6. **Short-term rental potential** — DTCM holiday home license can boost yields 30-50%
+1. **Central location** — between Al Barsha and Dubai Sports City, well-connected by road
+2. **Blue Line metro coming** — planned for 2028-2030, could add 15-25% to property values
+3. **Huge tenant pool** — JVC is Dubai's most popular affordable area
+4. **Circle Mall** — significantly improved livability
+5. **More appreciation potential** than Motor City — younger, growing area
+6. **Rent covers mortgage + costs** — still positive cash flow even with mortgage
 
-**What concerns me:**
-- ⚠️ **Smaller units** — 350-450 sqft for 750K. Motor City gives you 600-880 sqft for 550K.
-- ⚠️ **Parking nightmare** — chronic parking shortage in many Business Bay buildings
-- ⚠️ **Competition** — 8,000-10,000 units expected for delivery; you're one of many
-- ⚠️ **Top of budget** — no buffer left for surprises
-- ⚠️ **Developer delay risk** — budget for 6-12 months of dead time with no rental income
-- ⚠️ **Cycle risk** — if correction hits before you sell, appreciation evaporates
+**Why I'm nervous:**
+- 🔴 **OVERSUPPLY** — 15,000-20,000 units expected for delivery 2025-2027
+- ⚠️ Monthly mortgage eats into your cash flow significantly
+- ⚠️ No metro until 2028-2030 (at best)
+- ⚠️ Construction noise everywhere
 
 **My strategy:**
-1. Go off-plan with Danube Bayz 101 (1% monthly plan is excellent for cash flow)
-2. Pay 20% down (~AED 150K), then 1% monthly during construction
-3. At handover, furnish and apply for DTCM holiday home license
-4. Run it as a short-term rental for the first year to maximize income
-5. Re-evaluate in Year 2-3: hold for rent, or sell for capital gain
+1. Find a ready or near-ready studio at 500-550K
+2. Put down 50% (300K), mortgage the rest
+3. Get tenant in place quickly
+4. Rent covers mortgage payment + most expenses
+5. Hold for metro arrival (2028-2030) for appreciation bonus
 
-**Who this is for:** Growth-oriented investors comfortable with construction risk and a 2-year wait.
+**Who this is for:** Investors who want growth potential and can handle some mortgage risk.
 
 ---
 
-### 🥉 #3: JVC Off-Plan (~AED 650,000)
+### 🥉 #3: Arjan Off-Plan (~AED 650K) — If You're Patient
 
-**Highest yield potential, but the oversupply risk is REAL.**
+**Solid off-plan play with no mortgage needed during construction.**
 
 | Detail | Info |
 |---|---|
-| **Budget** | ~AED 650,000 (off-plan, payment plan) |
-| **Type** | Off-plan — handover Q2-Q4 2026 |
-| **Size** | 380-500 sqft |
-| **Expected rent** | AED 42,000-50,000/year |
-| **Gross yield** | **~8-9%** |
-| **Supply risk** | 🔴 HIGH — 15,000-20,000 units expected |
-| **Best projects** | Binghatti Ghost (20/60/20), Danube Fashionz (1% monthly) |
+| **Purchase Price** | ~AED 650K |
+| **Payment Plan** | 20-50% during construction (130-325K from your capital) |
+| **Mortgage** | At handover: remaining balance |
+| **Type** | Off-plan (18-24 month wait) |
+| **Expected rent at handover** | AED 55-60K/year |
+| **Current avg Arjan rent** | AED 51,000/year (validated Feb 2026: range 29,500-63,000) |
+| **Supply risk** | 🟡 MEDIUM-HIGH — 8,000-12,000 units expected |
+| **Best developers** | Samana (pool amenities), Danube |
 
-**Why it's tempting:**
-1. **High yields** — 8-9% gross is excellent
-2. **Blue Line metro coming** — planned for 2028-2030, could add 15-25% to property values
-3. **Central location** — between Al Barsha and Sports City, well-connected by road
-4. **Circle Mall** — significantly improved livability
-5. **AED 100K cheaper than Business Bay** — more budget flexibility
+**Why it's interesting:**
+1. **No mortgage during construction** — you pay developer directly from your 300-400K capital
+2. **Samana projects** — private pool studios are a unique selling point for rentals
+3. **Growing area** — near Dubai Hills, Miracle Garden, Mediclinic Parkview
+4. **Rents may grow** by handover time as area matures
+5. **Good developer payment plans** — 20/50/30 or 1% monthly spreads your capital well
 
-**Why I'm nervous:**
-- 🔴 **OVERSUPPLY IS THE #1 RISK** — 15,000-20,000 units expected for delivery 2025-2027. That's potentially 5,000-7,000 studios competing for the same tenant pool.
-- ⚠️ JVC already had 8,000+ transactions in 2024, but can it absorb this volume?
-- ⚠️ If rents drop 10-15% due to oversupply, your 8.5% yield becomes 7% — no better than Business Bay
-- ⚠️ No metro until 2028-2030 (at best) — that's 2-4 years of car-dependency after handover
-- ⚠️ Construction noise and disruption for years
+**Why I'm cautious:**
+- ⚠️ **18-24 month wait** — no income during construction
+- ⚠️ **Oversupply concerns** — Arjan has heavy off-plan pipeline
+- ⚠️ **Developer delay risk** — budget for 12-month delay
+- ⚠️ **Rents could drop** if oversupply materializes by handover
 
-**My strategy (IF you go JVC):**
-1. **Only pick Tier 1-2 developers** — Binghatti (Tier 3 but proven) or Danube (good payment plans)
-2. **Pick an EARLY handover date** — be among the first buildings delivered so you capture tenants before the flood
-3. **Price your rent competitively from Day 1** — don't hold out for top-of-market rent; fill the unit fast
-4. **Have AED 100K in reserve** — for the 3-6 month vacancy risk during the absorption period
-5. **Plan to hold 7+ years** — if Blue Line materializes, you'll be rewarded
+**My strategy:**
+1. Pick a Samana project with pool amenities (rental differentiator)
+2. Pay 20% down from capital, then monthly installments during build
+3. At handover, mortgage the remaining balance
+4. List as premium furnished studio with pool access
+5. Aim for AED 55-60K rent to cover mortgage + expenses
 
-**Who this is for:** Investors who believe in JVC's long-term trajectory and can tolerate near-term pain.
+**Who this is for:** Patient investors who can wait 2 years and want off-plan upside.
 
 ---
 
-## 🚫 Areas to AVOID
+## 🚫 Business Bay Verdict — A STRETCH at Your Budget
 
-### Dubai South — Too Early ⏰
-- Yes, Al Maktoum Airport will be transformative. Eventually.
-- But "eventually" could mean 2030-2035. That's a LONG time to hold an underperforming asset.
-- Current occupancy: 75-85% — lowest of any area we analyzed
-- You'd be paying for a dream, not a reality. Wait until the airport expansion has a firm timeline.
+**At 300-400K capital, Business Bay is risky. Here's why:**
 
-### DSO (Dubai Silicon Oasis) — Too Far 🚗
-- Great tech hub, but physically distant from Dubai's lifestyle centers
-- Limited appeal to non-tech tenants
-- Better options exist at similar price points
-- Exception: If you're specifically targeting tech sector tenants and comfortable with the location
+| Cost Item | Amount |
+|---|---|
+| Studio price | AED 750,000 |
+| Down payment (50% LTV non-resident) | AED 375,000 |
+| DLD fee (4%) | AED 30,000 |
+| Agent + admin fees | AED 20,000 |
+| Furnishing | AED 20,000 |
+| **Total cash needed** | **AED 445,000** |
+| **Your cash available** | **AED 300-400K** |
+| **Shortfall** | **AED 45-145K** ❌ |
 
-### Any Tier 4 Developer — Full Stop ❌
-- Vincitore, Object 1, Tiger at the budget end — insufficient track record
-- With 70,000 units coming, developers will face financial pressure. Weaker ones may struggle.
-- Your escrow is protected, but delays and stress are not worth the 5-10% discount
-- Stick with Tier 1-3: Emaar, Sobha, Ellington, Danube, Samana, Binghatti, DAMAC (with reservations)
+Even if you find a studio at 700K, you need 350K down + 28K DLD + 20K fees + 20K furnishing = **AED 418K**. That leaves you with ZERO reserves.
+
+**Not recommended unless:**
+- You find a genuine deal under AED 650K (rare in Business Bay for new/quality)
+- You have additional capital sources
+- You're getting resident status which unlocks 80% LTV (only 20% down)
+
+**Business Bay average rent:** AED 70,000/year (validated Feb 2026) — excellent, but the entry price kills the ROI at your capital level.
 
 ---
 
@@ -197,9 +210,8 @@ This is the elephant in the room that Dubai property brochures don't mention.
 
 | Item | Before IL Tax | After IL Tax | Drag |
 |---|---|---|---|
-| Annual rent (45K) | AED 45,000 | ~AED 33,750 | -25% |
-| Capital gain (5yr, 207K) | AED 207,000 | ~AED 155,250 | -25% |
-| **5-Year total return** | **AED 370,000** | **AED 278,000** | **-AED 92,000** |
+| Annual rent (56K Motor City) | AED 56,000 | ~AED 42,000 | -25% |
+| Capital gain (5yr, 150K) | AED 150,000 | ~AED 112,500 | -25% |
 
 **Factor Israeli tax into ALL return calculations.** The "tax-free Dubai" marketing is for UAE residents only. As an Israeli tax resident, you're taxed on worldwide income.
 
@@ -209,30 +221,34 @@ This is the elephant in the room that Dubai property brochures don't mention.
 - Plan capital gains timing carefully
 
 ### 2. Don't Buy for the Visa Alone 🛂
-A 2-year renewable visa is not worth AED 830K+ unless the investment itself makes sense. If you just want a UAE visa, there are cheaper ways (freelance visa, employment, etc.)
+A 2-year renewable visa is not worth AED 500K+ unless the investment itself makes sense. If you just want a UAE visa, there are cheaper ways (freelance visa, employment, etc.)
 
-### 3. Budget for MUCH More Than the Property Price 💰
+### 3. Mortgage Adds Risk — Understand It 🏦
+| Factor | Detail |
+|---|---|
+| Monthly obligation | Must pay mortgage whether unit is rented or not |
+| Interest rate risk | Variable rates can increase 1-2% |
+| Vacancy impact | 2 months vacancy = 2 months out-of-pocket mortgage |
+| Reserves needed | Keep 6+ months of mortgage payments in cash |
+
+### 4. Budget for MUCH More Than the Property Price 💰
 | Extra Cost | Amount |
 |---|---|
-| DLD Fee (4%) | AED 30,000 |
-| Agency + Trustee + Admin | AED 20,000-25,000 |
+| DLD Fee (4%) | AED 20,000-30,000 |
+| Agency + Trustee + Admin | AED 15,000-20,000 |
 | Furnishing (basic) | AED 15,000-25,000 |
-| 6 months operating reserves | AED 10,000-15,000 |
-| **Total extras** | **AED 75,000-95,000** |
+| 6 months operating reserves | AED 15,000-25,000 |
+| **Total extras** | **AED 65,000-100,000** |
 
-Your real budget for the property itself is AED 650-670K, not 750K, if 750K is your absolute maximum.
-
-### 4. Plan for 12-Month Developer Delay ⏳
+### 5. Plan for 12-Month Developer Delay ⏳ (Off-Plan Only)
 - 60-80% of projects are delayed
 - Budget for no rental income for 12 months AFTER the promised handover date
 - If the developer says "Q4 2026", plan for "Q4 2027"
-- This is normal in Dubai — annoying, but normal
 
-### 5. Keep 6 Months of Costs as Reserves 🏦
-- Service charges: ~AED 650/month
-- Vacancy allowance: ~AED 3,750/month
-- Maintenance: ~AED 200/month
-- **6-month reserve: ~AED 28,000 minimum**
+### 6. Keep 6 Months of Costs as Reserves 🏦
+- Service charges + mortgage: ~AED 1,500-3,000/month
+- Vacancy allowance: ~AED 4,500/month
+- **6-month reserve: ~AED 20,000-40,000 minimum** (higher with mortgage)
 - This is non-negotiable. If you can't keep this reserve, you can't afford the investment.
 
 ---
@@ -240,43 +256,44 @@ Your real budget for the property itself is AED 650-670K, not 750K, if 750K is y
 ## 📋 Pip's Recommended Action Plan
 
 ### Phase 1: Preparation (Weeks 1-4)
-- [ ] **Decide on strategy:** Cash flow (Motor City) vs. Growth (Business Bay) vs. Balanced (JVC)
+- [ ] **Decide on strategy:** Cash flow (Motor City) vs. Growth (JVC) vs. Off-plan (Arjan)
 - [ ] **Engage Israeli-UAE tax advisor** — get tax structure advice BEFORE buying
-- [ ] **Open a UAE bank account** remotely (Emirates NBD, ADCB, or Mashreq)
+- [ ] **Get mortgage pre-approval** — talk to Emirates NBD, ADCB, Mashreq about non-resident mortgage terms
+- [ ] **Open a UAE bank account** remotely
 - [ ] **Contact 2-3 licensed Dubai brokers** — get current pricing for your shortlisted areas
-- [ ] **Verify budget:** Confirm you have AED 830K+ total (property + all costs + reserves)
+- [ ] **Verify budget:** Confirm exactly how much cash you have after DLD + fees + reserves
 
 ### Phase 2: Research Trip (Weeks 4-6)
 - [ ] **Fly to Dubai** for 4-5 days of site visits
-- [ ] **Visit completed projects** by your target developers (see the quality firsthand)
-- [ ] **Tour ready Motor City studios** — if my #1 pick appeals, see units in person
-- [ ] **Visit off-plan sales centers** for Business Bay / JVC projects
+- [ ] **Visit ready Motor City studios** — if my #1 pick appeals, see units in person
+- [ ] **Visit JVC ready studios** — compare to Motor City
+- [ ] **Visit off-plan sales centers** for Arjan projects (Samana)
 - [ ] **Walk the neighborhoods** at night and on weekends — feel the vibe
 - [ ] **Meet a real estate lawyer** — get SPA template reviewed
+- [ ] **Visit banks for mortgage paperwork** — start the process
 
 ### Phase 3: Purchase (Weeks 6-10)
 - [ ] **Make your decision** based on site visits + data
-- [ ] **Negotiate** — developers and agents have room to negotiate (5-10% is common, especially for ready units)
+- [ ] **Negotiate** — 5-10% discount is common, especially for ready units
 - [ ] **Verify RERA registration** at [DXBinteract](https://dxbinteract.com) before signing anything
 - [ ] **Have lawyer review SPA** (Sale Purchase Agreement)
-- [ ] **Wire initial payment** — ensure you get proper receipts and escrow confirmation
+- [ ] **Submit mortgage application** (if applicable)
+- [ ] **Wire initial payment** — ensure you get proper receipts
 - [ ] **Register Oqood** (off-plan) or title deed (ready)
 
-### Phase 4: Post-Purchase (Months 3-24)
-**If ready (Motor City):**
+### Phase 4: Post-Purchase
+**If ready (Motor City / JVC):**
 - [ ] Furnish within 2 weeks
 - [ ] List on Bayut, PropertyFinder, Dubizzle
 - [ ] Find tenant within 1-2 months
 - [ ] Register Ejari
-- [ ] Apply for property visa (after title deed)
-- [ ] Set up auto-rent collection
+- [ ] Set up auto-rent collection and mortgage auto-debit
 
-**If off-plan (Business Bay / JVC):**
+**If off-plan (Arjan):**
 - [ ] Make staged payments per schedule
-- [ ] Monitor construction progress monthly (developer updates, site photos)
-- [ ] Join buyer WhatsApp groups for the project
-- [ ] Plan furnishing and listing strategy 3 months before handover
-- [ ] Accept the handover, note all defects (snagging), get title deed
+- [ ] Monitor construction progress monthly
+- [ ] Plan furnishing and mortgage application 3 months before handover
+- [ ] At handover: complete mortgage, furnish, list for rent
 
 ### Phase 5: Ongoing (Year 1+)
 - [ ] File Israeli tax declaration including rental income
@@ -291,18 +308,21 @@ Your real budget for the property itself is AED 650-670K, not 750K, if 750K is y
 
 Michael, here's my honest bottom line:
 
-**If I were investing YOUR money, I'd buy the Motor City ready studio at ~AED 550K.**
+**If I were investing YOUR money, I'd buy the Motor City ready studio at ~AED 500K.**
 
 Not because it's exciting. Not because it'll make you rich quick. But because:
 
-1. You start earning rent immediately — no 2-year wait
-2. You keep AED 200K as a safety net — priceless peace of mind
-3. 10%+ yield is excellent by any global standard
-4. You're not betting against a potential oversupply wave
-5. If the market corrects 15%, you're still cash-flow positive
-6. You can always buy a second property in 2-3 years when the market is clearer
+1. **You can nearly buy it cash** — minimal or zero mortgage = maximum safety
+2. **Start earning 56K/year rent immediately** — Day 1 income
+3. **Best net cash flow** — almost all rent is profit
+4. **~8-9% net yield** is excellent by any global standard
+5. **You're not betting against a potential oversupply wave**
+6. If the market corrects 15%, you're still cash-flow positive
+7. You keep cash reserves for emergencies or the next opportunity
 
-The Business Bay play is sexier, and JVC has higher upside, but at this point in the cycle — 5 years into a bull run, with record off-plan launches — **I'd rather be boring and profitable than exciting and anxious.**
+JVC is a solid #2 if you want more growth potential and can handle a mortgage. Arjan off-plan is interesting if you're patient.
+
+**Business Bay? Not with 300-400K capital.** You'd be maxed out with zero safety net. Wait until you have more capital or get resident status for 80% LTV.
 
 Whatever you decide, don't rush. Visit Dubai. See the units. Feel the market. And never invest more than you can afford to hold for 10 years.
 

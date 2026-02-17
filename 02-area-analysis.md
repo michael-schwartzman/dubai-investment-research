@@ -276,13 +276,13 @@ Dubai's average gross rental yield for apartments sits at **6.5–8.5%** as of 2
 - **Binghatti Luxuria JVT** — Launch price from AED 766K, studios 360-430 sqft, handover July 2027, payment plan 20/50/30, freehold
 
 **Risks:**
-- ⚠️ **High new supply** — significant off-plan activity including Binghatti Luxuria and other launches; risk of oversupply similar to JVC
+- ⚠️ **Moderate new supply** — some off-plan activity including Binghatti Luxuria and other launches, but significantly less than JVC. Estimated pipeline of 2,000-3,000 units (vs JVC's 15,000+)
 - ⚠️ **No metro access** — not currently served by Dubai Metro; relies on car/bus transport
 - ⚠️ **Less established than JVC** — fewer retail/dining options within JVT itself; residents often drive to JVC or Ibn Battuta
 - ⚠️ **Mixed development stage** — some parts of JVT still have vacant plots and ongoing construction
 - ⚠️ **Brand confusion** — tenants/buyers sometimes confuse JVT with JVC, which can affect marketing
 
-**Investment Verdict:** JVT offers a **quieter, more community-oriented alternative to JVC** with competitive pricing and strong rental yields. The Nakheel master plan provides infrastructure confidence. However, increasing off-plan supply is a concern. Best suited for investors who want a family-friendly area with solid fundamentals and don't need metro access.
+**Investment Verdict:** JVT offers a **quieter, more community-oriented alternative to JVC** with competitive pricing and strong rental yields. The Nakheel master plan provides infrastructure confidence. Supply risk is moderate — significantly lower than JVC's massive pipeline. Best suited for investors who want a family-friendly area with solid fundamentals and don't need metro access.
 
 ---
 
@@ -382,7 +382,7 @@ Dubai's average gross rental yield for apartments sits at **6.5–8.5%** as of 2
 | **Business Bay** | 650K-1.2M | 45K-70K | 6.5-7.5% | +50-65% | ✅ | 🟡 Medium | Appreciation |
 | **Dubai Marina** | 700K-1.5M | 55K-85K | 6.0-7.0% | +45-55% | ✅ | 🟢 Low | Lifestyle |
 | **JLT** | 550K-900K | 42K-60K | 7.0-8.0% | +40-50% | ✅ | 🟢 Low | Balance |
-| **JVT** | 420K-750K | 45K-60K | 7.5-8.5% | +35-45% | ❌ | 🔴 High | Yield + Community |
+| **JVT** | 420K-750K | 45K-60K | 7.5-8.5% | +35-45% | ❌ | 🟡 Medium | Yield + Community |
 | **Motor City** | 400K-650K | 37.5K-70K | 9.0-10.5% | +25-35% | ❌ | 🟢 Low | High Yield |
 | **Discovery Gdns** | 280K-450K | 25K-38K | 8.0-9.5% | +25-35% | ✅ | 🟢 Low | Budget yield |
 | **MBR City** | 600K-1M | 40K-60K | 6.5-7.5% | +55-70% | ❌ (planned) | 🟡 Medium | Appreciation |
