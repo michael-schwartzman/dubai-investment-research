@@ -124,6 +124,17 @@ table {
 }
 .grid-2 table, .grid-3 table {
   min-width: unset;
+  font-size: 0.8em;
+}
+.grid-2 table thead th, .grid-3 table thead th {
+  padding: 7px 6px;
+}
+.grid-2 table tbody td, .grid-3 table tbody td {
+  padding: 7px 6px;
+}
+.grid-2 .card, .grid-3 .card {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 table thead th {
   background: rgba(42,46,58,0.7);
@@ -2258,6 +2269,28 @@ function drawDevConcentrationChart() {
         <div class="detail">Avg transaction: 510K · Motivated seller</div>
         <a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-triangle-al-jawhara-residences-15570609.html" target="_blank">View on PropertyFinder →</a>
       </div>
+      <!-- Wasl Gate -->
+      <div class="deal-card off-plan">
+        <h4><span class="tag tag-offplan">OFF-PLAN</span> South Garden B — Wasl Gate</h4>
+        <div class="price">550,000 AED launch</div>
+        <div class="detail">399–507 sqft · Wasl Properties (Govt) · Q4 2027</div>
+        <div class="detail">5/55/40 plan · Govt developer = low risk</div>
+        <a href="https://www.propertyfinder.ae/en/new-projects/wasl-properties/south-garden-b" target="_blank">View on PropertyFinder →</a>
+      </div>
+      <div class="deal-card">
+        <h4><span class="tag tag-ready">READY</span> South Garden C — Wasl Gate</h4>
+        <div class="price">599,435 AED avg txn</div>
+        <div class="detail">438 sqft · 1,369 AED/sqft · Wasl Properties</div>
+        <div class="detail">Near metro · Government developer</div>
+        <a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-wasl-gate-south-garden-south-garden-c-14044718.html" target="_blank">View on PropertyFinder →</a>
+      </div>
+      <div class="deal-card off-plan">
+        <h4><span class="tag tag-offplan">OFF-PLAN</span> Hills View — Wasl Gate</h4>
+        <div class="price">624,900 AED</div>
+        <div class="detail">425–458 sqft · 3yr post-handover · Branded</div>
+        <div class="detail">Fully furnished · Near metro</div>
+        <a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-wasl-gate-hills-view-16068790.html" target="_blank">View on PropertyFinder →</a>
+      </div>
     </div>
   </div>
 
@@ -2556,6 +2589,8 @@ function drawDevConcentrationChart() {
     <a class="area-link" href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-business-bay.html" target="_blank">🏙️ Business Bay Studios</a>
     <a class="area-link" href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-jumeirah-village-triangle-jvt.html" target="_blank">🔺 JVT Studios</a>
     <a class="area-link" href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-dubai-silicon-oasis.html" target="_blank">💻 DSO Studios</a>
+    <a class="area-link" href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-wasl-gate.html" target="_blank">🚪 Wasl Gate Studios</a>
+    <a class="area-link" href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-jumeirah-lake-towers.html" target="_blank">🏢 JLT Studios</a>
   </div>
 
   <!-- CHARTS ROW 1: Price Distribution + Price/sqft -->
@@ -2656,7 +2691,7 @@ function drawDevConcentrationChart() {
   <!-- ============================================================ -->
   <div class="section-header insights-section" style="margin-top:40px;">
     <h2>🔍 Key Market Insights — February 2026</h2>
-    <p>Data-driven insights from 6,879 studio listings across 6 investment areas</p>
+    <p>Data-driven insights from 7,380+ studio listings across 8 investment areas</p>
   </div>
 
   <div class="insight-cards-grid">
@@ -2719,11 +2754,31 @@ function drawDevConcentrationChart() {
       </div>
       <a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-business-bay.html" target="_blank">View Business Bay Studios →</a>
     </div>
+
+    <!-- 🚪 Wasl Gate -->
+    <div class="insight-card">
+      <div class="ic-icon">🚪</div>
+      <div class="ic-headline green">Wasl Gate: 645K avg / Govt Dev</div>
+      <div class="ic-body">
+        <strong>Government-backed Wasl Properties development.</strong> 45 studio listings near Al Jadaf / Healthcare City. Avg transaction 646K, avg 1,552 AED/sqft. Off-plan South Garden B launches at just <strong>550K</strong> with 5/55/40 payment plan — cheapest govt-developer studio. Ready units at South Garden C trade at 599K avg. Near upcoming Blue Line metro. Low risk profile due to government developer.
+      </div>
+      <a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-wasl-gate.html" target="_blank">View Wasl Gate Studios →</a>
+    </div>
+
+    <!-- 🏢 JLT -->
+    <div class="insight-card">
+      <div class="ic-icon">🏢</div>
+      <div class="ic-headline orange">JLT: Mature area, 972K avg</div>
+      <div class="ic-body">
+        <strong>Premium established community — limited budget deals.</strong> JLT averages 972K for studios (2,115 AED/sqft) with 456 listings. Some Golf Views units start around 600K but most exceed budget. Strong rental demand from DMCC free zone proximity. Best suited for investors with higher capital or seeking appreciation in a mature, metro-connected community.
+      </div>
+      <a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-jumeirah-lake-towers.html" target="_blank">View JLT Studios →</a>
+    </div>
   </div>
 
   <!-- DEALS TO WATCH CALLOUT -->
   <div class="callout-box">
-    <h3>🎯 Deals to Watch — Under 600K in Motor City & Arjan</h3>
+    <h3>🎯 Deals to Watch — Under 600K in Motor City, Arjan & Wasl Gate</h3>
     <div class="callout-item">
       <span class="ci-name">🏁 Ananda Residences — Motor City</span>
       <span><span class="ci-price">525K–575K AED</span> · Off-plan · 346-577 sqft<a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-motor-city.html" target="_blank">🔗</a></span>
@@ -2747,14 +2802,6 @@ function drawDevConcentrationChart() {
     <div class="callout-item">
       <span class="ci-name">🌸 Resortz by Danube — Arjan</span>
       <span><span class="ci-price">590,000 AED</span> · Ready · 431 sqft · Furnished<a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-arjan-resortz-by-danube-resortz-block-3-16249674.html" target="_blank">🔗</a></span>
-    </div>
-    <div class="callout-item">
-      <span class="ci-name">🚪 South Garden B — Wasl Gate</span>
-      <span><span class="ci-price">550,000 AED</span> · Off-plan · 399-507 sqft · Govt dev<a href="https://www.propertyfinder.ae/en/new-projects/wasl-properties/south-garden-b" target="_blank">🔗</a></span>
-    </div>
-    <div class="callout-item">
-      <span class="ci-name">🚪 South Garden C (txn avg) — Wasl Gate</span>
-      <span><span class="ci-price">599,435 AED</span> · Ready · 438 sqft · 1,369/sqft<a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-wasl-gate-south-garden-south-garden-c-14044718.html" target="_blank">🔗</a></span>
     </div>
     <div style="margin-top:14px; font-size:0.85em; color:var(--text-secondary);">
       💡 <strong>Strategy tip:</strong> At 25% down, a 560K studio needs just <strong>140K capital</strong> — well within your 300-400K budget with room for registration fees (4% DLD = 22.4K) and furnishing. Target monthly mortgage: ~2,100 AED on 420K loan at 5.5%.
