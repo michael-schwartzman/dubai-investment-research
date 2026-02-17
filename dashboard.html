@@ -2814,5 +2814,400 @@ function drawDevConcentrationChart() {
   </div>
 </div>
 
+<!-- ============================================================ -->
+<!-- 🏗️ OFF-PLAN PROJECTS — FEBRUARY 2026                         -->
+<!-- ============================================================ -->
+<style>
+.offplan-section { margin-top: 40px; }
+.offplan-section .section-header {
+  text-align: center; padding: 30px 20px; margin-bottom: 24px;
+  background: linear-gradient(135deg, #1a1d27 0%, #0f1117 100%);
+  border: 1px solid var(--border); border-radius: 16px;
+}
+.offplan-section .section-header h2 {
+  font-size: 1.8em; font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px;
+}
+.offplan-section .section-header p { color: var(--text-secondary); font-size: 0.95em; }
+.offplan-area-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.offplan-area-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 18px;
+  transition: border-color 0.2s;
+}
+.offplan-area-card:hover { border-color: rgba(167,139,250,0.4); }
+.offplan-area-card .area-name { font-size: 1.1em; font-weight: 700; margin-bottom: 6px; }
+.offplan-area-card .area-count { font-size: 0.8em; color: var(--text-secondary); margin-bottom: 10px; }
+.offplan-area-card .price-range { display: flex; justify-content: space-between; font-size: 0.85em; margin-bottom: 4px; }
+.offplan-area-card .price-range .label { color: var(--text-secondary); }
+.offplan-area-card .price-range .value { font-weight: 600; }
+.offplan-project-pill { display: inline-block; padding: 3px 10px; border-radius: 10px; font-size: 0.75em; margin: 2px; background: rgba(167,139,250,0.12); color: var(--accent-purple); border: 1px solid rgba(167,139,250,0.2); }
+.budget-match { background: rgba(52,211,153,0.1) !important; border-color: rgba(52,211,153,0.3) !important; }
+.budget-match td { color: var(--accent-green) !important; }
+.offplan-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+</style>
+
+<div class="offplan-section">
+  <div class="section-header">
+    <h2>🏗️ Off-Plan Projects — February 2026</h2>
+    <p>Off-plan studio apartments across 8 target areas — scraped from PropertyFinder.ae</p>
+    <span class="badge" style="background:rgba(167,139,250,0.15);color:var(--accent-purple);border-color:rgba(167,139,250,0.3);">🏗️ Live data • Budget: ≤750K AED (300-400K own capital)</span>
+  </div>
+
+  <!-- KPI Row -->
+  <div class="kpi-row" style="margin-bottom:24px;">
+    <div class="kpi purple"><div class="value">35+</div><div class="label">Off-Plan Projects Found</div></div>
+    <div class="kpi green"><div class="value">14</div><div class="label">Under 750K AED</div></div>
+    <div class="kpi blue"><div class="value">6,746</div><div class="label">Total Off-Plan Listings</div></div>
+    <div class="kpi orange"><div class="value">8</div><div class="label">Areas Analyzed</div></div>
+  </div>
+
+  <!-- Area Summary Cards -->
+  <div class="offplan-area-grid">
+    <!-- JVC -->
+    <div class="offplan-area-card">
+      <div class="area-name" style="color:var(--accent-blue);">📍 JVC</div>
+      <div class="area-count">1,540 off-plan listings • 10+ new projects</div>
+      <div class="price-range"><span class="label">Min Price</span><span class="value" style="color:var(--accent-green);">570K</span></div>
+      <div class="price-range"><span class="label">Avg Price</span><span class="value">750K</span></div>
+      <div class="price-range"><span class="label">Max Price</span><span class="value" style="color:var(--accent-red);">962K</span></div>
+      <div style="margin-top:8px;">
+        <span class="offplan-project-pill">Trevino 797K</span>
+        <span class="offplan-project-pill">Coventry 684K</span>
+        <span class="offplan-project-pill">Tresora 670K</span>
+        <span class="offplan-project-pill">Elitz 3 650K</span>
+        <span class="offplan-project-pill">Serenz 840K</span>
+      </div>
+    </div>
+    <!-- Arjan -->
+    <div class="offplan-area-card">
+      <div class="area-name" style="color:var(--accent-orange);">📍 Arjan</div>
+      <div class="area-count">1,028 off-plan listings • 8+ new projects</div>
+      <div class="price-range"><span class="label">Min Price</span><span class="value" style="color:var(--accent-green);">590K</span></div>
+      <div class="price-range"><span class="label">Avg Price</span><span class="value">730K</span></div>
+      <div class="price-range"><span class="label">Max Price</span><span class="value" style="color:var(--accent-red);">994K</span></div>
+      <div style="margin-top:8px;">
+        <span class="offplan-project-pill">Resortz 590K</span>
+        <span class="offplan-project-pill">One Beverly 675K</span>
+        <span class="offplan-project-pill">Floarea 870K</span>
+        <span class="offplan-project-pill">Samana Imperial 994K</span>
+      </div>
+    </div>
+    <!-- JVT -->
+    <div class="offplan-area-card">
+      <div class="area-name" style="color:var(--accent-cyan);">📍 JVT</div>
+      <div class="area-count">775 off-plan listings • 5+ new projects</div>
+      <div class="price-range"><span class="label">Min Price</span><span class="value" style="color:var(--accent-green);">530K</span></div>
+      <div class="price-range"><span class="label">Avg Price</span><span class="value">720K</span></div>
+      <div class="price-range"><span class="label">Max Price</span><span class="value" style="color:var(--accent-red);">975K</span></div>
+      <div style="margin-top:8px;">
+        <span class="offplan-project-pill">VOXA 639K</span>
+        <span class="offplan-project-pill">Guzel 659K</span>
+        <span class="offplan-project-pill">Lum1nar 798K</span>
+        <span class="offplan-project-pill">Binghatti Flare 765K</span>
+      </div>
+    </div>
+    <!-- Motor City -->
+    <div class="offplan-area-card">
+      <div class="area-name" style="color:var(--accent-green);">📍 Motor City</div>
+      <div class="area-count">272 off-plan listings • 3+ new projects</div>
+      <div class="price-range"><span class="label">Min Price</span><span class="value" style="color:var(--accent-green);">525K</span></div>
+      <div class="price-range"><span class="label">Avg Price</span><span class="value">700K</span></div>
+      <div class="price-range"><span class="label">Max Price</span><span class="value" style="color:var(--accent-red);">920K</span></div>
+      <div style="margin-top:8px;">
+        <span class="offplan-project-pill">Ananda 525K</span>
+        <span class="offplan-project-pill">Sierra 755K</span>
+        <span class="offplan-project-pill">15 Cascade 871K</span>
+        <span class="offplan-project-pill">Binghatti SkyTerr 728K</span>
+      </div>
+    </div>
+    <!-- DSO -->
+    <div class="offplan-area-card">
+      <div class="area-name" style="color:var(--accent-pink);">📍 DSO</div>
+      <div class="area-count">123 off-plan listings • 3+ new projects</div>
+      <div class="price-range"><span class="label">Min Price</span><span class="value" style="color:var(--accent-green);">449K</span></div>
+      <div class="price-range"><span class="label">Avg Price</span><span class="value">670K</span></div>
+      <div class="price-range"><span class="label">Max Price</span><span class="value" style="color:var(--accent-red);">842K</span></div>
+      <div style="margin-top:8px;">
+        <span class="offplan-project-pill">Timez 812K</span>
+        <span class="offplan-project-pill">Belle Vie 665K</span>
+        <span class="offplan-project-pill">Oasiz 2 769K</span>
+        <span class="offplan-project-pill">Tria 675K</span>
+      </div>
+    </div>
+    <!-- Wasl Gate -->
+    <div class="offplan-area-card">
+      <div class="area-name" style="color:var(--accent-green);">📍 Wasl Gate</div>
+      <div class="area-count">45 listings • Mostly ready • Govt developer</div>
+      <div class="price-range"><span class="label">Min Price</span><span class="value" style="color:var(--accent-green);">660K</span></div>
+      <div class="price-range"><span class="label">Avg Price</span><span class="value">710K</span></div>
+      <div class="price-range"><span class="label">Max Price</span><span class="value" style="color:var(--accent-red);">850K</span></div>
+      <div style="margin-top:8px;">
+        <span class="offplan-project-pill">Hills View 660K</span>
+        <span class="offplan-project-pill">South Garden 700K</span>
+        <span class="offplan-project-pill">Hammock Park 740K</span>
+      </div>
+    </div>
+    <!-- JLT -->
+    <div class="offplan-area-card">
+      <div class="area-name" style="color:var(--accent-orange);">📍 JLT</div>
+      <div class="area-count">456 off-plan listings • Premium area</div>
+      <div class="price-range"><span class="label">Min Price</span><span class="value" style="color:var(--accent-green);">600K</span></div>
+      <div class="price-range"><span class="label">Avg Price</span><span class="value">1,050K</span></div>
+      <div class="price-range"><span class="label">Max Price</span><span class="value" style="color:var(--accent-red);">1,565K</span></div>
+      <div style="margin-top:8px;">
+        <span class="offplan-project-pill">Golf Views 600K</span>
+        <span class="offplan-project-pill">Diamondz 1.1M</span>
+        <span class="offplan-project-pill">MBL Signature 1.17M</span>
+        <span class="offplan-project-pill">Saba 4 1.29M</span>
+      </div>
+    </div>
+    <!-- Business Bay -->
+    <div class="offplan-area-card">
+      <div class="area-name" style="color:var(--accent-red);">📍 Business Bay</div>
+      <div class="area-count">2,003 off-plan listings • Premium central</div>
+      <div class="price-range"><span class="label">Min Price</span><span class="value" style="color:var(--accent-green);">700K</span></div>
+      <div class="price-range"><span class="label">Avg Price</span><span class="value">1,200K</span></div>
+      <div class="price-range"><span class="label">Max Price</span><span class="value" style="color:var(--accent-red);">3,490K</span></div>
+      <div style="margin-top:8px;">
+        <span class="offplan-project-pill">Safeer 700K</span>
+        <span class="offplan-project-pill">Bayz 101 1.18M</span>
+        <span class="offplan-project-pill">Bayz 102 1.3M</span>
+        <span class="offplan-project-pill">V-Suites 1.6M</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Off-Plan Price Distribution Chart -->
+  <div class="card" style="margin-bottom:24px;">
+    <h2><span class="icon">📊</span> Off-Plan Price Distribution by Area</h2>
+    <div class="chart-container">
+      <canvas id="offplanPriceChart" height="350"></canvas>
+    </div>
+    <div class="legend" style="margin-top:12px;">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--accent-green)"></div> Min Price</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--accent-blue)"></div> Avg Price</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--accent-red)"></div> Max Price</div>
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(251,191,36,0.3);border:2px dashed var(--accent-orange)"></div> Budget Limit (750K)</div>
+    </div>
+  </div>
+
+  <!-- Sortable Off-Plan Comparison Table -->
+  <div class="card" style="margin-bottom:24px;">
+    <h2><span class="icon">🏗️</span> Off-Plan Project Comparison — All Areas</h2>
+    <p style="font-size:0.8em;color:var(--text-secondary);margin-bottom:12px;">🟢 Green = within 750K budget (300-400K own capital) • Click headers to sort</p>
+    <div class="offplan-table-wrap">
+    <table id="offplanTable">
+      <thead><tr>
+        <th data-col="project">Project <span class="sort-arrow">▲▼</span></th>
+        <th data-col="developer">Developer <span class="sort-arrow">▲▼</span></th>
+        <th data-col="area">Area <span class="sort-arrow">▲▼</span></th>
+        <th data-col="price" data-type="num">Price (AED) <span class="sort-arrow">▲▼</span></th>
+        <th data-col="handover">Handover <span class="sort-arrow">▲▼</span></th>
+        <th data-col="plan">Payment Plan <span class="sort-arrow">▲▼</span></th>
+        <th data-col="size">Size (sqft) <span class="sort-arrow">▲▼</span></th>
+        <th data-col="type">Type <span class="sort-arrow">▲▼</span></th>
+      </tr></thead>
+      <tbody id="offplanBody">
+        <!-- JVC Projects -->
+        <tr class="budget-match"><td>Levanto By Oro24</td><td>Oro24</td><td>JVC</td><td data-v="570000">570,000</td><td>Q2 2026</td><td>—</td><td>365</td><td>Resale</td></tr>
+        <tr class="budget-match"><td>Gateway</td><td>—</td><td>JVC</td><td data-v="620000">620,000</td><td>Q3 2026</td><td>—</td><td>396</td><td>Off-Plan</td></tr>
+        <tr class="budget-match"><td>Elitz 3 by Danube</td><td>Danube</td><td>JVC</td><td data-v="650000">650,000</td><td>Q4 2026</td><td>1% Monthly</td><td>385</td><td>Off-Plan</td></tr>
+        <tr class="budget-match"><td>Tresora by Wadan</td><td>Wadan</td><td>JVC</td><td data-v="670000">670,000</td><td>Q1 2028</td><td>2 Plans</td><td>420-540</td><td>New Project</td></tr>
+        <tr class="budget-match"><td>Coventry Living</td><td>GFS</td><td>JVC</td><td data-v="684000">684,000</td><td>Q2 2028</td><td>5/39/20/36</td><td>420</td><td>New Project</td></tr>
+        <tr class="budget-match"><td>Elitz 2 By Danube</td><td>Danube</td><td>JVC</td><td data-v="699900">699,900</td><td>Q3 2026</td><td>1% Monthly</td><td>387</td><td>Off-Plan</td></tr>
+        <tr class="budget-match"><td>Waref Residences</td><td>—</td><td>JVC</td><td data-v="699999">699,999</td><td>Q4 2026</td><td>30/70</td><td>450</td><td>Off-Plan</td></tr>
+        <tr class="budget-match"><td>The Orchard Place</td><td>Peak Summit</td><td>JVC</td><td data-v="699378">699,378</td><td>Q3 2026</td><td>10/50/40</td><td>—</td><td>New Project</td></tr>
+        <tr class="budget-match"><td>Skyhills Residences 3</td><td>—</td><td>JVC</td><td data-v="725000">725,000</td><td>H1 2026</td><td>—</td><td>400</td><td>Off-Plan</td></tr>
+        <tr class="budget-match"><td>Neva Residences</td><td>—</td><td>JVC</td><td data-v="735000">735,000</td><td>Q2 2026</td><td>—</td><td>520</td><td>Off-Plan</td></tr>
+        <tr class="budget-match"><td>Sky Living</td><td>Peace Homes</td><td>JVC</td><td data-v="745000">745,000</td><td>Q4 2026</td><td>20/36/8/36</td><td>441</td><td>New Project</td></tr>
+        <tr class="budget-match"><td>Alta View Skyhomes</td><td>Object 1</td><td>JVC</td><td data-v="748000">748,000</td><td>Q4 2028</td><td>2 Plans</td><td>416</td><td>New Project</td></tr>
+        <tr class="budget-match"><td>Mi Casa</td><td>London Gate</td><td>JVC</td><td data-v="750000">750,000</td><td>Q4 2027</td><td>20/10/70</td><td>—</td><td>New Project</td></tr>
+        <tr><td>Binghatti Etherea</td><td>Binghatti</td><td>JVC</td><td data-v="719099">719,099</td><td>2028</td><td>—</td><td>336</td><td>Direct Dev</td></tr>
+        <tr><td>Auresta Tower</td><td>Tiger</td><td>JVC</td><td data-v="727136">727,136</td><td>Q4 2028</td><td>—</td><td>—</td><td>New Project</td></tr>
+        <tr><td>Floarea Skies</td><td>—</td><td>JVC</td><td data-v="779000">779,000</td><td>2027</td><td>3yr PHPP</td><td>396</td><td>Off-Plan</td></tr>
+        <tr><td>1WOOD Phase 2</td><td>Object 1</td><td>JVC</td><td data-v="788117">788,117</td><td>Q4 2027</td><td>2 Plans</td><td>397-425</td><td>New Project</td></tr>
+        <tr><td>Trevino Residences</td><td>—</td><td>JVC</td><td data-v="797100">797,100</td><td>2028</td><td>—</td><td>395</td><td>Off-Plan</td></tr>
+        <tr><td>IR1DIAN Park Ph2</td><td>Object 1</td><td>JVC</td><td data-v="827530">827,530</td><td>Q2 2027</td><td>20/40/40</td><td>—</td><td>New Project</td></tr>
+        <tr><td>Serenz</td><td>Danube</td><td>JVC</td><td data-v="840000">840,000</td><td>Q4 2029</td><td>—</td><td>—</td><td>New Project</td></tr>
+        <tr><td>Ashton Park 2</td><td>—</td><td>JVC</td><td data-v="850000">850,000</td><td>2027</td><td>3yr PHPP</td><td>408</td><td>Off-Plan</td></tr>
+        <tr><td>Autograph S Series</td><td>—</td><td>JVC</td><td data-v="860000">860,000</td><td>2027</td><td>—</td><td>463</td><td>Off-Plan</td></tr>
+        <tr><td>J Haus Residences</td><td>—</td><td>JVC</td><td data-v="962500">962,500</td><td>2028</td><td>10yr Plan</td><td>439</td><td>Off-Plan</td></tr>
+        <tr><td>Marriott Residences</td><td>—</td><td>JVC</td><td data-v="975000">975,000</td><td>2028</td><td>4.5yr PHPP</td><td>447</td><td>Branded</td></tr>
+        <!-- Arjan Projects -->
+        <tr class="budget-match"><td>Resortz by Danube</td><td>Danube</td><td>Arjan</td><td data-v="590000">590,000</td><td>Ready</td><td>—</td><td>431</td><td>Ready</td></tr>
+        <tr class="budget-match"><td>One Beverly</td><td>—</td><td>Arjan</td><td data-v="675000">675,000</td><td>Q1 2026</td><td>—</td><td>387</td><td>Off-Plan</td></tr>
+        <tr class="budget-match"><td>Salim 1 Building</td><td>—</td><td>Arjan</td><td data-v="654345">654,345</td><td>Ready</td><td>—</td><td>484</td><td>Ready</td></tr>
+        <tr class="budget-match"><td>One Beverly (Cash)</td><td>—</td><td>Arjan</td><td data-v="730000">730,000</td><td>Q1 2026</td><td>PHPP</td><td>388</td><td>Off-Plan</td></tr>
+        <tr><td>Oxford Gardens</td><td>—</td><td>Arjan</td><td data-v="849999">849,999</td><td>2027</td><td>—</td><td>404</td><td>Off-Plan</td></tr>
+        <tr><td>Floarea Grande</td><td>—</td><td>Arjan</td><td data-v="870000">870,000</td><td>Q3 2026</td><td>—</td><td>423</td><td>Off-Plan</td></tr>
+        <tr><td>Samana Imperial Garden</td><td>Samana</td><td>Arjan</td><td data-v="994444">994,444</td><td>Q4 2028</td><td>2 Plans</td><td>—</td><td>New Project</td></tr>
+        <!-- JVT Projects -->
+        <tr class="budget-match"><td>Al Jawhara Residences</td><td>—</td><td>JVT</td><td data-v="530000">530,000</td><td>Ready</td><td>—</td><td>433</td><td>Ready</td></tr>
+        <tr class="budget-match"><td>The Community</td><td>—</td><td>JVT</td><td data-v="580000">580,000</td><td>Ready</td><td>—</td><td>326</td><td>Ready</td></tr>
+        <tr class="budget-match"><td>VOXA by Pantheon</td><td>Pantheon</td><td>JVT</td><td data-v="639000">639,000</td><td>Q3 2028</td><td>20/35/10/35</td><td>—</td><td>New Project</td></tr>
+        <tr class="budget-match"><td>Guzel Towers</td><td>—</td><td>JVT</td><td data-v="659143">659,143</td><td>2027</td><td>—</td><td>399</td><td>Off-Plan</td></tr>
+        <tr class="budget-match"><td>Terhab Hotels</td><td>—</td><td>JVT</td><td data-v="650000">650,000</td><td>Ready</td><td>—</td><td>366</td><td>Ready</td></tr>
+        <tr><td>Binghatti Luxuria</td><td>Binghatti</td><td>JVT</td><td data-v="719099">719,099</td><td>2028</td><td>—</td><td>336</td><td>Direct Dev</td></tr>
+        <tr><td>Binghatti Flare</td><td>Binghatti</td><td>JVT</td><td data-v="764639">764,639</td><td>2028</td><td>—</td><td>384</td><td>Off-Plan</td></tr>
+        <tr><td>Lum1nar Tower 3</td><td>—</td><td>JVT</td><td data-v="798000">798,000</td><td>2027</td><td>PHPP</td><td>335</td><td>Off-Plan</td></tr>
+        <tr><td>Essenlife</td><td>—</td><td>JVT</td><td data-v="869748">869,748</td><td>2028</td><td>—</td><td>484</td><td>Off-Plan</td></tr>
+        <tr><td>Fashionz by Danube</td><td>Danube</td><td>JVT</td><td data-v="975000">975,000</td><td>2027</td><td>PHPP</td><td>457</td><td>Off-Plan</td></tr>
+        <!-- Motor City Projects -->
+        <tr class="budget-match"><td>Ananda Residences</td><td>—</td><td>Motor City</td><td data-v="525000">525,000</td><td>Q4 2027</td><td>Cash Deal</td><td>367-500</td><td>Off-Plan</td></tr>
+        <tr class="budget-match"><td>Binghatti SkyTerraces</td><td>Binghatti</td><td>Motor City</td><td data-v="728499">728,499</td><td>2028</td><td>—</td><td>360</td><td>Direct Dev</td></tr>
+        <tr class="budget-match"><td>Sierra by Iman (Cash)</td><td>Iman</td><td>Motor City</td><td data-v="755000">755,000</td><td>Q1 2029</td><td>Cash -15%</td><td>416</td><td>Off-Plan</td></tr>
+        <tr><td>Bennett House</td><td>—</td><td>Motor City</td><td data-v="790000">790,000</td><td>Ready</td><td>—</td><td>727</td><td>Ready</td></tr>
+        <tr><td>Sierra by Iman</td><td>Iman</td><td>Motor City</td><td data-v="799000">799,000</td><td>Q1 2029</td><td>20/40/40</td><td>416</td><td>New Project</td></tr>
+        <tr><td>15 Cascade</td><td>Iman</td><td>Motor City</td><td data-v="871000">871,000</td><td>2029</td><td>—</td><td>421-847</td><td>New Project</td></tr>
+        <!-- DSO Projects -->
+        <tr class="budget-match"><td>Silicon Gates</td><td>—</td><td>DSO</td><td data-v="449000">449,000</td><td>Ready</td><td>—</td><td>349</td><td>Ready</td></tr>
+        <tr class="budget-match"><td>Palace Towers</td><td>—</td><td>DSO</td><td data-v="500000">500,000</td><td>Ready</td><td>—</td><td>431</td><td>Ready</td></tr>
+        <tr class="budget-match"><td>Oasis Lofts Uniestate</td><td>Uniestate</td><td>DSO</td><td data-v="620000">620,000</td><td>2027</td><td>—</td><td>409</td><td>Off-Plan</td></tr>
+        <tr class="budget-match"><td>Belle Vie by Zimaya</td><td>Zimaya</td><td>DSO</td><td data-v="664888">664,888</td><td>Q4 2027</td><td>—</td><td>454</td><td>Off-Plan</td></tr>
+        <tr class="budget-match"><td>Tria by Deyaar</td><td>Deyaar</td><td>DSO</td><td data-v="675000">675,000</td><td>Ready</td><td>—</td><td>436</td><td>Ready</td></tr>
+        <tr class="budget-match"><td>Uniestate Millennium</td><td>Uniestate</td><td>DSO</td><td data-v="699000">699,000</td><td>2027</td><td>—</td><td>523</td><td>Off-Plan</td></tr>
+        <tr><td>Timez by Danube</td><td>Danube</td><td>DSO</td><td data-v="812000">812,000</td><td>Q3 2028</td><td>70/30</td><td>386-427</td><td>New Project</td></tr>
+        <tr><td>Oasiz 2 by Danube</td><td>Danube</td><td>DSO</td><td data-v="769000">769,000</td><td>Q4 2027</td><td>2 Plans</td><td>378</td><td>Sold Out</td></tr>
+        <!-- Wasl Gate Projects -->
+        <tr class="budget-match"><td>Hills View</td><td>Wasl</td><td>Wasl Gate</td><td data-v="660000">660,000</td><td>Ready</td><td>—</td><td>428</td><td>Ready</td></tr>
+        <tr class="budget-match"><td>South Garden</td><td>Wasl</td><td>Wasl Gate</td><td data-v="700000">700,000</td><td>Ready</td><td>—</td><td>410</td><td>Ready</td></tr>
+        <tr class="budget-match"><td>Hammock Park</td><td>Wasl</td><td>Wasl Gate</td><td data-v="740000">740,000</td><td>Ready</td><td>—</td><td>394</td><td>Ready</td></tr>
+        <!-- JLT Projects -->
+        <tr class="budget-match"><td>Golf Views Seven City</td><td>Seven Tides</td><td>JLT</td><td data-v="600000">600,000</td><td>Ready</td><td>—</td><td>415</td><td>Ready</td></tr>
+        <tr class="budget-match"><td>Golf Views (Furnished)</td><td>Seven Tides</td><td>JLT</td><td data-v="690000">690,000</td><td>Ready</td><td>—</td><td>385</td><td>Ready</td></tr>
+        <tr><td>Viewz 2 by Danube</td><td>Danube</td><td>JLT</td><td data-v="1000000">1,000,000</td><td>2027</td><td>1% Monthly</td><td>403</td><td>Off-Plan</td></tr>
+        <tr><td>Diamondz by Danube</td><td>Danube</td><td>JLT</td><td data-v="1100000">1,100,000</td><td>Q4 2027</td><td>10/59/1/30</td><td>418</td><td>New Project</td></tr>
+        <tr><td>MBL Signature</td><td>MAG</td><td>JLT</td><td data-v="1171329">1,171,329</td><td>Q4 2026</td><td>20/20/60</td><td>614</td><td>New Project</td></tr>
+        <tr><td>Saba 4</td><td>Saba</td><td>JLT</td><td data-v="1290000">1,290,000</td><td>Q2 2027</td><td>—</td><td>—</td><td>New Project</td></tr>
+        <tr><td>Mercer House</td><td>Uptown</td><td>JLT</td><td data-v="1400000">1,400,000</td><td>Q3 2027</td><td>—</td><td>554</td><td>Off-Plan</td></tr>
+        <!-- Business Bay Projects -->
+        <tr class="budget-match"><td>Safeer Tower</td><td>—</td><td>Business Bay</td><td data-v="700000">700,000</td><td>Ready</td><td>—</td><td>445</td><td>Ready</td></tr>
+        <tr><td>Executive Bay A</td><td>—</td><td>Business Bay</td><td data-v="760000">760,000</td><td>Ready</td><td>—</td><td>462</td><td>Ready</td></tr>
+        <tr><td>Waters Edge</td><td>—</td><td>Business Bay</td><td data-v="850000">850,000</td><td>Ready</td><td>—</td><td>397</td><td>Ready</td></tr>
+        <tr><td>AG Tower</td><td>—</td><td>Business Bay</td><td data-v="880000">880,000</td><td>Ready</td><td>—</td><td>443</td><td>Ready</td></tr>
+        <tr><td>Bayz 101</td><td>Danube</td><td>Business Bay</td><td data-v="1175000">1,175,000</td><td>Q2 2028</td><td>10/63/1/26</td><td>374</td><td>New Project</td></tr>
+        <tr><td>Binghatti Skyhall</td><td>Binghatti</td><td>Business Bay</td><td data-v="1208000">1,208,000</td><td>Q4 2026</td><td>20/50/30</td><td>395-833</td><td>New Project</td></tr>
+        <tr><td>Bayz 102</td><td>Danube</td><td>Business Bay</td><td data-v="1300000">1,300,000</td><td>Q4 2029</td><td>10/59/1/30</td><td>404-465</td><td>New Project</td></tr>
+        <tr><td>V-Suites</td><td>Anax</td><td>Business Bay</td><td data-v="1620777">1,620,777</td><td>Q4 2026</td><td>10/20/20/50</td><td>529-741</td><td>New Project</td></tr>
+        <tr><td>Canal Crown</td><td>DAMAC</td><td>Business Bay</td><td data-v="3490000">3,490,000</td><td>Q4 2027</td><td>20/40/40</td><td>432</td><td>New Project</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+<script>
+// Off-Plan Price Distribution Chart
+(function(){
+  const ctx = document.getElementById('offplanPriceChart').getContext('2d');
+  const areas = ['JVC','Arjan','JVT','Motor City','DSO','Wasl Gate','JLT','Biz Bay'];
+  const minPrices = [570,590,530,525,449,660,600,700];
+  const avgPrices = [750,730,720,700,670,710,1050,1200];
+  const maxPrices = [962,994,975,920,842,850,1565,3490];
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: areas,
+      datasets: [
+        {
+          label: 'Min Price (K)',
+          data: minPrices,
+          backgroundColor: 'rgba(52,211,153,0.7)',
+          borderColor: '#34d399',
+          borderWidth: 1
+        },
+        {
+          label: 'Avg Price (K)',
+          data: avgPrices,
+          backgroundColor: 'rgba(96,165,250,0.7)',
+          borderColor: '#60a5fa',
+          borderWidth: 1
+        },
+        {
+          label: 'Max Price (K)',
+          data: maxPrices,
+          backgroundColor: 'rgba(248,113,113,0.7)',
+          borderColor: '#f87171',
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: 1800,
+          ticks: { color: '#9aa0a6', callback: v => v+'K' },
+          grid: { color: 'rgba(42,46,58,0.5)' }
+        },
+        x: {
+          ticks: { color: '#e8eaed', font:{size:11} },
+          grid: { display: false }
+        }
+      },
+      plugins: {
+        legend: { labels: { color: '#9aa0a6' } },
+        annotation: {
+          annotations: {
+            budgetLine: {
+              type: 'line',
+              yMin: 750,
+              yMax: 750,
+              borderColor: '#fbbf24',
+              borderWidth: 2,
+              borderDash: [6,4],
+              label: {
+                content: 'Budget Limit 750K',
+                enabled: true,
+                position: 'end',
+                color: '#fbbf24',
+                backgroundColor: 'rgba(0,0,0,0.6)',
+                font: { size: 11 }
+              }
+            }
+          }
+        },
+        tooltip: {
+          callbacks: {
+            label: function(c) { return c.dataset.label+': '+c.raw+'K AED'; }
+          }
+        }
+      }
+    }
+  });
+
+  // Make offplan table sortable
+  if(typeof makeSortable === 'function') {
+    makeSortable(document.getElementById('offplanTable'));
+  } else {
+    // Inline sortable for offplan table
+    const table = document.getElementById('offplanTable');
+    if(table) {
+      table.querySelectorAll('thead th').forEach((th,ci) => {
+        th.addEventListener('click', () => {
+          const tbody = table.querySelector('tbody');
+          const rows = Array.from(tbody.querySelectorAll('tr'));
+          const isNum = th.dataset.type === 'num';
+          const dir = th.classList.contains('sorted-asc') ? -1 : 1;
+          table.querySelectorAll('th').forEach(t=>{t.classList.remove('sorted','sorted-asc','sorted-desc');});
+          th.classList.add('sorted', dir===1?'sorted-asc':'sorted-desc');
+          rows.sort((a,b) => {
+            let va = a.cells[ci].getAttribute('data-v') || a.cells[ci].textContent.trim();
+            let vb = b.cells[ci].getAttribute('data-v') || b.cells[ci].textContent.trim();
+            if(isNum){ va=parseFloat(va.replace(/[^0-9.-]/g,''))||0; vb=parseFloat(vb.replace(/[^0-9.-]/g,''))||0; }
+            if(va<vb) return -dir; if(va>vb) return dir; return 0;
+          });
+          rows.forEach(r => tbody.appendChild(r));
+        });
+      });
+    }
+  }
+})();
+</script>
+
 </body>
 </html>
