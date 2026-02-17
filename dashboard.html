@@ -144,6 +144,9 @@ table tbody td {
   padding: 10px 12px;
   border-bottom: 1px solid rgba(42,46,58,0.5);
   white-space: nowrap;
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 table tbody tr { transition: background 0.15s; }
 table tbody tr:hover { background: var(--bg-card-hover); }
@@ -1724,8 +1727,296 @@ window.addEventListener('resize', () => {
 // ===================== LIVE LISTINGS SECTION =====================
 function initLiveListings() {
   setupSortable('liveListingsTable');
+  setupSortable('topCheapTable');
+  setupSortable('offPlanGapTable');
+  drawPriceDistChart();
+  drawPriceSqftChart();
+  drawYoYCompChart();
+  drawYieldCompChart();
+  drawDevConcentrationChart();
 }
 window.addEventListener('load', initLiveListings);
+window.addEventListener('resize', () => {
+  drawPriceDistChart();
+  drawPriceSqftChart();
+  drawYoYCompChart();
+  drawYieldCompChart();
+  drawDevConcentrationChart();
+});
+
+// --- DATA ---
+const areaStats = [
+  { area: 'Motor City', avgPrice: 713900, avgSqft: 1634, yield: 8.17, yoy: 32.79, color: '#34d399', listings: 200 },
+  { area: 'JVC',        avgPrice: 700563, avgSqft: 1659, yield: 8.06, yoy: 12.24, color: '#60a5fa', listings: 2750 },
+  { area: 'Arjan',      avgPrice: 657389, avgSqft: 1544, yield: 8.80, yoy: 6.62,  color: '#fbbf24', listings: 1028 },
+  { area: 'Biz Bay',    avgPrice:1195584, avgSqft: 2657, yield: 7.49, yoy: 4.45,  color: '#f87171', listings: 2003 },
+  { area: 'JVT',        avgPrice: 715912, avgSqft: 1779, yield: 0,    yoy: 21.39, color: '#a78bfa', listings: 775 },
+  { area: 'DSO',        avgPrice: 760876, avgSqft: 1645, yield: 9.43, yoy: 40.50, color: '#22d3ee', listings: 123 }
+];
+
+// All individual listing prices for histogram
+const allPrices = [
+  // Motor City
+  525000,575000,589505,606745,728000,750000,753000,790000,
+  // JVC
+  560000,590000,590000,620000,644800,650000,665000,669999,670000,684000,699999,725000,748000,779000,788117,
+  // Arjan
+  560000,575000,589000,590000,600000,620000,629999,650000,654345,675000,704872,750000,
+  // Biz Bay
+  700000,760000,775980,850000,850000,880000,975000,
+  // JVT
+  525000,530000,555000,580000,639000,650000,690000,690000,707000,719099,735000,750000,752000,764639,
+  // DSO
+  449000,500000,500000,555000,579780,620000,650000,664888,675000,699000,812000
+];
+
+// Price Distribution Histogram
+function drawPriceDistChart() {
+  const c = document.getElementById('priceDistChart');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.parentElement.clientWidth; c.width = W; c.height = 280;
+  ctx.clearRect(0,0,W,280);
+
+  const bins = [
+    {label:'<500K', min:0, max:500000, color:'#34d399'},
+    {label:'500-600K', min:500000, max:600000, color:'#60a5fa'},
+    {label:'600-700K', min:600000, max:700000, color:'#fbbf24'},
+    {label:'700-800K', min:700000, max:800000, color:'#a78bfa'},
+    {label:'800K+', min:800000, max:Infinity, color:'#f87171'}
+  ];
+  bins.forEach(b => b.count = allPrices.filter(p => p >= b.min && p < b.max).length);
+  const maxCount = Math.max(...bins.map(b=>b.count));
+
+  const padL=60, padR=20, padT=20, padB=50;
+  const plotW=W-padL-padR, plotH=280-padT-padB;
+  const barW = plotW/bins.length * 0.7;
+  const gap = plotW/bins.length * 0.3;
+
+  // Grid
+  ctx.strokeStyle='#2a2e3a'; ctx.lineWidth=1;
+  for(let i=0;i<=5;i++){
+    const y=padT+plotH-plotH*(i/5);
+    ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(W-padR,y); ctx.stroke();
+    ctx.fillStyle='#6b7280'; ctx.font='11px sans-serif'; ctx.textAlign='right';
+    ctx.fillText(Math.round(maxCount*i/5),padL-8,y+4);
+  }
+
+  bins.forEach((b,i) => {
+    const x = padL + i*(barW+gap) + gap/2;
+    const h = maxCount?plotH*(b.count/maxCount):0;
+    const y = padT+plotH-h;
+    // Bar
+    const grad = ctx.createLinearGradient(x,y,x,padT+plotH);
+    grad.addColorStop(0, b.color);
+    grad.addColorStop(1, b.color+'40');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.roundRect(x,y,barW,h,4);
+    ctx.fill();
+    // Count label
+    ctx.fillStyle='#e8eaed'; ctx.font='bold 13px sans-serif'; ctx.textAlign='center';
+    ctx.fillText(b.count, x+barW/2, y-6);
+    // Bin label
+    ctx.fillStyle='#9aa0a6'; ctx.font='11px sans-serif';
+    ctx.fillText(b.label, x+barW/2, 280-padB+18);
+  });
+  // Title
+  ctx.fillStyle='#6b7280'; ctx.font='10px sans-serif'; ctx.textAlign='center';
+  ctx.fillText('Price Range (AED)', W/2, 280-6);
+}
+
+// Price per sqft comparison
+function drawPriceSqftChart() {
+  const c = document.getElementById('priceSqftChart');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.parentElement.clientWidth; c.width = W; c.height = 280;
+  ctx.clearRect(0,0,W,280);
+
+  const padL=60, padR=20, padT=20, padB=50;
+  const plotW=W-padL-padR, plotH=280-padT-padB;
+  const maxVal = Math.max(...areaStats.map(a=>a.avgSqft))*1.15;
+  const barW = plotW/areaStats.length*0.65;
+  const gap = plotW/areaStats.length*0.35;
+
+  // Grid
+  ctx.strokeStyle='#2a2e3a'; ctx.lineWidth=1;
+  for(let i=0;i<=5;i++){
+    const y=padT+plotH-plotH*(i/5);
+    const val = Math.round(maxVal*i/5);
+    ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(W-padR,y); ctx.stroke();
+    ctx.fillStyle='#6b7280'; ctx.font='11px sans-serif'; ctx.textAlign='right';
+    ctx.fillText(val.toLocaleString(),padL-8,y+4);
+  }
+
+  areaStats.forEach((a,i) => {
+    const x = padL + i*(barW+gap) + gap/2;
+    const h = plotH*(a.avgSqft/maxVal);
+    const y = padT+plotH-h;
+    const grad = ctx.createLinearGradient(x,y,x,padT+plotH);
+    grad.addColorStop(0, a.color);
+    grad.addColorStop(1, a.color+'40');
+    ctx.fillStyle = grad;
+    ctx.beginPath(); ctx.roundRect(x,y,barW,h,4); ctx.fill();
+    ctx.fillStyle='#e8eaed'; ctx.font='bold 12px sans-serif'; ctx.textAlign='center';
+    ctx.fillText(a.avgSqft.toLocaleString(), x+barW/2, y-6);
+    ctx.fillStyle='#9aa0a6'; ctx.font='10px sans-serif';
+    ctx.fillText(a.area, x+barW/2, 280-padB+16);
+  });
+}
+
+// YoY Price Change
+function drawYoYCompChart() {
+  const c = document.getElementById('yoyCompChart');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.parentElement.clientWidth; c.width = W; c.height = 280;
+  ctx.clearRect(0,0,W,280);
+
+  const padL=60, padR=20, padT=20, padB=50;
+  const plotW=W-padL-padR, plotH=280-padT-padB;
+  const maxVal = Math.max(...areaStats.map(a=>a.yoy))*1.15;
+  const barW = plotW/areaStats.length*0.65;
+  const gap = plotW/areaStats.length*0.35;
+
+  ctx.strokeStyle='#2a2e3a'; ctx.lineWidth=1;
+  for(let i=0;i<=5;i++){
+    const y=padT+plotH-plotH*(i/5);
+    ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(W-padR,y); ctx.stroke();
+    ctx.fillStyle='#6b7280'; ctx.font='11px sans-serif'; ctx.textAlign='right';
+    ctx.fillText((maxVal*i/5).toFixed(0)+'%',padL-8,y+4);
+  }
+
+  areaStats.forEach((a,i) => {
+    const x = padL + i*(barW+gap) + gap/2;
+    const h = plotH*(a.yoy/maxVal);
+    const y = padT+plotH-h;
+    const col = a.yoy>20?'#34d399':a.yoy>10?'#60a5fa':a.yoy>5?'#fbbf24':'#9aa0a6';
+    const grad = ctx.createLinearGradient(x,y,x,padT+plotH);
+    grad.addColorStop(0, col);
+    grad.addColorStop(1, col+'40');
+    ctx.fillStyle = grad;
+    ctx.beginPath(); ctx.roundRect(x,y,barW,h,4); ctx.fill();
+    ctx.fillStyle='#e8eaed'; ctx.font='bold 12px sans-serif'; ctx.textAlign='center';
+    ctx.fillText(a.yoy.toFixed(1)+'%', x+barW/2, y-6);
+    ctx.fillStyle='#9aa0a6'; ctx.font='10px sans-serif';
+    ctx.fillText(a.area, x+barW/2, 280-padB+16);
+  });
+}
+
+// Yield Comparison — PF advertised vs calculated
+function drawYieldCompChart() {
+  const c = document.getElementById('yieldCompChart');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.parentElement.clientWidth; c.width = W; c.height = 280;
+  ctx.clearRect(0,0,W,280);
+
+  const yieldData = [
+    {area:'Motor City', pf:8.17, calc:7.8},
+    {area:'JVC',        pf:8.06, calc:7.5},
+    {area:'Arjan',      pf:8.80, calc:8.2},
+    {area:'Biz Bay',    pf:7.49, calc:6.8},
+    {area:'JVT',        pf:0,    calc:7.3},
+    {area:'DSO',        pf:9.43, calc:8.9}
+  ];
+
+  const padL=50, padR=20, padT=20, padB=50;
+  const plotW=W-padL-padR, plotH=280-padT-padB;
+  const maxVal=12;
+  const groupW = plotW/yieldData.length;
+  const barW = groupW*0.32;
+
+  ctx.strokeStyle='#2a2e3a'; ctx.lineWidth=1;
+  for(let i=0;i<=6;i++){
+    const y=padT+plotH-plotH*(i*2/maxVal);
+    ctx.beginPath(); ctx.moveTo(padL,y); ctx.lineTo(W-padR,y); ctx.stroke();
+    ctx.fillStyle='#6b7280'; ctx.font='11px sans-serif'; ctx.textAlign='right';
+    ctx.fillText((i*2)+'%',padL-8,y+4);
+  }
+
+  yieldData.forEach((d,i) => {
+    const gx = padL + i*groupW;
+    // PF yield
+    if(d.pf>0){
+      const h1=plotH*(d.pf/maxVal), y1=padT+plotH-h1;
+      const g1=ctx.createLinearGradient(gx+4,y1,gx+4,padT+plotH);
+      g1.addColorStop(0,'#60a5fa'); g1.addColorStop(1,'#60a5fa40');
+      ctx.fillStyle=g1;
+      ctx.beginPath(); ctx.roundRect(gx+4,y1,barW,h1,3); ctx.fill();
+      ctx.fillStyle='#60a5fa'; ctx.font='bold 10px sans-serif'; ctx.textAlign='center';
+      ctx.fillText(d.pf.toFixed(1)+'%',gx+4+barW/2,y1-4);
+    }
+    // Calc yield
+    const h2=plotH*(d.calc/maxVal), y2=padT+plotH-h2;
+    const g2=ctx.createLinearGradient(gx+barW+8,y2,gx+barW+8,padT+plotH);
+    g2.addColorStop(0,'#34d399'); g2.addColorStop(1,'#34d39940');
+    ctx.fillStyle=g2;
+    ctx.beginPath(); ctx.roundRect(gx+barW+8,y2,barW,h2,3); ctx.fill();
+    ctx.fillStyle='#34d399'; ctx.font='bold 10px sans-serif'; ctx.textAlign='center';
+    ctx.fillText(d.calc.toFixed(1)+'%',gx+barW+8+barW/2,y2-4);
+
+    ctx.fillStyle='#9aa0a6'; ctx.font='10px sans-serif'; ctx.textAlign='center';
+    ctx.fillText(d.area, gx+groupW/2, 280-padB+16);
+  });
+
+  // Legend
+  const ly=padT+4;
+  ctx.fillStyle='#60a5fa'; ctx.fillRect(padL+10,ly,10,10);
+  ctx.fillStyle='#9aa0a6'; ctx.font='10px sans-serif'; ctx.textAlign='left';
+  ctx.fillText('PF Advertised',padL+24,ly+9);
+  ctx.fillStyle='#34d399'; ctx.fillRect(padL+110,ly,10,10);
+  ctx.fillStyle='#9aa0a6'; ctx.fillText('Our Calculated',padL+124,ly+9);
+}
+
+// Developer Concentration
+function drawDevConcentrationChart() {
+  const c = document.getElementById('devConcentrationChart');
+  if (!c) return;
+  const ctx = c.getContext('2d');
+  const W = c.parentElement.clientWidth; c.width = W; c.height = 300;
+  ctx.clearRect(0,0,W,300);
+
+  const devs = [
+    {name:'Danube',     count:14, color:'#f87171'},
+    {name:'Binghatti',  count:9,  color:'#fbbf24'},
+    {name:'Object 1',   count:4,  color:'#60a5fa'},
+    {name:'Pantheon',   count:3,  color:'#a78bfa'},
+    {name:'Deyaar',     count:2,  color:'#22d3ee'},
+    {name:'Tiger',      count:2,  color:'#34d399'},
+    {name:'Union Props', count:2, color:'#f472b6'},
+    {name:'Others',     count:22, color:'#4b5563'}
+  ];
+  const total = devs.reduce((s,d)=>s+d.count,0);
+  const cx=W/2-60, cy=150, r=100;
+
+  let angle = -Math.PI/2;
+  devs.forEach(d => {
+    const slice = (d.count/total)*Math.PI*2;
+    ctx.beginPath(); ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,r,angle,angle+slice);
+    ctx.closePath(); ctx.fillStyle=d.color; ctx.fill();
+    ctx.strokeStyle='#1a1d27'; ctx.lineWidth=2; ctx.stroke();
+    // Label on slice
+    if(d.count/total>0.06){
+      const mid = angle+slice/2;
+      const lx=cx+Math.cos(mid)*(r*0.65), ly=cy+Math.sin(mid)*(r*0.65);
+      ctx.fillStyle='#fff'; ctx.font='bold 10px sans-serif'; ctx.textAlign='center';
+      ctx.fillText(Math.round(d.count/total*100)+'%',lx,ly+4);
+    }
+    angle+=slice;
+  });
+
+  // Legend
+  const lx = W/2+70;
+  devs.forEach((d,i) => {
+    const ly=30+i*28;
+    ctx.fillStyle=d.color; ctx.fillRect(lx,ly,12,12);
+    ctx.fillStyle='#e8eaed'; ctx.font='12px sans-serif'; ctx.textAlign='left';
+    ctx.fillText(d.name+' ('+d.count+')', lx+18, ly+11);
+  });
+}
 </script>
 
 <!-- ============================================================ -->
@@ -1781,7 +2072,7 @@ window.addEventListener('load', initLiveListings);
 <div class="dashboard live-listings">
   <div class="section-header">
     <h2>📋 Live Studio Listings — February 2026</h2>
-    <p>PropertyFinder.ae studio apartments for sale across 6 target investment areas</p>
+    <p>PropertyFinder.ae studio apartments for sale across 8 target investment areas</p>
     <span class="badge" style="background:rgba(251,191,36,0.15);color:var(--accent-orange);border-color:rgba(251,191,36,0.3);">🔄 Data scraped 18 Feb 2026</span>
   </div>
 
@@ -1828,6 +2119,20 @@ window.addEventListener('load', initLiveListings);
       <div class="stat"><span class="label">Avg ₱/sqft</span><span class="value">1,645 AED</span></div>
       <div class="stat"><span class="label">Rental Yield</span><span class="value" style="color:var(--accent-green)">9.43%</span></div>
       <div class="stat"><span class="label">Listings</span><span class="value">123</span></div>
+    </div>
+    <div class="area-summary-card">
+      <h3>🚪 Wasl Gate</h3>
+      <div class="stat"><span class="label">Avg Price</span><span class="value">645,722 AED <span class="change-up">▲1.8%</span></span></div>
+      <div class="stat"><span class="label">Avg ₱/sqft</span><span class="value">1,552 AED</span></div>
+      <div class="stat"><span class="label">Rental Yield</span><span class="value" style="color:var(--text-muted)">—</span></div>
+      <div class="stat"><span class="label">Listings</span><span class="value">45</span></div>
+    </div>
+    <div class="area-summary-card">
+      <h3>🏢 JLT</h3>
+      <div class="stat"><span class="label">Avg Price</span><span class="value">971,995 AED <span class="change-up">▲5.4%</span></span></div>
+      <div class="stat"><span class="label">Avg ₱/sqft</span><span class="value">2,115 AED</span></div>
+      <div class="stat"><span class="label">Rental Yield</span><span class="value" style="color:var(--text-muted)">—</span></div>
+      <div class="stat"><span class="label">Listings</span><span class="value">456</span></div>
     </div>
   </div>
 
@@ -2031,6 +2336,21 @@ window.addEventListener('load', initLiveListings);
           <tr><td>Biz Bay</td><td>Elite Biz Bay Res.</td><td data-sort="850000">850,000</td><td data-sort="479">479</td><td data-sort="1774">1,774</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-business-bay-elite-business-bay-residence-16026757.html" target="_blank">🔗</a></td></tr>
           <tr><td>Biz Bay</td><td>AG Tower</td><td data-sort="880000">880,000</td><td data-sort="443">443</td><td data-sort="1987">1,987</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-business-bay-ag-tower-16183408.html" target="_blank">🔗</a></td></tr>
           <tr><td>Biz Bay</td><td>DAMAC Paramount Tower C</td><td data-sort="975000">975,000</td><td data-sort="452">452</td><td data-sort="2157">2,157</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-business-bay-damac-towers-by-paramount-tower-c-16140301.html" target="_blank">🔗</a></td></tr>
+          <!-- WASL GATE -->
+          <tr><td>Wasl Gate</td><td>South Garden C</td><td data-sort="599435">599,435</td><td data-sort="438">438</td><td data-sort="1369">1,369</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-wasl-gate.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Wasl Gate</td><td>South Garden A</td><td data-sort="608136">608,136</td><td data-sort="438">438</td><td data-sort="1388">1,388</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-wasl-gate.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Wasl Gate</td><td>Hills View</td><td data-sort="624900">625K–825K</td><td data-sort="428">425–458</td><td data-sort="1488">~1,488</td><td><span class="pill pill-blue">Off-plan</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-wasl-gate.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Wasl Gate</td><td>South Garden B</td><td data-sort="628313">628,313</td><td data-sort="438">438</td><td data-sort="1434">1,434</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-wasl-gate.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Wasl Gate</td><td>Taiyo Residences</td><td data-sort="639385">639,385</td><td data-sort="400">~400</td><td data-sort="1598">1,598</td><td><span class="pill pill-blue">Off-plan</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-wasl-gate.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Wasl Gate</td><td>Hammock Park</td><td data-sort="740000">740K–850K</td><td data-sort="394">394–395</td><td data-sort="1970">~1,970</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-wasl-gate.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Wasl Gate</td><td>Sola Residences</td><td data-sort="722000">722K–794K</td><td data-sort="387">386–387</td><td data-sort="1958">~1,958</td><td><span class="pill pill-blue">Off-plan</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-wasl-gate.html" target="_blank">🔗</a></td></tr>
+          <!-- JLT -->
+          <tr><td>JLT</td><td>Golf Views Seven City</td><td data-sort="600000">600K–730K</td><td data-sort="400">384–415</td><td data-sort="1625">~1,625</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-jumeirah-lake-towers.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JLT</td><td>Goldcrest Views 2</td><td data-sort="704253">704,253</td><td data-sort="420">~420</td><td data-sort="1677">1,677</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-jumeirah-lake-towers.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JLT</td><td>Dubai Arch</td><td data-sort="720667">720,667</td><td data-sort="430">~430</td><td data-sort="1676">1,676</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-jumeirah-lake-towers.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JLT</td><td>Goldcrest Executive</td><td data-sort="740750">740,750</td><td data-sort="430">~430</td><td data-sort="1723">1,723</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-jumeirah-lake-towers.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JLT</td><td>Lake City Tower</td><td data-sort="875000">875,000</td><td data-sort="409">409</td><td data-sort="2140">2,140</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-jumeirah-lake-towers.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JLT</td><td>Al Waleed Paradise</td><td data-sort="950000">950,000</td><td data-sort="657">657</td><td data-sort="1446">1,446</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-jumeirah-lake-towers.html" target="_blank">🔗</a></td></tr>
         </tbody>
       </table>
     </div>
@@ -2117,11 +2437,310 @@ window.addEventListener('load', initLiveListings);
         </table>
       </div>
     </div>
+    <div class="card">
+      <h2><span class="icon">🏢</span> Wasl Gate — Avg Transaction Prices by Building</h2>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead><tr><th>Building</th><th>Avg Price (AED)</th></tr></thead>
+          <tbody>
+            <tr><td>Hills View</td><td>672,423</td></tr>
+            <tr><td>Taiyo Residences</td><td>639,385</td></tr>
+            <tr><td>South Garden B</td><td>628,313</td></tr>
+            <tr><td>Hammock Park</td><td>623,145</td></tr>
+            <tr><td>South Garden A</td><td>608,136</td></tr>
+            <tr class="highlight"><td>South Garden C</td><td style="color:var(--accent-green)">599,435</td></tr>
+            <tr class="highlight"><td>The Nook 2</td><td style="color:var(--accent-green)">577,500</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="icon">🏢</span> JLT — Avg Transaction Prices by Building</h2>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead><tr><th>Building</th><th>Avg Price (AED)</th></tr></thead>
+          <tbody>
+            <tr><td>Mercer House</td><td>1,343,930</td></tr>
+            <tr><td>MBL Signature</td><td>1,342,568</td></tr>
+            <tr><td>Diamondz by Danube</td><td>1,159,797</td></tr>
+            <tr><td>Viewz 2 by Danube</td><td>966,086</td></tr>
+            <tr><td>Goldcrest Views 1</td><td>788,500</td></tr>
+            <tr><td>Lake View Tower</td><td>750,364</td></tr>
+            <tr><td>Goldcrest Executive</td><td>740,750</td></tr>
+            <tr class="highlight"><td>Dubai Arch</td><td style="color:var(--accent-green)">720,667</td></tr>
+            <tr class="highlight"><td>Goldcrest Views 2</td><td style="color:var(--accent-green)">704,253</td></tr>
+            <tr class="highlight"><td>Golf Views Seven City</td><td style="color:var(--accent-green)">607,042</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
   <div class="disclaimer-note">
     📌 Data scraped from PropertyFinder.ae — February 2026. Prices may change. Business Bay studios largely exceed 1M AED budget — included for comparison only.<br>
     Highlighted rows (blue tint) = best value picks under Michael's 300-400K capital budget. "Ready" = completed; "Off-plan" = under construction.
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- 📊 STATISTICS & CHARTS                                      -->
+  <!-- ============================================================ -->
+  <style>
+  .insights-section { margin-top: 36px; }
+  .insights-section .section-header h2 {
+    font-size: 1.8em; font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px;
+  }
+  .insight-cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .insight-card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 22px;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .insight-card:hover { border-color: rgba(96,165,250,0.4); transform: translateY(-2px); }
+  .insight-card .ic-icon { font-size: 2em; margin-bottom: 8px; }
+  .insight-card .ic-headline {
+    font-size: 1.4em; font-weight: 800; margin-bottom: 6px;
+  }
+  .insight-card .ic-headline.green { color: var(--accent-green); }
+  .insight-card .ic-headline.orange { color: var(--accent-orange); }
+  .insight-card .ic-headline.blue { color: var(--accent-blue); }
+  .insight-card .ic-headline.purple { color: var(--accent-purple); }
+  .insight-card .ic-headline.cyan { color: var(--accent-cyan); }
+  .insight-card .ic-headline.red { color: var(--accent-red); }
+  .insight-card .ic-body { font-size: 0.88em; color: var(--text-secondary); line-height: 1.5; margin-bottom: 10px; }
+  .insight-card a { color: var(--accent-blue); font-size: 0.82em; text-decoration: none; }
+  .insight-card a:hover { text-decoration: underline; }
+  .callout-box {
+    background: linear-gradient(135deg, rgba(52,211,153,0.08), rgba(96,165,250,0.08));
+    border: 2px solid rgba(52,211,153,0.3); border-radius: 14px; padding: 24px; margin-bottom: 24px;
+  }
+  .callout-box h3 { font-size: 1.15em; margin-bottom: 14px; color: var(--accent-green); }
+  .callout-box .callout-item {
+    display: flex; justify-content: space-between; align-items: center; padding: 8px 0;
+    border-bottom: 1px solid rgba(42,46,58,0.5); font-size: 0.9em;
+  }
+  .callout-box .callout-item:last-child { border-bottom: none; }
+  .callout-box .callout-item .ci-name { font-weight: 600; color: var(--text-primary); }
+  .callout-box .callout-item .ci-price { font-weight: 700; color: var(--accent-green); }
+  .callout-box .callout-item a { color: var(--accent-blue); font-size: 0.85em; text-decoration: none; margin-left: 8px; }
+  .area-links-bar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; justify-content: center; }
+  .area-link {
+    display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px;
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+    color: var(--accent-blue); text-decoration: none; font-size: 0.88em; font-weight: 600;
+    transition: all 0.2s;
+  }
+  .area-link:hover { border-color: var(--accent-blue); background: rgba(96,165,250,0.08); transform: translateY(-1px); }
+  </style>
+
+  <!-- Quick Links to All Area Listings -->
+  <div class="area-links-bar" style="margin-top:24px;">
+    <a class="area-link" href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-motor-city.html" target="_blank">🏁 Motor City Studios</a>
+    <a class="area-link" href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-jumeirah-village-circle-jvc.html" target="_blank">🏘️ JVC Studios</a>
+    <a class="area-link" href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-arjan.html" target="_blank">🌸 Arjan Studios</a>
+    <a class="area-link" href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-business-bay.html" target="_blank">🏙️ Business Bay Studios</a>
+    <a class="area-link" href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-jumeirah-village-triangle-jvt.html" target="_blank">🔺 JVT Studios</a>
+    <a class="area-link" href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-dubai-silicon-oasis.html" target="_blank">💻 DSO Studios</a>
+  </div>
+
+  <!-- CHARTS ROW 1: Price Distribution + Price/sqft -->
+  <div class="grid-2">
+    <div class="card">
+      <h2><span class="icon">📊</span> Price Distribution — All Listings</h2>
+      <div class="chart-container"><canvas id="priceDistChart"></canvas></div>
+    </div>
+    <div class="card">
+      <h2><span class="icon">💰</span> Avg Price/sqft by Area</h2>
+      <div class="chart-container"><canvas id="priceSqftChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- CHARTS ROW 2: YoY + Yield -->
+  <div class="grid-2">
+    <div class="card">
+      <h2><span class="icon">📈</span> YoY Price Change by Area</h2>
+      <div class="chart-container"><canvas id="yoyCompChart"></canvas></div>
+    </div>
+    <div class="card">
+      <h2><span class="icon">🎯</span> Yield Comparison — Advertised vs Calculated</h2>
+      <div class="chart-container"><canvas id="yieldCompChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Developer Concentration -->
+  <div class="card" style="margin-bottom:24px;">
+    <h2><span class="icon">🏗️</span> Developer Concentration — Projects by Developer</h2>
+    <div class="chart-container"><canvas id="devConcentrationChart"></canvas></div>
+  </div>
+
+  <!-- TOP 10 CHEAPEST TABLE -->
+  <div class="card" style="margin-bottom:24px;">
+    <h2><span class="icon">💵</span> Top 10 Cheapest Studios Under 600K AED</h2>
+    <div style="overflow-x:auto;">
+      <table id="topCheapTable">
+        <thead>
+          <tr>
+            <th onclick="sortTable('topCheapTable',0)"># <span class="sort-arrow">⇅</span></th>
+            <th onclick="sortTable('topCheapTable',1)">Area <span class="sort-arrow">⇅</span></th>
+            <th onclick="sortTable('topCheapTable',2)">Project <span class="sort-arrow">⇅</span></th>
+            <th onclick="sortTable('topCheapTable',3)">Price (AED) <span class="sort-arrow">⇅</span></th>
+            <th onclick="sortTable('topCheapTable',4)">Size <span class="sort-arrow">⇅</span></th>
+            <th onclick="sortTable('topCheapTable',5)">₱/sqft <span class="sort-arrow">⇅</span></th>
+            <th onclick="sortTable('topCheapTable',6)">Type <span class="sort-arrow">⇅</span></th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="highlight"><td>1</td><td>DSO</td><td>Silicon Gates 1</td><td data-sort="449000">449,000</td><td data-sort="349">349 sqft</td><td data-sort="1287">1,287</td><td><span class="pill pill-green">Ready</span></td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-dubai-silicon-oasis-silicon-gates-silicon-gates-1-16010206.html" target="_blank">🔗 View</a></td></tr>
+          <tr class="highlight"><td>2</td><td>DSO</td><td>Palace Tower 2</td><td data-sort="500000">500,000</td><td data-sort="431">431 sqft</td><td data-sort="1160">1,160</td><td><span class="pill pill-green">Ready</span></td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-dubai-silicon-oasis-palace-towers-palace-tower-2-15503538.html" target="_blank">🔗 View</a></td></tr>
+          <tr class="highlight"><td>3</td><td>DSO</td><td>Silicon Gates 4</td><td data-sort="500000">500,000</td><td data-sort="358">358 sqft</td><td data-sort="1397">1,397</td><td><span class="pill pill-green">Ready</span></td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-dubai-silicon-oasis-silicon-gates-silicon-gates-4-16137070.html" target="_blank">🔗 View</a></td></tr>
+          <tr><td>4</td><td>Motor City</td><td>Ananda Residences</td><td data-sort="525000">525,000</td><td data-sort="346">346 sqft</td><td data-sort="1517">1,517</td><td><span class="pill pill-blue">Off-plan</span></td><td><a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-motor-city.html" target="_blank">🔗 View</a></td></tr>
+          <tr><td>5</td><td>JVT</td><td>Red Square Tower</td><td data-sort="525000">525,000</td><td data-sort="302">302 sqft</td><td data-sort="1738">1,738</td><td><span class="pill pill-blue">Off-plan</span></td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-triangle-red-square-tower-16306663.html" target="_blank">🔗 View</a></td></tr>
+          <tr class="highlight"><td>6</td><td>JVT</td><td>Al Jawhara Residences</td><td data-sort="530000">530,000</td><td data-sort="433">433 sqft</td><td data-sort="1224">1,224</td><td><span class="pill pill-green">Ready</span></td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-triangle-al-jawhara-residences-15570609.html" target="_blank">🔗 View</a></td></tr>
+          <tr><td>7</td><td>DSO</td><td>Arabian Gate</td><td data-sort="555000">555,000</td><td data-sort="405">405 sqft</td><td data-sort="1370">1,370</td><td><span class="pill pill-green">Ready</span></td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-dubai-silicon-oasis-arabian-gate-15356498.html" target="_blank">🔗 View</a></td></tr>
+          <tr><td>8</td><td>JVT</td><td>Guzel Towers</td><td data-sort="555000">555,000</td><td data-sort="350">350 sqft</td><td data-sort="1586">1,586</td><td><span class="pill pill-blue">Off-plan</span></td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-triangle-guzel-towers-16027792.html" target="_blank">🔗 View</a></td></tr>
+          <tr class="highlight"><td>9</td><td>Arjan</td><td>Lincoln Park</td><td data-sort="560000">560,000</td><td data-sort="609">609 sqft</td><td data-sort="919">919</td><td><span class="pill pill-green">Ready</span></td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-arjan-lincoln-park-lincoln-park-sheffield-16315874.html" target="_blank">🔗 View</a></td></tr>
+          <tr class="highlight"><td>10</td><td>JVC</td><td>Plaza Residences 2</td><td data-sort="560000">560,000</td><td data-sort="465">465 sqft</td><td data-sort="1204">1,204</td><td><span class="pill pill-green">Ready</span></td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-circle-16337223.html" target="_blank">🔗 View</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- OFF-PLAN vs READY GAP TABLE -->
+  <div class="card" style="margin-bottom:24px;">
+    <h2><span class="icon">🔄</span> Off-Plan vs Ready Price Gap by Area</h2>
+    <div style="overflow-x:auto;">
+      <table id="offPlanGapTable">
+        <thead>
+          <tr>
+            <th onclick="sortTable('offPlanGapTable',0)">Area <span class="sort-arrow">⇅</span></th>
+            <th onclick="sortTable('offPlanGapTable',1)">Avg Ready Price <span class="sort-arrow">⇅</span></th>
+            <th onclick="sortTable('offPlanGapTable',2)">Avg Off-Plan Price <span class="sort-arrow">⇅</span></th>
+            <th onclick="sortTable('offPlanGapTable',3)">Gap (AED) <span class="sort-arrow">⇅</span></th>
+            <th onclick="sortTable('offPlanGapTable',4)">Gap % <span class="sort-arrow">⇅</span></th>
+            <th>Verdict</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Motor City</td><td data-sort="684082">684,082</td><td data-sort="668667">668,667</td><td data-sort="-15415" style="color:var(--accent-green)">−15,415</td><td data-sort="-2.3" style="color:var(--accent-green)">−2.3%</td><td><span class="pill pill-green">Off-plan cheaper</span></td></tr>
+          <tr><td>JVC</td><td data-sort="631971">631,971</td><td data-sort="727688">727,688</td><td data-sort="95717" style="color:var(--accent-red)">+95,717</td><td data-sort="15.1" style="color:var(--accent-red)">+15.1%</td><td><span class="pill pill-red">Off-plan premium</span></td></tr>
+          <tr><td>Arjan</td><td data-sort="623168">623,168</td><td data-sort="652936">652,936</td><td data-sort="29768" style="color:var(--accent-orange)">+29,768</td><td data-sort="4.8" style="color:var(--accent-orange)">+4.8%</td><td><span class="pill pill-yellow">Slight premium</span></td></tr>
+          <tr><td>Business Bay</td><td data-sort="827283">827,283</td><td data-sort="0">—</td><td data-sort="0">—</td><td data-sort="0">—</td><td><span class="pill pill-blue">All Ready</span></td></tr>
+          <tr><td>JVT</td><td data-sort="628000">628,000</td><td data-sort="701534">701,534</td><td data-sort="73534" style="color:var(--accent-red)">+73,534</td><td data-sort="11.7" style="color:var(--accent-red)">+11.7%</td><td><span class="pill pill-red">Off-plan premium</span></td></tr>
+          <tr><td>DSO</td><td data-sort="578540">578,540</td><td data-sort="698963">698,963</td><td data-sort="120423" style="color:var(--accent-red)">+120,423</td><td data-sort="20.8" style="color:var(--accent-red)">+20.8%</td><td><span class="pill pill-red">High premium</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="font-size:0.82em; color:var(--text-muted); margin-top:12px; padding:8px 0;">
+      ℹ️ Negative gap = off-plan is cheaper (early-bird pricing). Positive = you pay a premium for off-plan (developer-priced new builds). Motor City off-plan is still competitively priced vs ready stock.
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- 🔍 KEY MARKET INSIGHTS — FEBRUARY 2026                      -->
+  <!-- ============================================================ -->
+  <div class="section-header insights-section" style="margin-top:40px;">
+    <h2>🔍 Key Market Insights — February 2026</h2>
+    <p>Data-driven insights from 6,879 studio listings across 6 investment areas</p>
+  </div>
+
+  <div class="insight-cards-grid">
+    <!-- 💰 Best Value -->
+    <div class="insight-card">
+      <div class="ic-icon">💰</div>
+      <div class="ic-headline green">DSO: 449K AED</div>
+      <div class="ic-body">
+        <strong>Lowest entry point across all 6 areas.</strong> Silicon Gates 1 at just 449K (1,287 AED/sqft). DSO also delivers the highest advertised yield at <strong>9.43%</strong>. Average studios here trade at 578K ready — the most affordable area for ready units with 349–515 sqft layouts.
+      </div>
+      <a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-dubai-silicon-oasis.html" target="_blank">View DSO Studios on PropertyFinder →</a>
+    </div>
+
+    <!-- 📈 Fastest Growing -->
+    <div class="insight-card">
+      <div class="ic-icon">📈</div>
+      <div class="ic-headline orange">Motor City: +32.8% YoY</div>
+      <div class="ic-body">
+        <strong>Fastest appreciating studios.</strong> Motor City prices surged +32.8% year-on-year, driven by upcoming Blue Line Metro access and Expo infrastructure maturity. JVT follows at +21.4%. These areas show the strongest capital growth momentum — buy now before the metro premium fully prices in.
+      </div>
+      <a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-motor-city.html" target="_blank">View Motor City Studios →</a>
+    </div>
+
+    <!-- 🏗️ Most Off-Plan Supply -->
+    <div class="insight-card">
+      <div class="ic-icon">🏗️</div>
+      <div class="ic-headline blue">JVT: 14 Off-Plan Projects</div>
+      <div class="ic-body">
+        <strong>Most off-plan developer competition.</strong> JVT has the highest concentration of new launches (Binghatti, Pantheon, Danube, Object 1, Tiger). This developer saturation may cap near-term price growth but creates negotiation leverage. VOXA at 639K and Red Square at 525K offer the best off-plan entry points.
+      </div>
+      <a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-jumeirah-village-triangle-jvt.html" target="_blank">View JVT Studios →</a>
+    </div>
+
+    <!-- 🎯 Sweet Spot -->
+    <div class="insight-card">
+      <div class="ic-icon">🎯</div>
+      <div class="ic-headline purple">Arjan: 657K avg / 8.8% yield</div>
+      <div class="ic-body">
+        <strong>Best balance of price & yield for 300-400K budget.</strong> Arjan offers the lowest average studio price (657K) outside DSO, with superior yield (8.8%) and recent completions from Danube. Lincoln Park (560K, 609sqft) and Siraj Tower (589K) are the standout ready picks. With ~25% down + mortgage, you're looking at 164K–147K capital outlay.
+      </div>
+      <a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-arjan.html" target="_blank">View Arjan Studios →</a>
+    </div>
+
+    <!-- 🏆 Best ₱/sqft Value -->
+    <div class="insight-card">
+      <div class="ic-icon">🏆</div>
+      <div class="ic-headline cyan">Lincoln Park: 919 AED/sqft</div>
+      <div class="ic-body">
+        <strong>Most space for your money.</strong> At 609 sqft and 560K, Lincoln Park Arjan is by far the best value per square foot across all areas. Next closest: Palace Tower 2 DSO at 1,160/sqft and Edmonton Elm JVT at 1,076/sqft. If sqft matters, these three buildings deliver 50-70% more space than typical 350-400 sqft studios.
+      </div>
+      <a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-arjan-lincoln-park-lincoln-park-sheffield-16315874.html" target="_blank">View Lincoln Park Listing →</a>
+    </div>
+
+    <!-- ⚠️ Warning -->
+    <div class="insight-card">
+      <div class="ic-icon">⚠️</div>
+      <div class="ic-headline red">Biz Bay: 2,657 AED/sqft</div>
+      <div class="ic-body">
+        <strong>Priced out of budget — comparison only.</strong> Business Bay averages 1.2M for studios (2,657 AED/sqft) with the lowest yield (7.49%). Cheapest ready unit: Safeer Tower at 700K. For a 300-400K capital investor, Business Bay requires 80% financing and delivers inferior returns vs suburban areas.
+      </div>
+      <a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-business-bay.html" target="_blank">View Business Bay Studios →</a>
+    </div>
+  </div>
+
+  <!-- DEALS TO WATCH CALLOUT -->
+  <div class="callout-box">
+    <h3>🎯 Deals to Watch — Under 600K in Motor City & Arjan</h3>
+    <div class="callout-item">
+      <span class="ci-name">🏁 Ananda Residences — Motor City</span>
+      <span><span class="ci-price">525K–575K AED</span> · Off-plan · 346-577 sqft<a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-motor-city.html" target="_blank">🔗</a></span>
+    </div>
+    <div class="callout-item">
+      <span class="ci-name">🏁 Eden Apartments — Motor City</span>
+      <span><span class="ci-price">589,505 AED</span> · Ready · ~400 sqft<a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-motor-city.html" target="_blank">🔗</a></span>
+    </div>
+    <div class="callout-item">
+      <span class="ci-name">🌸 Lincoln Park — Arjan</span>
+      <span><span class="ci-price">560,000 AED</span> · Ready · 609 sqft · 919/sqft<a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-arjan-lincoln-park-lincoln-park-sheffield-16315874.html" target="_blank">🔗</a></span>
+    </div>
+    <div class="callout-item">
+      <span class="ci-name">🌸 Elz by Danube — Arjan</span>
+      <span><span class="ci-price">575,000 AED</span> · Ready · 392 sqft<a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-arjan-elz-by-danube-16257838.html" target="_blank">🔗</a></span>
+    </div>
+    <div class="callout-item">
+      <span class="ci-name">🌸 Siraj Tower — Arjan</span>
+      <span><span class="ci-price">589,000 AED</span> · Ready · 415 sqft · Avg txn 537K<a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-arjan-siraj-tower-16173242.html" target="_blank">🔗</a></span>
+    </div>
+    <div class="callout-item">
+      <span class="ci-name">🌸 Resortz by Danube — Arjan</span>
+      <span><span class="ci-price">590,000 AED</span> · Ready · 431 sqft · Furnished<a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-arjan-resortz-by-danube-resortz-block-3-16249674.html" target="_blank">🔗</a></span>
+    </div>
+    <div style="margin-top:14px; font-size:0.85em; color:var(--text-secondary);">
+      💡 <strong>Strategy tip:</strong> At 25% down, a 560K studio needs just <strong>140K capital</strong> — well within your 300-400K budget with room for registration fees (4% DLD = 22.4K) and furnishing. Target monthly mortgage: ~2,100 AED on 420K loan at 5.5%.
+    </div>
+  </div>
+
+  <div class="disclaimer-note" style="margin-bottom:0;">
+    📌 All data from PropertyFinder.ae — scraped 18 Feb 2026. Yields are advertised by PF; "calculated" yields use our rental estimates. Prices subject to change. Not financial advice.<br>
+    Dashboard: <a href="https://michael-schwartzman.github.io/dubai-investment-research/" style="color:var(--accent-blue);">michael-schwartzman.github.io/dubai-investment-research</a>
   </div>
 </div>
 
