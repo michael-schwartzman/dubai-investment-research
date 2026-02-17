@@ -205,20 +205,25 @@ Even if you find a studio at 700K, you need 350K down + 28K DLD + 20K fees + 20K
 
 ## ⚠️ Key Warnings — Read These Carefully
 
-### 1. Israeli Tax Will Eat Your Returns 🇮🇱💸
+### 1. Israeli Tax Will Reduce Your Returns 🇮🇱💸
 This is the elephant in the room that Dubai property brochures don't mention.
 
-| Item | Before IL Tax | After IL Tax | Drag |
+**Rental Income — Two Options (choose the lower tax):**
+- **Option A — 15% flat rate** (Section 122A): No deductions. Simple. Most small landlords choose this.
+- **Option B — Marginal rate with deductions:** Deduct building depreciation (2%/yr of building value), service charges, maintenance, insurance. Better if deductions are high.
+
+| Item | Gross | Option A (15% flat) | Option B (marginal + deductions) |
 |---|---|---|---|
-| Annual rent (56K Motor City) | AED 56,000 | ~AED 42,000 | -25% |
-| Capital gain (5yr, 150K) | AED 150,000 | ~AED 112,500 | -25% |
+| Annual rent (56K) | AED 56,000 | Tax: ~8,400 → Net: 47,600 | Taxable: ~39,500 → Tax varies |
+| Capital gain (5yr, ~108K) | AED 108,000 | Tax: 25% = ~27,000 | Same: 25% = ~27,000 |
+
+**Building depreciation:** 2% per year on building value (not land). On a 500K property (~80% building = 400K): deduction of ~8,000 AED/year under Option B.
 
 **Factor Israeli tax into ALL return calculations.** The "tax-free Dubai" marketing is for UAE residents only. As an Israeli tax resident, you're taxed on worldwide income.
 
 - Get a cross-border tax advisor BEFORE you buy
-- Ask about the 15% flat rate option for small-scale landlords
-- Consider depreciation schedules to reduce taxable rental income
-- Plan capital gains timing carefully
+- Compare Option A vs B annually — choose whichever is lower
+- Plan capital gains timing carefully (hold period affects rate)
 
 ### 2. Don't Buy for the Visa Alone 🛂
 A 2-year renewable visa is not worth AED 500K+ unless the investment itself makes sense. If you just want a UAE visa, there are cheaper ways (freelance visa, employment, etc.)

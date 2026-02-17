@@ -452,34 +452,33 @@ table tbody tr.highlight { background: rgba(96,165,250,0.1); }
   <div class="card">
     <h2><span class="icon">🇮🇱</span> Israeli Tax Impact — Gross vs Net Returns</h2>
     <div style="margin-bottom:16px;">
-      <h3 style="font-size:0.9em;color:var(--accent-orange);margin-bottom:8px;">5-Year Rental Income (Motor City ~500K)</h3>
+      <h3 style="font-size:0.9em;color:var(--accent-orange);margin-bottom:8px;">5-Year Rental Income (Motor City ~500K, rent 56K/yr)</h3>
       <div class="cost-line"><span>Gross Rental (5yr @ 56K)</span><span class="amount">AED 280,000</span></div>
+      <div class="cost-line"><span>Israeli Rental Tax (15% flat on gross)</span><span class="amount" style="color:var(--accent-red)">-AED 42,000</span></div>
+      <div class="cost-line" style="font-size:0.8em;color:var(--text-secondary)"><span>📝 Section 122A: 15% flat, no deductions. Alt: marginal rate with 2%/yr depreciation.</span><span></span></div>
       <div class="cost-line"><span>Operating Costs (5yr @ 12K)</span><span class="amount" style="color:var(--accent-red)">-AED 60,000</span></div>
-      <div class="cost-line"><span>Net Before Tax</span><span class="amount">AED 220,000</span></div>
-      <div class="cost-line"><span>Israeli Rental Tax (15% flat)</span><span class="amount" style="color:var(--accent-red)">-AED 33,000</span></div>
-      <div class="cost-line" style="font-size:0.8em;color:var(--text-secondary)"><span>📝 Alt: marginal rate with 2%/yr building depreciation deduction</span><span></span></div>
-      <div class="cost-total"><span>Net After Israeli Tax</span><span class="amount">AED 187,000</span></div>
+      <div class="cost-total"><span>Net After Tax & Costs</span><span class="amount">AED 178,000</span></div>
       <div class="tax-bar" style="margin-top:10px;">
-        <div class="segment" style="width:66.8%;background:var(--accent-green);">Net Income</div>
-        <div class="segment" style="width:11.8%;background:var(--accent-red);">Tax 15%</div>
+        <div class="segment" style="width:63.6%;background:var(--accent-green);">Net Income</div>
+        <div class="segment" style="width:15%;background:var(--accent-red);">Tax 15%</div>
         <div class="segment" style="width:21.4%;background:var(--text-muted);">Costs</div>
       </div>
       <div class="legend">
-        <div class="legend-item"><div class="legend-dot" style="background:var(--accent-green)"></div>Net Income (66.8%)</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--accent-red)"></div>Israeli Tax 15% (11.8%)</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--text-muted)"></div>Costs (21.4%)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--accent-green)"></div>Net Income (63.6%)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--accent-red)"></div>Israeli Tax 15% flat (15%)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--text-muted)"></div>Operating Costs (21.4%)</div>
       </div>
     </div>
     <div style="border-top:1px solid var(--border);padding-top:14px;">
       <h3 style="font-size:0.9em;color:var(--accent-orange);margin-bottom:8px;">Capital Gains (5-Year Base Case — Motor City)</h3>
       <div class="cost-line"><span>Appreciation (~4%/yr on 500K)</span><span class="amount">AED 108,000</span></div>
-      <div class="cost-line"><span>Capital Gains Tax (25%)</span><span class="amount" style="color:var(--accent-red)">-AED 27,000</span></div>
+      <div class="cost-line"><span>Capital Gains Tax (25% on real gain)</span><span class="amount" style="color:var(--accent-red)">-AED 27,000</span></div>
       <div class="cost-total"><span>Net Capital Gain</span><span class="amount">AED 81,000</span></div>
       <div style="margin-top:12px;padding:10px;background:rgba(248,113,113,0.08);border-radius:8px;border:1px solid rgba(248,113,113,0.2);">
         <div class="cost-line"><span><strong>Total 5yr Return (Before Tax)</strong></span><span class="amount" style="color:var(--accent-green)"><strong>AED 328,000</strong></span></div>
-        <div class="cost-line"><span><strong>Total 5yr Return (After IL Tax)</strong></span><span class="amount" style="color:var(--accent-orange)"><strong>AED 268,000</strong></span></div>
-        <div class="cost-line"><span><strong>Effective 5yr ROI (After Tax)</strong></span><span class="amount" style="color:var(--accent-orange)"><strong>47.9%</strong></span></div>
-        <div class="cost-line"><span><strong>Annualized ROI (After Tax)</strong></span><span class="amount" style="color:var(--accent-orange)"><strong>8.1%</strong></span></div>
+        <div class="cost-line"><span><strong>Total 5yr Return (After IL Tax)</strong></span><span class="amount" style="color:var(--accent-orange)"><strong>AED 259,000</strong></span></div>
+        <div class="cost-line"><span><strong>Effective 5yr ROI (After Tax)</strong></span><span class="amount" style="color:var(--accent-orange)"><strong>46.3%</strong></span></div>
+        <div class="cost-line"><span><strong>Annualized ROI (After Tax)</strong></span><span class="amount" style="color:var(--accent-orange)"><strong>7.9%</strong></span></div>
       </div>
     </div>
   </div>

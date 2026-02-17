@@ -206,15 +206,32 @@
 - 🟡 Foreign tax credits may be available (but UAE charges no tax, so no credit)
 - 🟡 Tax treaty between Israel and UAE (signed 2021) may provide some relief
 - 🔴 Reporting obligations: Must declare foreign property ownership and income to Israeli Tax Authority
-- 🔴 Israeli capital gains tax: Up to **25% (non-residential) or 25% on real capital gain** for foreign investment property
-- 🟡 **Depreciation:** Can claim depreciation on the property against rental income
+- 🔴 Israeli capital gains tax: **25% on real capital gain** for foreign investment property
+- 🟡 **Two rental income tax options (choose the lower one):**
+  - **Option A — 15% flat rate** (Section 122A, Israeli Tax Ordinance): No deductions allowed. Simple. Most small landlords choose this.
+  - **Option B — Marginal tax rate with deductions:** Can deduct building depreciation (2% of building value per year, excluding land), maintenance, management fees, insurance, etc. Better if deductions are high or other income is low.
+- 🟡 **Building depreciation:** 2% of the building component per year (not land value). On a 500K AED property where ~80% is building: ~8,000 AED/year deductible under Option B.
 
-### Estimated Israeli Tax Impact:
+### Estimated Israeli Tax Impact (Motor City ~500K, rent 56K/yr):
 
-| Item | Gross Amount (AED) | Israeli Tax (~25%) | Net After Tax |
+**Option A — 15% Flat Rate (simpler, usually chosen):**
+
+| Item | Gross Amount (AED) | Israeli Tax | Net After Tax |
 |---|---|---|---|
-| Annual rent | 45,000 | ~11,250 | 33,750 |
-| Capital gain (5yr, 207K) | 207,000 | ~51,750 | 155,250 |
+| Annual rent | 56,000 | 15% = ~8,400 | 47,600 |
+| Capital gain (5yr, ~108K) | 108,000 | 25% = ~27,000 | 81,000 |
+
+**Option B — Marginal Rate with Deductions (example):**
+
+| Item | Amount (AED) |
+|---|---|
+| Annual rent | 56,000 |
+| Less: Depreciation (2% × 400K building) | (8,000) |
+| Less: Service charges, maintenance | (8,500) |
+| Taxable income | 39,500 |
+| Tax at marginal rate (depends on brackets) | Varies |
+
+> 💡 **Most small landlords choose Option A (15% flat)** — it's simpler and often lower unless you have very high deductible expenses or low marginal tax rates.
 
 > ⚠️ **Consult a cross-border tax advisor** — Israeli tax on foreign rental income and capital gains can significantly reduce returns. There may be optimization strategies (LLC structure, timing of gains, depreciation schedules).
 
@@ -259,7 +276,7 @@ To cover ALL costs (service charges, maintenance, vacancy, management):
 ## Key Financial Takeaways
 
 1. **Expected 5-year annualized ROI: 8-9%** in the base case — competitive globally
-2. **Dubai is tax-free** but your home country tax could reduce returns by 20-25%
+2. **Dubai is tax-free** but Israeli rental tax (15% flat) and capital gains tax (25%) will reduce returns by ~15-20%
 3. **1% monthly payment plans** are excellent for cash flow management
 4. **Budget AED 80K+ above property price** for DLD fees, furnishing, and initial costs
 5. **Mortgage leverage** can significantly boost ROI but adds risk

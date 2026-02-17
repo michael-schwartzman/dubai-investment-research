@@ -217,18 +217,35 @@ Budget for these beyond the property price:
 ### Tax Obligations
 - 🔴 Israeli tax residents must declare ALL foreign income and assets
 - 🔴 No tax treaty benefit for zero UAE taxes (no foreign tax credit to offset)
-- 🔴 Rental income taxed at your marginal Israeli rate (or 15% flat rate option for small landlords)
+- 🟡 **Rental income — two options (choose the lower tax):**
+  - **Option A — 15% flat rate** (Section 122A, Israeli Tax Ordinance): No deductions allowed. Simple and usually the best choice for small landlords.
+  - **Option B — Marginal tax rate with deductions:** Can deduct building depreciation (2% of building value per year, excluding land), service charges, maintenance, insurance, etc.
 - 🔴 Capital gains taxed at **25%** on real gains — this is a significant drag on returns
+- 🟡 **Building depreciation:** 2% per year on the building component (not land). On a 500K AED property (~80% building): ~8,000 AED/year deductible under Option B.
 - 🔴 Israeli CFC (Controlled Foreign Corporation) rules may apply if using a company structure
-- **Impact calculation:**
+- **Impact calculation (Motor City ~500K, rent 56K/yr):**
 
-| Item | Gross (AED) | After Israeli Tax (~25%) | Tax Drag |
-|---|---|---|---|
-| Annual rent (45K gross) | 45,000 | ~33,750 | -AED 11,250/yr |
-| Capital gain (5yr, 207K) | 207,000 | ~155,250 | -AED 51,750 |
-| **Total 5yr tax impact** | — | — | **-AED 108,000** |
+**Option A — 15% Flat Rate (most common choice):**
 
-- **Mitigation:** Consult a cross-border tax advisor (Israel-UAE). Structure ownership optimally. Consider timing of capital gains realization.
+| Item | Gross (AED) | Israeli Tax | Net After Tax | Tax Drag |
+|---|---|---|---|---|
+| Annual rent | 56,000 | 15% = 8,400 | 47,600 | -AED 8,400/yr |
+| Capital gain (5yr, ~108K) | 108,000 | 25% = 27,000 | 81,000 | -AED 27,000 |
+| **Total 5yr tax impact** | — | — | — | **-AED 69,000** |
+
+**Option B — Marginal Rate with Depreciation (example):**
+
+| Item | Amount (AED) |
+|---|---|
+| Annual rent | 56,000 |
+| Less: Depreciation (2% × ~400K building) | (8,000) |
+| Less: Service charges, maintenance | (8,500) |
+| Taxable income | 39,500 |
+| Tax at marginal rate | Varies by bracket |
+
+> 💡 Most small landlords choose **Option A (15% flat)** — simpler and usually lower total tax.
+
+- **Mitigation:** Consult a cross-border tax advisor (Israel-UAE). Structure ownership optimally. Consider timing of capital gains realization. Compare Option A vs B annually.
 
 ### Political Considerations
 - Abraham Accords (2020) normalized Israel-UAE relations
@@ -323,7 +340,7 @@ Budget for these beyond the property price:
 | Build quality | 🟡 Medium | Yes (developer research) | — |
 | Vacancy | 🟡 Medium | Yes (pricing, management) | 1-4 months/yr |
 | Hidden costs | 🟡 Medium | Yes (budgeting) | AED 80K+ extra |
-| Tax (Israel) | 🟡 Medium | Partially (structure) | 25% on gains |
+| Tax (Israel) | 🟡 Medium | Partially (structure) | 15% flat on rent, 25% on gains |
 | Regulatory changes | 🟢 Low-Medium | No | — |
 | Currency | 🟢 Low | No | AED pegged to USD |
 | Geopolitical | 🟢 Low | No | — |
