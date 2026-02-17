@@ -452,34 +452,33 @@ table tbody tr.highlight { background: rgba(96,165,250,0.1); }
   <div class="card">
     <h2><span class="icon">🇮🇱</span> Israeli Tax Impact — Gross vs Net Returns</h2>
     <div style="margin-bottom:16px;">
-      <h3 style="font-size:0.9em;color:var(--accent-orange);margin-bottom:8px;">5-Year Rental Income (Motor City ~500K)</h3>
+      <h3 style="font-size:0.9em;color:var(--accent-orange);margin-bottom:8px;">5-Year Rental Income (Motor City ~500K, rent 56K/yr)</h3>
       <div class="cost-line"><span>Gross Rental (5yr @ 56K)</span><span class="amount">AED 280,000</span></div>
+      <div class="cost-line"><span>Israeli Rental Tax (15% flat on gross)</span><span class="amount" style="color:var(--accent-red)">-AED 42,000</span></div>
+      <div class="cost-line" style="font-size:0.8em;color:var(--text-secondary)"><span>📝 Section 122A: 15% flat, no deductions. Alt: marginal rate with 2%/yr depreciation.</span><span></span></div>
       <div class="cost-line"><span>Operating Costs (5yr @ 12K)</span><span class="amount" style="color:var(--accent-red)">-AED 60,000</span></div>
-      <div class="cost-line"><span>Net Before Tax</span><span class="amount">AED 220,000</span></div>
-      <div class="cost-line"><span>Israeli Rental Tax (15% flat)</span><span class="amount" style="color:var(--accent-red)">-AED 33,000</span></div>
-      <div class="cost-line" style="font-size:0.8em;color:var(--text-secondary)"><span>📝 Alt: marginal rate with 2%/yr building depreciation deduction</span><span></span></div>
-      <div class="cost-total"><span>Net After Israeli Tax</span><span class="amount">AED 187,000</span></div>
+      <div class="cost-total"><span>Net After Tax & Costs</span><span class="amount">AED 178,000</span></div>
       <div class="tax-bar" style="margin-top:10px;">
-        <div class="segment" style="width:66.8%;background:var(--accent-green);">Net Income</div>
-        <div class="segment" style="width:11.8%;background:var(--accent-red);">Tax 15%</div>
+        <div class="segment" style="width:63.6%;background:var(--accent-green);">Net Income</div>
+        <div class="segment" style="width:15%;background:var(--accent-red);">Tax 15%</div>
         <div class="segment" style="width:21.4%;background:var(--text-muted);">Costs</div>
       </div>
       <div class="legend">
-        <div class="legend-item"><div class="legend-dot" style="background:var(--accent-green)"></div>Net Income (66.8%)</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--accent-red)"></div>Israeli Tax 15% (11.8%)</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--text-muted)"></div>Costs (21.4%)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--accent-green)"></div>Net Income (63.6%)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--accent-red)"></div>Israeli Tax 15% flat (15%)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--text-muted)"></div>Operating Costs (21.4%)</div>
       </div>
     </div>
     <div style="border-top:1px solid var(--border);padding-top:14px;">
       <h3 style="font-size:0.9em;color:var(--accent-orange);margin-bottom:8px;">Capital Gains (5-Year Base Case — Motor City)</h3>
       <div class="cost-line"><span>Appreciation (~4%/yr on 500K)</span><span class="amount">AED 108,000</span></div>
-      <div class="cost-line"><span>Capital Gains Tax (25%)</span><span class="amount" style="color:var(--accent-red)">-AED 27,000</span></div>
+      <div class="cost-line"><span>Capital Gains Tax (25% on real gain)</span><span class="amount" style="color:var(--accent-red)">-AED 27,000</span></div>
       <div class="cost-total"><span>Net Capital Gain</span><span class="amount">AED 81,000</span></div>
       <div style="margin-top:12px;padding:10px;background:rgba(248,113,113,0.08);border-radius:8px;border:1px solid rgba(248,113,113,0.2);">
         <div class="cost-line"><span><strong>Total 5yr Return (Before Tax)</strong></span><span class="amount" style="color:var(--accent-green)"><strong>AED 328,000</strong></span></div>
-        <div class="cost-line"><span><strong>Total 5yr Return (After IL Tax)</strong></span><span class="amount" style="color:var(--accent-orange)"><strong>AED 268,000</strong></span></div>
-        <div class="cost-line"><span><strong>Effective 5yr ROI (After Tax)</strong></span><span class="amount" style="color:var(--accent-orange)"><strong>47.9%</strong></span></div>
-        <div class="cost-line"><span><strong>Annualized ROI (After Tax)</strong></span><span class="amount" style="color:var(--accent-orange)"><strong>8.1%</strong></span></div>
+        <div class="cost-line"><span><strong>Total 5yr Return (After IL Tax)</strong></span><span class="amount" style="color:var(--accent-orange)"><strong>AED 259,000</strong></span></div>
+        <div class="cost-line"><span><strong>Effective 5yr ROI (After Tax)</strong></span><span class="amount" style="color:var(--accent-orange)"><strong>46.3%</strong></span></div>
+        <div class="cost-line"><span><strong>Annualized ROI (After Tax)</strong></span><span class="amount" style="color:var(--accent-orange)"><strong>7.9%</strong></span></div>
       </div>
     </div>
   </div>
@@ -1721,6 +1720,410 @@ window.addEventListener('resize', () => {
   drawInfraTimeline();
   drawGovRadar();
 });
+
+// ===================== LIVE LISTINGS SECTION =====================
+function initLiveListings() {
+  setupSortable('liveListingsTable');
+}
+window.addEventListener('load', initLiveListings);
 </script>
+
+<!-- ============================================================ -->
+<!-- 📋 LIVE STUDIO LISTINGS — FEBRUARY 2026                      -->
+<!-- ============================================================ -->
+<style>
+.live-listings { margin-top: 40px; }
+.live-listings .section-header {
+  text-align: center; padding: 30px 20px; margin-bottom: 24px;
+  background: linear-gradient(135deg, #1a1d27 0%, #0f1117 100%);
+  border: 1px solid var(--border); border-radius: 16px;
+}
+.live-listings .section-header h2 {
+  font-size: 1.8em; font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-orange), var(--accent-pink));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px;
+}
+.live-listings .section-header p { color: var(--text-secondary); font-size: 0.95em; }
+.area-summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 24px; }
+.area-summary-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 18px;
+  transition: border-color 0.2s;
+}
+.area-summary-card:hover { border-color: rgba(251,191,36,0.4); }
+.area-summary-card h3 { font-size: 1em; font-weight: 700; color: var(--accent-orange); margin-bottom: 10px; }
+.area-summary-card .stat { display: flex; justify-content: space-between; padding: 3px 0; font-size: 0.85em; }
+.area-summary-card .stat .label { color: var(--text-secondary); }
+.area-summary-card .stat .value { font-weight: 600; color: var(--text-primary); }
+.area-summary-card .stat .change-up { color: var(--accent-green); font-size: 0.8em; }
+.area-summary-card .stat .change-down { color: var(--accent-red); font-size: 0.8em; }
+.best-deals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.deal-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 18px;
+  border-left: 4px solid var(--accent-green);
+}
+.deal-card.off-plan { border-left-color: var(--accent-blue); }
+.deal-card.high-yield { border-left-color: var(--accent-orange); }
+.deal-card h4 { font-size: 0.95em; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.deal-card .tag { font-size: 0.7em; padding: 2px 8px; border-radius: 8px; font-weight: 600; }
+.deal-card .tag-ready { background: rgba(52,211,153,0.15); color: var(--accent-green); }
+.deal-card .tag-offplan { background: rgba(96,165,250,0.15); color: var(--accent-blue); }
+.deal-card .tag-yield { background: rgba(251,191,36,0.15); color: var(--accent-orange); }
+.deal-card .detail { font-size: 0.85em; color: var(--text-secondary); padding: 2px 0; }
+.deal-card .price { font-size: 1.1em; font-weight: 700; color: var(--accent-green); }
+.deal-card a { color: var(--accent-blue); font-size: 0.8em; text-decoration: none; }
+.deal-card a:hover { text-decoration: underline; }
+.disclaimer-note {
+  text-align: center; font-size: 0.8em; color: var(--text-muted); padding: 12px;
+  border-top: 1px solid var(--border); margin-top: 20px;
+}
+</style>
+
+<div class="dashboard live-listings">
+  <div class="section-header">
+    <h2>📋 Live Studio Listings — February 2026</h2>
+    <p>PropertyFinder.ae studio apartments for sale across 6 target investment areas</p>
+    <span class="badge" style="background:rgba(251,191,36,0.15);color:var(--accent-orange);border-color:rgba(251,191,36,0.3);">🔄 Data scraped 18 Feb 2026</span>
+  </div>
+
+  <!-- ===== AREA SUMMARY CARDS ===== -->
+  <div class="area-summary-grid">
+    <div class="area-summary-card">
+      <h3>🏁 Motor City</h3>
+      <div class="stat"><span class="label">Avg Price</span><span class="value">713,900 AED <span class="change-up">▲32.8%</span></span></div>
+      <div class="stat"><span class="label">Avg ₱/sqft</span><span class="value">1,634 AED</span></div>
+      <div class="stat"><span class="label">Rental Yield</span><span class="value" style="color:var(--accent-green)">8.17%</span></div>
+      <div class="stat"><span class="label">Listings</span><span class="value">200+</span></div>
+    </div>
+    <div class="area-summary-card">
+      <h3>🏘️ JVC</h3>
+      <div class="stat"><span class="label">Avg Price</span><span class="value">700,563 AED <span class="change-up">▲12.2%</span></span></div>
+      <div class="stat"><span class="label">Avg ₱/sqft</span><span class="value">1,659 AED</span></div>
+      <div class="stat"><span class="label">Rental Yield</span><span class="value" style="color:var(--accent-green)">8.06%</span></div>
+      <div class="stat"><span class="label">Listings</span><span class="value">2,750</span></div>
+    </div>
+    <div class="area-summary-card">
+      <h3>🌸 Arjan</h3>
+      <div class="stat"><span class="label">Avg Price</span><span class="value">657,389 AED <span class="change-up">▲6.6%</span></span></div>
+      <div class="stat"><span class="label">Avg ₱/sqft</span><span class="value">1,544 AED</span></div>
+      <div class="stat"><span class="label">Rental Yield</span><span class="value" style="color:var(--accent-green)">8.80%</span></div>
+      <div class="stat"><span class="label">Listings</span><span class="value">1,028</span></div>
+    </div>
+    <div class="area-summary-card">
+      <h3>🏙️ Business Bay</h3>
+      <div class="stat"><span class="label">Avg Price</span><span class="value">1,195,584 AED <span class="change-up">▲4.5%</span></span></div>
+      <div class="stat"><span class="label">Avg ₱/sqft</span><span class="value">2,657 AED</span></div>
+      <div class="stat"><span class="label">Rental Yield</span><span class="value" style="color:var(--accent-orange)">7.49%</span></div>
+      <div class="stat"><span class="label">Listings</span><span class="value">2,003</span></div>
+    </div>
+    <div class="area-summary-card">
+      <h3>🔺 JVT</h3>
+      <div class="stat"><span class="label">Avg Price</span><span class="value">715,912 AED <span class="change-up">▲21.4%</span></span></div>
+      <div class="stat"><span class="label">Avg ₱/sqft</span><span class="value">1,779 AED</span></div>
+      <div class="stat"><span class="label">Rental Yield</span><span class="value" style="color:var(--accent-orange)">—</span></div>
+      <div class="stat"><span class="label">Listings</span><span class="value">775</span></div>
+    </div>
+    <div class="area-summary-card">
+      <h3>💻 DSO</h3>
+      <div class="stat"><span class="label">Avg Price</span><span class="value">760,876 AED <span class="change-up">▲40.5% ₱/sqft</span></span></div>
+      <div class="stat"><span class="label">Avg ₱/sqft</span><span class="value">1,645 AED</span></div>
+      <div class="stat"><span class="label">Rental Yield</span><span class="value" style="color:var(--accent-green)">9.43%</span></div>
+      <div class="stat"><span class="label">Listings</span><span class="value">123</span></div>
+    </div>
+  </div>
+
+  <!-- ===== BEST DEALS HIGHLIGHT ===== -->
+  <div class="card" style="margin-bottom:24px;">
+    <h2><span class="icon">⭐</span> Best Deals — Studios Under Budget</h2>
+    <div class="best-deals-grid">
+      <!-- Ready under 600K -->
+      <div class="deal-card">
+        <h4><span class="tag tag-ready">READY</span> Plaza Residences 2 — JVC</h4>
+        <div class="price">560,000 AED</div>
+        <div class="detail">465 sqft · 1,204 AED/sqft · District 13</div>
+        <div class="detail">Vacant · High ROI · Central Location</div>
+        <a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-circle-16337223.html" target="_blank">View on PropertyFinder →</a>
+      </div>
+      <div class="deal-card">
+        <h4><span class="tag tag-ready">READY</span> Elz by Danube — Arjan</h4>
+        <div class="price">575,000 AED</div>
+        <div class="detail">392 sqft · 1,467 AED/sqft · Danube (Tier 2)</div>
+        <div class="detail">Stylish Studio · Vacant May</div>
+        <a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-arjan-elz-by-danube-16257838.html" target="_blank">View on PropertyFinder →</a>
+      </div>
+      <div class="deal-card">
+        <h4><span class="tag tag-ready">READY</span> Resortz by Danube — Arjan</h4>
+        <div class="price">590,000 AED</div>
+        <div class="detail">431 sqft · 1,369 AED/sqft · Danube (Tier 2)</div>
+        <div class="detail">Fully Furnished · High ROI</div>
+        <a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-arjan-resortz-by-danube-resortz-block-3-16249674.html" target="_blank">View on PropertyFinder →</a>
+      </div>
+      <div class="deal-card">
+        <h4><span class="tag tag-ready">READY</span> Lincoln Park — Arjan</h4>
+        <div class="price">560,000 AED</div>
+        <div class="detail">609 sqft · 919 AED/sqft · Furnished · Balcony</div>
+        <div class="detail">Biggest studio layout in Arjan</div>
+        <a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-arjan-lincoln-park-lincoln-park-sheffield-16315874.html" target="_blank">View on PropertyFinder →</a>
+      </div>
+      <div class="deal-card">
+        <h4><span class="tag tag-ready">READY</span> Tower 108 — JVC</h4>
+        <div class="price">590,000 AED</div>
+        <div class="detail">433 sqft · 1,363 AED/sqft · District 18</div>
+        <div class="detail">High Floor · Fully Furnished · Great Investment</div>
+        <a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-circle-district-18-tower-108-16309489.html" target="_blank">View on PropertyFinder →</a>
+      </div>
+      <div class="deal-card">
+        <h4><span class="tag tag-ready">READY</span> National Bonds Residence — JVC</h4>
+        <div class="price">590,000 AED</div>
+        <div class="detail">396 sqft · 1,490 AED/sqft · District 15</div>
+        <div class="detail">Ready Unit · High ROI Potential</div>
+        <a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-circle-district-15-national-bonds-residence-16227564.html" target="_blank">View on PropertyFinder →</a>
+      </div>
+
+      <!-- Off-plan under 700K with good developers -->
+      <div class="deal-card off-plan">
+        <h4><span class="tag tag-offplan">OFF-PLAN</span> Ananda Residences — Motor City</h4>
+        <div class="price">525K–575K AED</div>
+        <div class="detail">346–577 sqft · Handover Q2-Q4 2028</div>
+        <div class="detail">Lowest entry in Motor City</div>
+        <a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-motor-city.html" target="_blank">View on PropertyFinder →</a>
+      </div>
+      <div class="deal-card off-plan">
+        <h4><span class="tag tag-offplan">OFF-PLAN</span> VOXA by Pantheon — JVT</h4>
+        <div class="price">639,000 AED</div>
+        <div class="detail">388 sqft · Handover Q3 2028 · 20/35/10/35 plan</div>
+        <div class="detail">Pantheon Development</div>
+        <a href="https://www.propertyfinder.ae/en/new-projects/pantheon-development/voxa-pantheon" target="_blank">View on PropertyFinder →</a>
+      </div>
+      <div class="deal-card off-plan">
+        <h4><span class="tag tag-offplan">OFF-PLAN</span> Coventry Living — JVC</h4>
+        <div class="price">684,000 AED</div>
+        <div class="detail">420 sqft · Handover Q2 2028 · 5/39/20/36 plan</div>
+        <div class="detail">GFS Developers</div>
+        <a href="https://www.propertyfinder.ae/en/new-projects/gfs-developers/coventry-living" target="_blank">View on PropertyFinder →</a>
+      </div>
+      <div class="deal-card off-plan">
+        <h4><span class="tag tag-offplan">OFF-PLAN</span> The Central Downtown — Arjan</h4>
+        <div class="price">600K–830K AED</div>
+        <div class="detail">397–551 sqft · Q2 2027 · 20/10/22/48 plan</div>
+        <div class="detail">Aqua Properties · 4% construction</div>
+        <a href="https://www.propertyfinder.ae/en/new-projects/aqua-properties-developers/the-central-downtown" target="_blank">View on PropertyFinder →</a>
+      </div>
+
+      <!-- Highest yield -->
+      <div class="deal-card high-yield">
+        <h4><span class="tag tag-yield">9.43% YIELD</span> Silicon Gates 1 — DSO</h4>
+        <div class="price">449,000 AED</div>
+        <div class="detail">349 sqft · 1,287 AED/sqft · Ready</div>
+        <div class="detail">Lowest price studio across all areas</div>
+        <a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-dubai-silicon-oasis-silicon-gates-silicon-gates-1-16010206.html" target="_blank">View on PropertyFinder →</a>
+      </div>
+      <div class="deal-card high-yield">
+        <h4><span class="tag tag-yield">9.43% YIELD</span> Palace Tower 2 — DSO</h4>
+        <div class="price">500,000 AED</div>
+        <div class="detail">431 sqft · 1,160 AED/sqft · Ready · Furnished</div>
+        <div class="detail">Leasehold · High ROI</div>
+        <a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-dubai-silicon-oasis-palace-towers-palace-tower-2-15503538.html" target="_blank">View on PropertyFinder →</a>
+      </div>
+      <div class="deal-card high-yield">
+        <h4><span class="tag tag-yield">8.80% YIELD</span> Siraj Tower — Arjan</h4>
+        <div class="price">589,000 AED</div>
+        <div class="detail">415 sqft · 1,420 AED/sqft · Ready · Furnished</div>
+        <div class="detail">Avg transaction price: 537K</div>
+        <a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-arjan-siraj-tower-16173242.html" target="_blank">View on PropertyFinder →</a>
+      </div>
+      <div class="deal-card high-yield">
+        <h4><span class="tag tag-yield">8.17% YIELD</span> Al Jawhara Residences — JVT</h4>
+        <div class="price">530,000 AED</div>
+        <div class="detail">433 sqft · 1,224 AED/sqft · Ready · Furnished</div>
+        <div class="detail">Avg transaction: 510K · Motivated seller</div>
+        <a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-triangle-al-jawhara-residences-15570609.html" target="_blank">View on PropertyFinder →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PROJECT COMPARISON TABLE ===== -->
+  <div class="card" style="margin-bottom:24px;">
+    <h2><span class="icon">📊</span> Project Comparison — All Areas</h2>
+    <div style="overflow-x:auto;">
+      <table id="liveListingsTable">
+        <thead>
+          <tr>
+            <th onclick="sortTable('liveListingsTable',0)">Area <span class="sort-arrow">⇅</span></th>
+            <th onclick="sortTable('liveListingsTable',1)">Project <span class="sort-arrow">⇅</span></th>
+            <th onclick="sortTable('liveListingsTable',2)">Price (AED) <span class="sort-arrow">⇅</span></th>
+            <th onclick="sortTable('liveListingsTable',3)">Size (sqft) <span class="sort-arrow">⇅</span></th>
+            <th onclick="sortTable('liveListingsTable',4)">₱/sqft <span class="sort-arrow">⇅</span></th>
+            <th onclick="sortTable('liveListingsTable',5)">Type <span class="sort-arrow">⇅</span></th>
+            <th onclick="sortTable('liveListingsTable',6)">Handover <span class="sort-arrow">⇅</span></th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- MOTOR CITY -->
+          <tr><td>Motor City</td><td>Ananda Residences</td><td data-sort="525000">525K–575K</td><td data-sort="346">346–577</td><td data-sort="1517">~1,517</td><td><span class="pill pill-blue">Off-plan</span></td><td>Q2-Q4 2028</td><td><a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-motor-city.html" target="_blank">🔗</a></td></tr>
+          <tr class="highlight"><td>Motor City</td><td>Eden Apartments</td><td data-sort="589505">589,505</td><td data-sort="400">~400</td><td data-sort="1474">~1,474</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-motor-city.html" target="_blank">🔗</a></td></tr>
+          <tr class="highlight"><td>Motor City</td><td>Barton House 1</td><td data-sort="606745">606,745</td><td data-sort="400">~400</td><td data-sort="1517">~1,517</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-motor-city.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Motor City</td><td>Binghatti SkyTerraces</td><td data-sort="728000">728,000</td><td data-sort="360">360</td><td data-sort="2022">2,022</td><td><span class="pill pill-blue">Off-plan</span></td><td>Q4 2027</td><td><a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-motor-city.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Motor City</td><td>Takaya (Union Props)</td><td data-sort="753000">753,000</td><td data-sort="445">371–519</td><td data-sort="1692">~1,692</td><td><span class="pill pill-blue">Off-plan</span></td><td>Q4 2027</td><td><a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-motor-city.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Motor City</td><td>Regent House 1</td><td data-sort="750000">750,000</td><td data-sort="713">713</td><td data-sort="1052">1,052</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-motor-city.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Motor City</td><td>Bennett House 1</td><td data-sort="790000">790,000</td><td data-sort="727">727</td><td data-sort="1087">1,087</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/buy/dubai/studio-apartments-for-sale-motor-city.html" target="_blank">🔗</a></td></tr>
+          <!-- JVC -->
+          <tr class="highlight"><td>JVC</td><td>Plaza Residences 2</td><td data-sort="560000">560,000</td><td data-sort="465">465</td><td data-sort="1204">1,204</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-circle-16337223.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JVC</td><td>Tower 108</td><td data-sort="590000">590,000</td><td data-sort="433">433</td><td data-sort="1363">1,363</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-circle-district-18-tower-108-16309489.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JVC</td><td>National Bonds Res.</td><td data-sort="590000">590,000</td><td data-sort="396">396</td><td data-sort="1490">1,490</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-circle-district-15-national-bonds-residence-16227564.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JVC</td><td>O2 Tower</td><td data-sort="620000">620,000</td><td data-sort="330">330</td><td data-sort="1879">1,879</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-circle-district-14-o2-tower-16028243.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JVC</td><td>Binghatti Azure</td><td data-sort="644800">644,800</td><td data-sort="345">345</td><td data-sort="1869">1,869</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-circle-district-16-binghatti-azure-15847243.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JVC</td><td>Pantheon Elysee</td><td data-sort="650000">650,000</td><td data-sort="429">429</td><td data-sort="1515">1,515</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-circle-district-13-pantheon-elysee-16310782.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JVC</td><td>Bloom Towers B</td><td data-sort="665000">665,000</td><td data-sort="395">395</td><td data-sort="1684">1,684</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-circle-district-10-bloom-towers-bloom-towers-b-16083625.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JVC</td><td>Q Gardens Lofts 2</td><td data-sort="669999">669,999</td><td data-sort="526">526</td><td data-sort="1274">1,274</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-circle-district-12-q-gardens-lofts-2-16084057.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JVC</td><td>Tresora by Wadan</td><td data-sort="670000">670K–780K</td><td data-sort="480">420–540</td><td data-sort="1444">~1,444</td><td><span class="pill pill-blue">Off-plan</span></td><td>Q1 2028</td><td><a href="https://www.propertyfinder.ae/en/new-projects/wadan-developments/tresora-by-wadan" target="_blank">🔗</a></td></tr>
+          <tr><td>JVC</td><td>Coventry Living</td><td data-sort="684000">684,000</td><td data-sort="420">420</td><td data-sort="1629">1,629</td><td><span class="pill pill-blue">Off-plan</span></td><td>Q2 2028</td><td><a href="https://www.propertyfinder.ae/en/new-projects/gfs-developers/coventry-living" target="_blank">🔗</a></td></tr>
+          <tr><td>JVC</td><td>Bloom Heights A</td><td data-sort="699999">699,999</td><td data-sort="394">394</td><td data-sort="1776">1,776</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-circle-district-15-bloom-heights-bloom-heights-a-16206718.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JVC</td><td>Skyhills Residences 3</td><td data-sort="725000">725,000</td><td data-sort="400">400</td><td data-sort="1813">1,813</td><td><span class="pill pill-blue">Off-plan</span></td><td>Q1 2026</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-circle-district-13-skyhills-residences-3-16230322.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JVC</td><td>Alta View Skyhomes</td><td data-sort="748000">748,000</td><td data-sort="416">416</td><td data-sort="1798">1,798</td><td><span class="pill pill-blue">Off-plan</span></td><td>Q4 2028</td><td><a href="https://www.propertyfinder.ae/en/new-projects/object-1/alta-view-skyhomes" target="_blank">🔗</a></td></tr>
+          <tr><td>JVC</td><td>Floarea Skies</td><td data-sort="779000">779,000</td><td data-sort="396">396</td><td data-sort="1967">1,967</td><td><span class="pill pill-blue">Off-plan</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-circle-district-10-floarea-skies-16251823.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JVC</td><td>1WOOD Residence Ph2</td><td data-sort="788117">788,117</td><td data-sort="411">397–425</td><td data-sort="1917">~1,917</td><td><span class="pill pill-blue">Off-plan</span></td><td>Q4 2027</td><td><a href="https://www.propertyfinder.ae/en/new-projects/object-1/1wood-residence-phase-2-by-object-1" target="_blank">🔗</a></td></tr>
+          <!-- ARJAN -->
+          <tr class="highlight"><td>Arjan</td><td>Lincoln Park</td><td data-sort="560000">560,000</td><td data-sort="609">609</td><td data-sort="919">919</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-arjan-lincoln-park-lincoln-park-sheffield-16315874.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Arjan</td><td>Elz by Danube</td><td data-sort="575000">575,000</td><td data-sort="392">392</td><td data-sort="1467">1,467</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-arjan-elz-by-danube-16257838.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Arjan</td><td>Siraj Tower</td><td data-sort="589000">589,000</td><td data-sort="415">415</td><td data-sort="1420">1,420</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-arjan-siraj-tower-16173242.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Arjan</td><td>Resortz by Danube</td><td data-sort="590000">590,000</td><td data-sort="431">431</td><td data-sort="1369">1,369</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-arjan-resortz-by-danube-resortz-block-3-16249674.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Arjan</td><td>Jewelz by Danube</td><td data-sort="620000">620,000</td><td data-sort="420">420</td><td data-sort="1476">1,476</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-arjan-jewelz-by-danube-16262816.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Arjan</td><td>Joya Dorado Residences</td><td data-sort="629999">629,999</td><td data-sort="415">415</td><td data-sort="1518">1,518</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-arjan-joya-dorado-residences-16311983.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Arjan</td><td>Skyz by Danube</td><td data-sort="650000">650K–750K</td><td data-sort="352">344–363</td><td data-sort="1889">~1,889</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-arjan-skyz-by-danube-16192841.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Arjan</td><td>Salim 1 Building</td><td data-sort="654345">654,345</td><td data-sort="484">484</td><td data-sort="1352">1,352</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-arjan-salim-1-building-16324327.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Arjan</td><td>One Beverly</td><td data-sort="675000">675K–730K</td><td data-sort="388">387–388</td><td data-sort="1881">~1,881</td><td><span class="pill pill-blue">Near Ready</span></td><td>Soon</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-arjan-one-beverly-16331537.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Arjan</td><td>The Central Downtown</td><td data-sort="600000">600K–830K</td><td data-sort="474">397–551</td><td data-sort="1266">~1,266</td><td><span class="pill pill-blue">Off-plan</span></td><td>Q2 2027</td><td><a href="https://www.propertyfinder.ae/en/new-projects/aqua-properties-developers/the-central-downtown" target="_blank">🔗</a></td></tr>
+          <tr><td>Arjan</td><td>Butterfly Towers</td><td data-sort="704872">704,872</td><td data-sort="420">~420</td><td data-sort="1678">~1,678</td><td><span class="pill pill-blue">Off-plan</span></td><td>Q1 2029</td><td><a href="https://www.propertyfinder.ae/en/new-projects/al-sayyah-group/butterfly-towers" target="_blank">🔗</a></td></tr>
+          <tr><td>Arjan</td><td>Torino</td><td data-sort="750000">750,000</td><td data-sort="371">371</td><td data-sort="2022">2,022</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-arjan-torino-16186602.html" target="_blank">🔗</a></td></tr>
+          <!-- JVT -->
+          <tr class="highlight"><td>JVT</td><td>Al Jawhara Residences</td><td data-sort="530000">530,000</td><td data-sort="433">433</td><td data-sort="1224">1,224</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-triangle-al-jawhara-residences-15570609.html" target="_blank">🔗</a></td></tr>
+          <tr class="highlight"><td>JVT</td><td>Red Square Tower</td><td data-sort="525000">525K–600K</td><td data-sort="314">302–325</td><td data-sort="1738">~1,738</td><td><span class="pill pill-blue">Off-plan</span></td><td>Q4 2026</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-triangle-red-square-tower-16306663.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JVT</td><td>Guzel Towers</td><td data-sort="555000">555K–659K</td><td data-sort="375">350–399</td><td data-sort="1651">~1,651</td><td><span class="pill pill-blue">Off-plan</span></td><td>Q4 2027</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-triangle-guzel-towers-16027792.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JVT</td><td>The Community</td><td data-sort="580000">580,000</td><td data-sort="326">326</td><td data-sort="1779">1,779</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-triangle-the-community-16122702.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JVT</td><td>VOXA by Pantheon</td><td data-sort="639000">639,000</td><td data-sort="388">388</td><td data-sort="1647">1,647</td><td><span class="pill pill-blue">Off-plan</span></td><td>Q3 2028</td><td><a href="https://www.propertyfinder.ae/en/new-projects/pantheon-development/voxa-pantheon" target="_blank">🔗</a></td></tr>
+          <tr><td>JVT</td><td>Terhab Hotels & Towers</td><td data-sort="650000">650,000</td><td data-sort="366">366</td><td data-sort="1776">1,776</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-triangle-terhab-hotels-towers-16151166.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JVT</td><td>Edmonton Elm</td><td data-sort="690000">690,000</td><td data-sort="641">641</td><td data-sort="1076">1,076</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-triangle-edmonton-elm-16228189.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JVT</td><td>Bali Residences</td><td data-sort="690000">690,000</td><td data-sort="407">407</td><td data-sort="1695">1,695</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-triangle-bali-residences-2PSxHj9fQ0m.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JVT</td><td>Sky Gate Tower</td><td data-sort="707000">707K–816K</td><td data-sort="344">307–381</td><td data-sort="2144">~2,144</td><td><span class="pill pill-blue">Off-plan</span></td><td>Q1 2028</td><td><a href="https://www.propertyfinder.ae/en/new-projects/tiger-properties/sky-gate-tower" target="_blank">🔗</a></td></tr>
+          <tr><td>JVT</td><td>Sol Levante</td><td data-sort="735000">735,000</td><td data-sort="400">~400</td><td data-sort="1838">~1,838</td><td><span class="pill pill-blue">Off-plan</span></td><td>Q3 2028</td><td><a href="https://www.propertyfinder.ae/en/new-projects/sol-properties/sol-levante" target="_blank">🔗</a></td></tr>
+          <tr><td>JVT</td><td>Fashionz by Danube</td><td data-sort="750000">750K–975K</td><td data-sort="400">346–458</td><td data-sort="2128">~2,128</td><td><span class="pill pill-blue">Off-plan</span></td><td>Q3 2026</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-triangle-fashionz-by-danube-15808537.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JVT</td><td>Binghatti Luxuria</td><td data-sort="719099">719,099</td><td data-sort="336">336</td><td data-sort="2140">2,140</td><td><span class="pill pill-blue">Off-plan</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-triangle-district-4-16281022.html" target="_blank">🔗</a></td></tr>
+          <tr><td>JVT</td><td>Essenlife</td><td data-sort="752000">752K–843K</td><td data-sort="462">435–488</td><td data-sort="1727">~1,727</td><td><span class="pill pill-blue">Off-plan</span></td><td>Q4 2027</td><td><a href="https://www.propertyfinder.ae/en/new-projects/object-1-contemporary-development/essenlife" target="_blank">🔗</a></td></tr>
+          <tr><td>JVT</td><td>Binghatti Flare</td><td data-sort="764639">765K–953K</td><td data-sort="413">382–444</td><td data-sort="1991">~1,991</td><td><span class="pill pill-blue">Off-plan</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-jumeirah-village-triangle-district-2-binghatti-flare-16338585.html" target="_blank">🔗</a></td></tr>
+          <!-- DSO -->
+          <tr class="highlight"><td>DSO</td><td>Silicon Gates 1</td><td data-sort="449000">449,000</td><td data-sort="349">349</td><td data-sort="1287">1,287</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-dubai-silicon-oasis-silicon-gates-silicon-gates-1-16010206.html" target="_blank">🔗</a></td></tr>
+          <tr class="highlight"><td>DSO</td><td>Palace Tower 2</td><td data-sort="500000">500,000</td><td data-sort="431">431</td><td data-sort="1160">1,160</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-dubai-silicon-oasis-palace-towers-palace-tower-2-15503538.html" target="_blank">🔗</a></td></tr>
+          <tr><td>DSO</td><td>Silicon Gates 4</td><td data-sort="500000">500,000</td><td data-sort="358">358</td><td data-sort="1397">1,397</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-dubai-silicon-oasis-silicon-gates-silicon-gates-4-16137070.html" target="_blank">🔗</a></td></tr>
+          <tr><td>DSO</td><td>Arabian Gate</td><td data-sort="555000">555K–630K</td><td data-sort="445">405–466</td><td data-sort="1343">~1,343</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-dubai-silicon-oasis-arabian-gate-15356498.html" target="_blank">🔗</a></td></tr>
+          <tr><td>DSO</td><td>Silicon Star 2</td><td data-sort="579780">579,780</td><td data-sort="487">487</td><td data-sort="1190">1,190</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-dubai-silicon-oasis-silicon-star-2-15942070.html" target="_blank">🔗</a></td></tr>
+          <tr><td>DSO</td><td>Oasis Lofts (Uniestate)</td><td data-sort="620000">620,000</td><td data-sort="409">409</td><td data-sort="1516">1,516</td><td><span class="pill pill-blue">Off-plan</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-dubai-silicon-oasis-oasis-lofts-uniestate-2PUlC6QoJOK.html" target="_blank">🔗</a></td></tr>
+          <tr><td>DSO</td><td>Binghatti Stars</td><td data-sort="650000">650K–700K</td><td data-sort="504">493–515</td><td data-sort="1319">~1,319</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-dubai-silicon-oasis-binghatti-stars-16194974.html" target="_blank">🔗</a></td></tr>
+          <tr><td>DSO</td><td>Belle Vie (Zimaya)</td><td data-sort="664888">664,888</td><td data-sort="454">454</td><td data-sort="1464">1,464</td><td><span class="pill pill-blue">Off-plan</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-dubai-silicon-oasis-belle-vie-by-zimaya-15635217.html" target="_blank">🔗</a></td></tr>
+          <tr><td>DSO</td><td>Tria by Deyaar</td><td data-sort="675000">675K–700K</td><td data-sort="460">436–483</td><td data-sort="1497">~1,497</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-dubai-silicon-oasis-tria-by-deyaar-2P97xilxEzg.html" target="_blank">🔗</a></td></tr>
+          <tr><td>DSO</td><td>Uniestate Millennium</td><td data-sort="699000">699,000</td><td data-sort="523">523</td><td data-sort="1337">1,337</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-dubai-silicon-oasis-uniestate-millennium-tower-16320606.html" target="_blank">🔗</a></td></tr>
+          <tr><td>DSO</td><td>Timez by Danube</td><td data-sort="812000">812K–887K</td><td data-sort="407">386–427</td><td data-sort="2078">~2,078</td><td><span class="pill pill-blue">Off-plan</span></td><td>Q3 2028</td><td><a href="https://www.propertyfinder.ae/en/new-projects/danube-properties/timez" target="_blank">🔗</a></td></tr>
+          <!-- BUSINESS BAY (under 1M) -->
+          <tr><td>Biz Bay</td><td>Safeer Tower 1</td><td data-sort="700000">700,000</td><td data-sort="445">445</td><td data-sort="1573">1,573</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-business-bay-safeer-towers-safeer-tower-1-16187794.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Biz Bay</td><td>Executive Bay A</td><td data-sort="760000">760,000</td><td data-sort="462">462</td><td data-sort="1645">1,645</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-business-bay-executive-bay-executive-bay-a-15966691.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Biz Bay</td><td>DAMAC Paramount Tower C</td><td data-sort="775980">775,980</td><td data-sort="452">452</td><td data-sort="1717">1,717</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-business-bay-damac-towers-by-paramount-tower-c-16083119.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Biz Bay</td><td>Waters Edge</td><td data-sort="850000">850,000</td><td data-sort="397">397</td><td data-sort="2141">2,141</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-business-bay-waters-edge-16083796.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Biz Bay</td><td>Elite Biz Bay Res.</td><td data-sort="850000">850,000</td><td data-sort="479">479</td><td data-sort="1774">1,774</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-business-bay-elite-business-bay-residence-16026757.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Biz Bay</td><td>AG Tower</td><td data-sort="880000">880,000</td><td data-sort="443">443</td><td data-sort="1987">1,987</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-business-bay-ag-tower-16183408.html" target="_blank">🔗</a></td></tr>
+          <tr><td>Biz Bay</td><td>DAMAC Paramount Tower C</td><td data-sort="975000">975,000</td><td data-sort="452">452</td><td data-sort="2157">2,157</td><td><span class="pill pill-green">Ready</span></td><td>—</td><td><a href="https://www.propertyfinder.ae/en/plp/buy/apartment-for-sale-dubai-business-bay-damac-towers-by-paramount-tower-c-16140301.html" target="_blank">🔗</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ===== AVG PRICES BY BUILDING (from PF Insights) ===== -->
+  <div class="grid-2">
+    <div class="card">
+      <h2><span class="icon">🏢</span> JVC — Avg Transaction Prices by Building</h2>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead><tr><th>Building</th><th>Avg Price (AED)</th></tr></thead>
+          <tbody>
+            <tr><td>Binghatti Ruby</td><td>876,373</td></tr>
+            <tr><td>Binghatti Amberhall</td><td>826,372</td></tr>
+            <tr><td>One Sky Park</td><td>815,226</td></tr>
+            <tr><td>The Autograph S Series</td><td>781,125</td></tr>
+            <tr><td>Skyhills Residences 2</td><td>733,560</td></tr>
+            <tr><td>Skyhills Residences 3</td><td>722,320</td></tr>
+            <tr><td>Binghatti Circle</td><td>721,449</td></tr>
+            <tr><td>Greygate Residences</td><td>661,123</td></tr>
+            <tr class="highlight"><td>Auresta Tower</td><td style="color:var(--accent-green)">580,006</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="icon">🏢</span> Arjan — Avg Transaction Prices by Building</h2>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead><tr><th>Building</th><th>Avg Price (AED)</th></tr></thead>
+          <tbody>
+            <tr><td>Empire Estates</td><td>853,025</td></tr>
+            <tr><td>Marquis One</td><td>781,038</td></tr>
+            <tr><td>Oxford Gardens</td><td>734,948</td></tr>
+            <tr><td>Vincitore Dolce Vita</td><td>702,099</td></tr>
+            <tr><td>Floarea Grande</td><td>690,440</td></tr>
+            <tr><td>One Beverly</td><td>665,247</td></tr>
+            <tr><td>Beverly Boulevard</td><td>662,854</td></tr>
+            <tr class="highlight"><td>Miraclz (Danube)</td><td style="color:var(--accent-green)">544,995</td></tr>
+            <tr class="highlight"><td>Skyz (Danube)</td><td style="color:var(--accent-green)">544,513</td></tr>
+            <tr class="highlight"><td>Siraj Tower</td><td style="color:var(--accent-green)">537,621</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="icon">🏢</span> JVT — Avg Transaction Prices by Building</h2>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead><tr><th>Building</th><th>Avg Price (AED)</th></tr></thead>
+          <tbody>
+            <tr><td>Binghatti Flare</td><td>859,239</td></tr>
+            <tr><td>Essenlife</td><td>787,282</td></tr>
+            <tr><td>Tower 1 (Terhab)</td><td>782,575</td></tr>
+            <tr><td>Sol Levante</td><td>779,301</td></tr>
+            <tr><td>Elaris Sky</td><td>771,682</td></tr>
+            <tr><td>VOXA by Pantheon</td><td>768,559</td></tr>
+            <tr class="highlight"><td>Red Square Tower</td><td style="color:var(--accent-green)">623,899</td></tr>
+            <tr class="highlight"><td>Guzel Towers</td><td style="color:var(--accent-green)">589,858</td></tr>
+            <tr class="highlight"><td>Sky Gate Tower</td><td style="color:var(--accent-green)">576,612</td></tr>
+            <tr class="highlight"><td>Al Jawhara Residences</td><td style="color:var(--accent-green)">509,770</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="icon">🏢</span> DSO — Avg Transaction Prices by Building</h2>
+      <div style="overflow-x:auto;">
+        <table>
+          <thead><tr><th>Building</th><th>Avg Price (AED)</th></tr></thead>
+          <tbody>
+            <tr><td>Timez by Danube</td><td>842,960</td></tr>
+            <tr><td>Oasiz by Danube</td><td>759,810</td></tr>
+            <tr><td>Belle Vie (Zimaya)</td><td>682,030</td></tr>
+            <tr><td>Serenova</td><td>640,677</td></tr>
+            <tr><td>Tria by Deyaar</td><td>606,115</td></tr>
+            <tr><td>Oasis Lofts (Uniestate)</td><td>592,960</td></tr>
+            <tr class="highlight"><td>Binghatti Crystals</td><td style="color:var(--accent-green)">521,800</td></tr>
+            <tr class="highlight"><td>Arabian Gate</td><td style="color:var(--accent-green)">513,633</td></tr>
+            <tr class="highlight"><td>Palace Tower 2</td><td style="color:var(--accent-green)">414,115</td></tr>
+            <tr class="highlight"><td>Silicon Gates 1</td><td style="color:var(--accent-green)">410,614</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="disclaimer-note">
+    📌 Data scraped from PropertyFinder.ae — February 2026. Prices may change. Business Bay studios largely exceed 1M AED budget — included for comparison only.<br>
+    Highlighted rows (blue tint) = best value picks under Michael's 300-400K capital budget. "Ready" = completed; "Off-plan" = under construction.
+  </div>
+</div>
+
 </body>
 </html>
