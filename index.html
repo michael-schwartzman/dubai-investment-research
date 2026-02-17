@@ -398,7 +398,6 @@ table tbody tr.highlight { background: rgba(96,165,250,0.1); }
 }
 .section-toggle .chevron.collapsed { transform: rotate(-90deg); }
 .section-content {
-  overflow: hidden;
   transition: max-height 0.4s ease, opacity 0.3s;
   max-height: 50000px;
   opacity: 1;
@@ -407,6 +406,7 @@ table tbody tr.highlight { background: rgba(96,165,250,0.1); }
   max-height: 0;
   opacity: 0;
   margin-bottom: 0;
+  overflow: hidden;
 }
 
 /* ===== BACK TO TOP ===== */
@@ -626,9 +626,9 @@ table tbody tr.highlight { background: rgba(96,165,250,0.1); }
     <h2><span class="icon">🗺️</span> Capital Appreciation (5Y)</h2>
     <div id="heatmap" style="display:flex;flex-direction:column;gap:6px;"></div>
   </div>
-  <div class="card">
+  <div class="card" style="overflow:visible;">
     <h2><span class="icon">⚠️</span> Supply Risk Gauge</h2>
-    <div class="gauge-row" id="gaugeRow"></div>
+    <div class="gauge-row" id="gaugeRow" style="overflow:visible;"></div>
   </div>
 </div>
 
@@ -1418,12 +1418,13 @@ function drawYieldChart() {
     const tooltip = document.getElementById('yieldTooltip');
     const bRect = canvas.getBoundingClientRect();
     const mx = e.clientX - bRect.left;
+    const my = e.clientY - bRect.top;
     const idx = Math.floor((mx - pad.left) / gap);
     if (idx >= 0 && idx < sorted.length) {
       const a = sorted[idx];
       tooltip.style.display = 'block';
-      tooltip.style.left = (e.clientX - canvas.parentElement.getBoundingClientRect().left + 15) + 'px';
-      tooltip.style.top = (e.clientY - canvas.parentElement.getBoundingClientRect().top - 30) + 'px';
+      tooltip.style.left = (mx + 15) + 'px';
+      tooltip.style.top = (my - 30) + 'px';
       tooltip.innerHTML = `<strong>${a.area}</strong><br>Yield: ${a.yield.toFixed(1)}% | Rent: ${(a.rent/1000).toFixed(1)}K | Occ: ${a.occupancy}%`;
     } else { tooltip.style.display = 'none'; }
   };
@@ -1500,8 +1501,8 @@ function drawScatterChart() {
     });
     if (found) {
       tooltip.style.display = 'block';
-      tooltip.style.left = (e.clientX - canvas.parentElement.getBoundingClientRect().left + 15) + 'px';
-      tooltip.style.top = (e.clientY - canvas.parentElement.getBoundingClientRect().top - 30) + 'px';
+      tooltip.style.left = (mx + 15) + 'px';
+      tooltip.style.top = (my - 30) + 'px';
       tooltip.innerHTML = `<strong>${found.area}</strong><br>Price: ${(found.price/1000).toFixed(0)}K | Yield: ${found.yield.toFixed(1)}% | Occupancy: ${found.occupancy}%`;
     } else { tooltip.style.display = 'none'; }
   };
@@ -1586,11 +1587,12 @@ function drawROIChart() {
     const tooltip = document.getElementById('roiTooltip');
     const bRect = canvas.getBoundingClientRect();
     const mx = e.clientX - bRect.left;
+    const my = e.clientY - bRect.top;
     const yearIdx = Math.round(((mx - pad.left) / chartW) * 5);
     if (yearIdx >= 0 && yearIdx <= 5) {
       tooltip.style.display = 'block';
-      tooltip.style.left = (e.clientX - canvas.parentElement.getBoundingClientRect().left + 15) + 'px';
-      tooltip.style.top = (e.clientY - canvas.parentElement.getBoundingClientRect().top - 40) + 'px';
+      tooltip.style.left = (mx + 15) + 'px';
+      tooltip.style.top = (my - 40) + 'px';
       tooltip.innerHTML = `<strong>Year ${yearIdx}</strong><br>
         🟢 Optimistic: ${roiData.optimistic[yearIdx].toFixed(1)}%<br>
         🔵 Base: ${roiData.base[yearIdx].toFixed(1)}%<br>
@@ -1645,16 +1647,35 @@ function drawGauges() {
     const riskLabel = riskClass.toUpperCase();
     const reason = supplyReasons[a.area] || 'No detailed analysis available.';
     const riskColor = riskClass === 'high' ? '#f87171' : riskClass === 'medium' ? '#fbbf24' : '#34d399';
-    return `<div class="gauge-item" style="position:relative;cursor:pointer;" onmouseenter="this.querySelector('.gauge-tooltip').style.display='block'" onmouseleave="this.querySelector('.gauge-tooltip').style.display='none'">
+    return `<div class="gauge-item" style="position:relative;cursor:pointer;" onmouseenter="showGaugeTooltip(this)" onmouseleave="hideGaugeTooltip(this)">
       <div class="gauge-circle ${riskClass}">${riskLabel}</div>
       <div class="label">${a.area}</div>
-      <div class="gauge-tooltip" style="display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);width:280px;background:var(--bg-secondary);border:1px solid ${riskColor};border-radius:10px;padding:12px;font-size:0.8em;line-height:1.4;color:var(--text-secondary);z-index:100;box-shadow:0 4px 20px rgba(0,0,0,0.4);pointer-events:none;">
-        <div style="font-weight:700;color:${riskColor};margin-bottom:4px;">${a.area} — ${a.supply} Supply Risk</div>
-        <div>${reason}</div>
-        <div style="position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);width:12px;height:12px;background:var(--bg-secondary);border-right:1px solid ${riskColor};border-bottom:1px solid ${riskColor};transform:translateX(-50%) rotate(45deg);"></div>
+      <div class="gauge-tooltip" data-risk-color="${riskColor}" style="display:none;flex-direction:column;gap:6px;position:fixed;width:300px;background:#1a1e2a;border:1.5px solid ${riskColor};border-radius:12px;padding:14px 16px;font-size:0.82em;line-height:1.5;color:#e8eaed;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,0.6);pointer-events:none;">
+        <div style="font-weight:700;font-size:1.05em;color:${riskColor};padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.08);">⚠ ${a.area} — ${riskLabel} Risk</div>
+        <div style="color:#cdd0d5;font-size:0.95em;">${reason}</div>
       </div>
     </div>`;
   }).join('');
+}
+
+function showGaugeTooltip(el) {
+  const tt = el.querySelector('.gauge-tooltip');
+  const circle = el.querySelector('.gauge-circle');
+  const circleRect = circle.getBoundingClientRect();
+  tt.style.display = 'flex';
+  const ttW = 300;
+  let left = circleRect.left + circleRect.width/2 - ttW/2;
+  if (left < 10) left = 10;
+  if (left + ttW > window.innerWidth - 10) left = window.innerWidth - ttW - 10;
+  tt.style.left = left + 'px';
+  tt.style.top = (circleRect.top - tt.offsetHeight - 12) + 'px';
+  if (circleRect.top - tt.offsetHeight - 12 < 10) {
+    tt.style.top = (circleRect.bottom + 12) + 'px';
+  }
+}
+
+function hideGaugeTooltip(el) {
+  el.querySelector('.gauge-tooltip').style.display = 'none';
 }
 
 // ===================== YIELD SORTED BAR CHART =====================
@@ -1729,12 +1750,13 @@ function drawYieldSortedChart() {
     const tooltip = document.getElementById('yieldSortedTooltip');
     const bRect = canvas.getBoundingClientRect();
     const mx = e.clientX - bRect.left;
+    const my = e.clientY - bRect.top;
     const idx = Math.floor((mx - pad.left) / gap);
     if (idx >= 0 && idx < sorted.length) {
       const a = sorted[idx];
       tooltip.style.display = 'block';
-      tooltip.style.left = (e.clientX - canvas.parentElement.getBoundingClientRect().left + 15) + 'px';
-      tooltip.style.top = (e.clientY - canvas.parentElement.getBoundingClientRect().top - 30) + 'px';
+      tooltip.style.left = (mx + 15) + 'px';
+      tooltip.style.top = (my - 30) + 'px';
       tooltip.innerHTML = `<strong>${a.area}</strong><br>Yield: ${a.yield.toFixed(1)}% | Price: ${(a.price/1000).toFixed(0)}K | Rent: ${(a.rent/1000).toFixed(1)}K`;
     } else { tooltip.style.display = 'none'; }
   };
@@ -1813,12 +1835,13 @@ function drawAppreciationChart() {
     const tooltip = document.getElementById('appreciationTooltip');
     const bRect = canvas.getBoundingClientRect();
     const mx = e.clientX - bRect.left;
+    const my = e.clientY - bRect.top;
     const idx = Math.floor((mx - pad.left) / gap);
     if (idx >= 0 && idx < sorted.length) {
       const a = sorted[idx];
       tooltip.style.display = 'block';
-      tooltip.style.left = (e.clientX - canvas.parentElement.getBoundingClientRect().left + 15) + 'px';
-      tooltip.style.top = (e.clientY - canvas.parentElement.getBoundingClientRect().top - 30) + 'px';
+      tooltip.style.left = (mx + 15) + 'px';
+      tooltip.style.top = (my - 30) + 'px';
       tooltip.innerHTML = `<strong>${a.area}</strong><br>Appreciation: +${a.appreciation}% (5yr) | Price: ${(a.price/1000).toFixed(0)}K | Score: ${a.score.toFixed(1)}`;
     } else { tooltip.style.display = 'none'; }
   };
@@ -2673,7 +2696,7 @@ function drawDevConcentrationChart() {
         <h4><span class="tag tag-yield">8.80% YIELD</span> Siraj Tower — Arjan</h4>
         <div class="price">589,000 AED</div>
         <div class="dev-info">
-          <span class="dev-badge tier3">🏢 Tiger Properties · Tier 4</span>
+          <span class="dev-badge tier4">🏢 Tiger Properties · Tier 4</span>
           <span class="dev-badge age">🕐 Built 2021 · ~5 yrs</span>
         </div>
         <div class="detail">415 sqft · 1,420 AED/sqft · Furnished · Avg txn 537K</div>
@@ -3553,124 +3576,185 @@ function drawDevConcentrationChart() {
 </div>
 
 <script>
-// Off-Plan Price Distribution Chart
+// Off-Plan Price Distribution Chart — pure Canvas 2D (no Chart.js dependency)
 function drawOffplanPriceChart() {
   const canvas = document.getElementById('offplanPriceChart');
   if (!canvas) return;
-  // Destroy existing chart instance if any
-  const existing = Chart.getChart(canvas);
-  if (existing) existing.destroy();
-  const ctx = canvas.getContext('2d');
-  const areas = ['JVC','Arjan','JVT','Motor City','DSO','Wasl Gate','JLT','Biz Bay'];
-  const minPrices = [570,590,530,525,449,660,600,700];
-  const avgPrices = [750,730,720,700,670,710,1050,1200];
-  const maxPrices = [962,994,975,920,842,850,1565,3490];
+  const parent = canvas.parentElement;
+  if (!parent || parent.clientWidth < 10) return; // collapsed / invisible
 
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: areas,
-      datasets: [
-        {
-          label: 'Min Price (K)',
-          data: minPrices,
-          backgroundColor: 'rgba(52,211,153,0.7)',
-          borderColor: '#34d399',
-          borderWidth: 1
-        },
-        {
-          label: 'Avg Price (K)',
-          data: avgPrices,
-          backgroundColor: 'rgba(96,165,250,0.7)',
-          borderColor: '#60a5fa',
-          borderWidth: 1
-        },
-        {
-          label: 'Max Price (K)',
-          data: maxPrices,
-          backgroundColor: 'rgba(248,113,113,0.7)',
-          borderColor: '#f87171',
-          borderWidth: 1
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        y: {
-          beginAtZero: true,
-          max: 1800,
-          ticks: { color: '#9aa0a6', callback: v => v+'K' },
-          grid: { color: 'rgba(42,46,58,0.5)' }
-        },
-        x: {
-          ticks: { color: '#e8eaed', font:{size:11} },
-          grid: { display: false }
-        }
-      },
-      plugins: {
-        legend: { labels: { color: '#9aa0a6' } },
-        annotation: {
-          annotations: {
-            budgetLine: {
-              type: 'line',
-              yMin: 750,
-              yMax: 750,
-              borderColor: '#fbbf24',
-              borderWidth: 2,
-              borderDash: [6,4],
-              label: {
-                content: 'Budget Limit 750K',
-                enabled: true,
-                position: 'end',
-                color: '#fbbf24',
-                backgroundColor: 'rgba(0,0,0,0.6)',
-                font: { size: 11 }
-              }
-            }
-          }
-        },
-        tooltip: {
-          callbacks: {
-            label: function(c) { return c.dataset.label+': '+c.raw+'K AED'; }
-          }
-        }
-      }
-    }
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const W = parent.clientWidth;
+  const H = 350;
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, W, H);
+
+  const areaLabels = ['JVC','Arjan','JVT','Motor City','DSO','Wasl Gate','JLT','Biz Bay'];
+  const minP  = [570, 590, 530, 525, 449, 660, 600,  700];
+  const avgP  = [750, 730, 720, 700, 670, 710,1050, 1200];
+  const maxP  = [962, 994, 975, 920, 842, 850,1565, 3490];
+  const datasets = [
+    { label:'Min Price', data:minP,  color:'#34d399', bg:'rgba(52,211,153,0.7)'  },
+    { label:'Avg Price', data:avgP,  color:'#60a5fa', bg:'rgba(96,165,250,0.7)'  },
+    { label:'Max Price', data:maxP,  color:'#f87171', bg:'rgba(248,113,113,0.7)' },
+  ];
+  const maxY = 1800;
+  const pad = { top:30, right:20, bottom:60, left:55 };
+  const chartW = W - pad.left - pad.right;
+  const chartH = H - pad.top - pad.bottom;
+  const groupGap = chartW / areaLabels.length;
+  const barW = Math.min(groupGap * 0.22, 28);
+  const barGap = 3;
+
+  // Y-axis grid
+  const ySteps = [0, 200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800];
+  ctx.strokeStyle = 'rgba(42,46,58,0.8)';
+  ctx.lineWidth = 0.5;
+  ctx.fillStyle = '#6b7280';
+  ctx.font = '11px sans-serif';
+  ctx.textAlign = 'right';
+  ySteps.forEach(v => {
+    const y = pad.top + chartH - (v / maxY) * chartH;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+    ctx.fillText(v + 'K', pad.left - 8, y + 4);
   });
+
+  // Budget line at 750K
+  const budgetY = pad.top + chartH - (750 / maxY) * chartH;
+  ctx.save();
+  ctx.strokeStyle = '#fbbf24';
+  ctx.lineWidth = 2;
+  ctx.setLineDash([6, 4]);
+  ctx.beginPath();
+  ctx.moveTo(pad.left, budgetY);
+  ctx.lineTo(W - pad.right, budgetY);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  // Budget label
+  ctx.fillStyle = '#fbbf24';
+  ctx.font = 'bold 11px sans-serif';
+  ctx.textAlign = 'right';
+  ctx.fillText('Budget 750K ▶', W - pad.right - 4, budgetY - 6);
+  ctx.restore();
+
+  // Draw bars
+  areaLabels.forEach((area, i) => {
+    const groupX = pad.left + i * groupGap + groupGap / 2;
+    const totalBarWidth = datasets.length * barW + (datasets.length - 1) * barGap;
+    const startX = groupX - totalBarWidth / 2;
+
+    datasets.forEach((ds, di) => {
+      const val = ds.data[i];
+      // Cap display at maxY for very large values
+      const displayVal = Math.min(val, maxY);
+      const barH = (displayVal / maxY) * chartH;
+      const x = startX + di * (barW + barGap);
+      const y = pad.top + chartH - barH;
+      const r = 3;
+
+      // Bar with rounded top
+      ctx.fillStyle = ds.bg;
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + barW - r, y);
+      ctx.quadraticCurveTo(x + barW, y, x + barW, y + r);
+      ctx.lineTo(x + barW, pad.top + chartH);
+      ctx.lineTo(x, pad.top + chartH);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.fill();
+
+      // Border
+      ctx.strokeStyle = ds.color;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Value label on top of bar (only show if bar is tall enough)
+      if (barH > 20) {
+        ctx.fillStyle = '#e8eaed';
+        ctx.font = '9px sans-serif';
+        ctx.textAlign = 'center';
+        const label = val >= 1000 ? (val/1000).toFixed(1)+'M' : val+'K';
+        ctx.fillText(label, x + barW/2, y - 4);
+      }
+    });
+
+    // X-axis label
+    ctx.save();
+    ctx.translate(groupX, pad.top + chartH + 12);
+    ctx.rotate(-0.45);
+    ctx.fillStyle = '#e8eaed';
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(area, 0, 0);
+    ctx.restore();
+  });
+
+  // Legend (drawn at top-right)
+  const legendX = W - pad.right - 200;
+  const legendY = pad.top + 2;
+  datasets.forEach((ds, i) => {
+    const lx = legendX + i * 80;
+    ctx.fillStyle = ds.bg;
+    ctx.fillRect(lx, legendY, 12, 12);
+    ctx.strokeStyle = ds.color;
+    ctx.strokeRect(lx, legendY, 12, 12);
+    ctx.fillStyle = '#9aa0a6';
+    ctx.font = '10px sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(ds.label, lx + 16, legendY + 10);
+  });
+
+  // Tooltip
+  canvas.onmousemove = function(e) {
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    const idx = Math.floor((mx - pad.left) / groupGap);
+    if (idx >= 0 && idx < areaLabels.length && my > pad.top && my < pad.top + chartH) {
+      canvas.style.cursor = 'crosshair';
+      canvas.title = areaLabels[idx] + ' — Min: ' + minP[idx] + 'K | Avg: ' + avgP[idx] + 'K | Max: ' + maxP[idx] + 'K';
+    } else {
+      canvas.style.cursor = 'default';
+      canvas.title = '';
+    }
+  };
 }
 // Initial draw (deferred so it works even if section is collapsed)
-window.addEventListener('load', () => {
-  // Try immediately, and also when off-plan section is expanded
+window.addEventListener('load', function() {
   setTimeout(drawOffplanPriceChart, 500);
-});
+
+  // Sortable offplan table
   if(typeof makeSortable === 'function') {
     makeSortable(document.getElementById('offplanTable'));
   } else {
-    // Inline sortable for offplan table
-    const table = document.getElementById('offplanTable');
+    var table = document.getElementById('offplanTable');
     if(table) {
-      table.querySelectorAll('thead th').forEach((th,ci) => {
-        th.addEventListener('click', () => {
-          const tbody = table.querySelector('tbody');
-          const rows = Array.from(tbody.querySelectorAll('tr'));
-          const isNum = th.dataset.type === 'num';
-          const dir = th.classList.contains('sorted-asc') ? -1 : 1;
-          table.querySelectorAll('th').forEach(t=>{t.classList.remove('sorted','sorted-asc','sorted-desc');});
+      table.querySelectorAll('thead th').forEach(function(th, ci) {
+        th.addEventListener('click', function() {
+          var tbody = table.querySelector('tbody');
+          var rows = Array.from(tbody.querySelectorAll('tr'));
+          var isNum = th.dataset.type === 'num';
+          var dir = th.classList.contains('sorted-asc') ? -1 : 1;
+          table.querySelectorAll('th').forEach(function(t){t.classList.remove('sorted','sorted-asc','sorted-desc');});
           th.classList.add('sorted', dir===1?'sorted-asc':'sorted-desc');
-          rows.sort((a,b) => {
-            let va = a.cells[ci].getAttribute('data-v') || a.cells[ci].textContent.trim();
-            let vb = b.cells[ci].getAttribute('data-v') || b.cells[ci].textContent.trim();
+          rows.sort(function(a,b) {
+            var va = a.cells[ci].getAttribute('data-v') || a.cells[ci].textContent.trim();
+            var vb = b.cells[ci].getAttribute('data-v') || b.cells[ci].textContent.trim();
             if(isNum){ va=parseFloat(va.replace(/[^0-9.-]/g,''))||0; vb=parseFloat(vb.replace(/[^0-9.-]/g,''))||0; }
             if(va<vb) return -dir; if(va>vb) return dir; return 0;
           });
-          rows.forEach(r => tbody.appendChild(r));
+          rows.forEach(function(r){ tbody.appendChild(r); });
         });
       });
     }
   }
-})();
+});
 </script>
 
 </div><!-- /offplan-section -->
