@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dubai Studio Investment Dashboard — 750K AED Analysis</title>
+<style>
+:root {
+  --bg-primary: #0f1117;
+  --bg-card: #1a1d27;
+  --bg-card-hover: #222635;
+  --border: #2a2e3a;
+  --text-primary: #e8eaed;
+  --text-secondary: #9aa0a6;
+  --text-muted: #6b7280;
+  --accent-green: #34d399;
+  --accent-blue: #60a5fa;
+  --accent-orange: #fbbf24;
+  --accent-red: #f87171;
+  --accent-purple: #a78bfa;
+  --accent-cyan: #22d3ee;
+  --accent-pink: #f472b6;
+  --gradient-green: linear-gradient(135deg, #34d399, #059669);
+  --gradient-blue: linear-gradient(135deg, #60a5fa, #3b82f6);
+  --gradient-orange: linear-gradient(135deg, #fbbf24, #f59e0b);
+  --gradient-red: linear-gradient(135deg, #f87171, #ef4444);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+.dashboard {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.header {
+  text-align: center;
+  padding: 40px 20px;
+  margin-bottom: 30px;
+  background: linear-gradient(135deg, #1a1d27 0%, #0f1117 100%);
+  border-bottom: 1px solid var(--border);
+  border-radius: 16px;
+}
+.header h1 {
+  font-size: 2.2em;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.header p { color: var(--text-secondary); font-size: 1.1em; }
+.header .badge {
+  display: inline-block;
+  background: rgba(52,211,153,0.15);
+  color: var(--accent-green);
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  margin-top: 10px;
+  border: 1px solid rgba(52,211,153,0.3);
+}
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+.full-width { grid-column: 1 / -1; }
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  transition: border-color 0.2s;
+}
+.card:hover { border-color: rgba(96,165,250,0.3); }
+.card h2 {
+  font-size: 1.15em;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card h2 .icon { font-size: 1.2em; }
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  padding: 12px;
+  background: rgba(42,46,58,0.5);
+  border-radius: 8px;
+}
+.filter-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 5px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85em;
+  transition: all 0.2s;
+}
+.filter-btn:hover, .filter-btn.active {
+  background: rgba(96,165,250,0.15);
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+}
+.chart-container {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+}
+canvas { width: 100% !important; border-radius: 8px; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+table thead th {
+  background: rgba(42,46,58,0.7);
+  color: var(--text-secondary);
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+  transition: color 0.2s;
+  position: relative;
+}
+table thead th:hover { color: var(--accent-blue); }
+table thead th .sort-arrow {
+  margin-left: 4px;
+  font-size: 0.7em;
+  opacity: 0.4;
+}
+table thead th.sorted .sort-arrow { opacity: 1; color: var(--accent-blue); }
+table tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(42,46,58,0.5);
+  white-space: nowrap;
+}
+table tbody tr { transition: background 0.15s; }
+table tbody tr:hover { background: var(--bg-card-hover); }
+table tbody tr.highlight { background: rgba(96,165,250,0.1); }
+.pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.8em;
+  font-weight: 600;
+}
+.pill-green { background: rgba(52,211,153,0.15); color: var(--accent-green); }
+.pill-yellow { background: rgba(251,191,36,0.15); color: var(--accent-orange); }
+.pill-red { background: rgba(248,113,113,0.15); color: var(--accent-red); }
+.pill-blue { background: rgba(96,165,250,0.15); color: var(--accent-blue); }
+.tooltip {
+  position: absolute;
+  background: #2a2e3a;
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.85em;
+  pointer-events: none;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  border: 1px solid var(--border);
+  white-space: nowrap;
+  display: none;
+}
+.gauge-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.gauge-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 90px;
+}
+.gauge-item .label { font-size: 0.75em; color: var(--text-secondary); text-align: center; }
+.gauge-item .gauge-circle {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7em;
+  font-weight: 700;
+  border: 3px solid;
+}
+.gauge-circle.low { border-color: var(--accent-green); color: var(--accent-green); background: rgba(52,211,153,0.08); }
+.gauge-circle.medium { border-color: var(--accent-orange); color: var(--accent-orange); background: rgba(251,191,36,0.08); }
+.gauge-circle.high { border-color: var(--accent-red); color: var(--accent-red); background: rgba(248,113,113,0.08); }
+.kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 20px; }
+.kpi {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+}
+.kpi .value { font-size: 1.6em; font-weight: 700; }
+.kpi .label { font-size: 0.8em; color: var(--text-secondary); margin-top: 4px; }
+.kpi.green .value { color: var(--accent-green); }
+.kpi.blue .value { color: var(--accent-blue); }
+.kpi.orange .value { color: var(--accent-orange); }
+.kpi.red .value { color: var(--accent-red); }
+.kpi.purple .value { color: var(--accent-purple); }
+.cost-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.cost-section h3 {
+  font-size: 0.95em;
+  color: var(--accent-blue);
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 6px;
+}
+.cost-line {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  font-size: 0.9em;
+}
+.cost-line .amount { font-weight: 600; }
+.cost-total {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-weight: 700;
+  border-top: 2px solid var(--border);
+  margin-top: 6px;
+  font-size: 1em;
+}
+.cost-total .amount { color: var(--accent-green); }
+.tax-bar {
+  display: flex;
+  height: 28px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+.tax-bar .segment { display: flex; align-items: center; justify-content: center; font-size: 0.7em; font-weight: 600; }
+.legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; font-size: 0.8em; }
+.legend-item { display: flex; align-items: center; gap: 5px; }
+.legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+@media (max-width: 900px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .cost-grid { grid-template-columns: 1fr; }
+  .header h1 { font-size: 1.5em; }
+  .kpi-row { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .dashboard { padding: 10px; }
+  .kpi-row { grid-template-columns: 1fr 1fr; }
+  table { font-size: 0.8em; }
+}
+</style>
+</head>
+<body>
+<div class="dashboard">
+
+<div class="header">
+  <h1>🏗️ Dubai Studio Investment Dashboard</h1>
+  <p>750,000 AED Budget — Off-Plan Studio Apartment Analysis</p>
+  <span class="badge">📊 Data as of February 2026</span>
+</div>
+
+<!-- KPIs -->
+<div class="kpi-row">
+  <div class="kpi green"><div class="value">8.9%</div><div class="label">5-Year Ann. ROI (Base)</div></div>
+  <div class="kpi blue"><div class="value">AED 370K</div><div class="label">5-Year Total Return</div></div>
+  <div class="kpi orange"><div class="value">AED 830K</div><div class="label">Total Acquisition Cost</div></div>
+  <div class="kpi purple"><div class="value">4-6%</div><div class="label">Net Yield After Costs</div></div>
+  <div class="kpi red"><div class="value">~25%</div><div class="label">Israeli Tax Impact</div></div>
+</div>
+
+<!-- Filter Bar -->
+<div class="card" style="margin-bottom:20px;">
+  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+    <span style="font-size:0.85em;color:var(--text-secondary);font-weight:600;">Filter by Area:</span>
+    <div class="filter-bar" id="filterBar" style="margin-bottom:0;padding:6px;flex:1;">
+      <button class="filter-btn active" onclick="filterArea('all')">All Areas</button>
+      <button class="filter-btn" onclick="filterArea('JVC')">JVC</button>
+      <button class="filter-btn" onclick="filterArea('Arjan')">Arjan</button>
+      <button class="filter-btn" onclick="filterArea('Business Bay')">Business Bay</button>
+      <button class="filter-btn" onclick="filterArea('JLT')">JLT</button>
+      <button class="filter-btn" onclick="filterArea('DSO')">DSO</button>
+      <button class="filter-btn" onclick="filterArea('MBR City')">MBR City</button>
+      <button class="filter-btn" onclick="filterArea('Al Furjan')">Al Furjan</button>
+      <button class="filter-btn" onclick="filterArea('Dubai South')">Dubai South</button>
+      <button class="filter-btn" onclick="filterArea('Dubai Marina')">Dubai Marina</button>
+      <button class="filter-btn" onclick="filterArea('JVT')">JVT</button>
+      <button class="filter-btn" onclick="filterArea('Motor City')">Motor City</button>
+    </div>
+  </div>
+</div>
+
+<!-- Row 1: Bar Chart + Scatter -->
+<div class="grid-2">
+  <div class="card">
+    <h2><span class="icon">📊</span> Rental Yield Comparison (%)</h2>
+    <div class="chart-container">
+      <canvas id="yieldChart" height="320"></canvas>
+    </div>
+    <div class="tooltip" id="yieldTooltip"></div>
+  </div>
+  <div class="card">
+    <h2><span class="icon">🔵</span> Price vs Yield (Bubble = Occupancy)</h2>
+    <div class="chart-container">
+      <canvas id="scatterChart" height="320"></canvas>
+    </div>
+    <div class="tooltip" id="scatterTooltip"></div>
+  </div>
+</div>
+
+<!-- Row 2: ROI Line + Heatmap + Gauge -->
+<div class="grid-3">
+  <div class="card">
+    <h2><span class="icon">📈</span> 5-Year ROI Projection</h2>
+    <div class="chart-container">
+      <canvas id="roiChart" height="280"></canvas>
+    </div>
+    <div class="tooltip" id="roiTooltip"></div>
+    <div class="legend" style="margin-top:12px;">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--accent-green)"></div> Optimistic (7% appr.)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--accent-blue)"></div> Base (5% appr.)</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--accent-red)"></div> Pessimistic (2% appr.)</div>
+    </div>
+  </div>
+  <div class="card">
+    <h2><span class="icon">🗺️</span> Capital Appreciation (5Y)</h2>
+    <div id="heatmap" style="display:flex;flex-direction:column;gap:6px;"></div>
+  </div>
+  <div class="card">
+    <h2><span class="icon">⚠️</span> Supply Risk Gauge</h2>
+    <div class="gauge-row" id="gaugeRow"></div>
+  </div>
+</div>
+
+<!-- Table 1: Area Comparison -->
+<div class="grid-2" style="margin-bottom:20px;">
+  <div class="card">
+    <h2><span class="icon">💹</span> Rental Yield Comparison (Sorted)</h2>
+    <div class="chart-container">
+      <canvas id="yieldSortedChart" height="360"></canvas>
+    </div>
+    <div class="tooltip" id="yieldSortedTooltip"></div>
+  </div>
+  <div class="card">
+    <h2><span class="icon">🏗️</span> Capital Appreciation — 5 Year (%)</h2>
+    <div class="chart-container">
+      <canvas id="appreciationChart" height="360"></canvas>
+    </div>
+    <div class="tooltip" id="appreciationTooltip"></div>
+  </div>
+</div>
+
+<!-- Table 1: Area Comparison -->
+<div class="card" style="margin-bottom:20px;overflow-x:auto;">
+  <h2><span class="icon">🏘️</span> Area Comparison Matrix</h2>
+  <table id="areaTable">
+    <thead><tr>
+      <th data-col="area">Area <span class="sort-arrow">▲▼</span></th>
+      <th data-col="price" data-type="num">Avg Price (AED) <span class="sort-arrow">▲▼</span></th>
+      <th data-col="rent" data-type="num">Avg Rent (AED) <span class="sort-arrow">▲▼</span></th>
+      <th data-col="yield" data-type="num">Yield % <span class="sort-arrow">▲▼</span></th>
+      <th data-col="appreciation" data-type="num">Appreciation <span class="sort-arrow">▲▼</span></th>
+      <th data-col="occupancy" data-type="num">Occupancy <span class="sort-arrow">▲▼</span></th>
+      <th data-col="supply">Supply Risk <span class="sort-arrow">▲▼</span></th>
+      <th data-col="infra" data-type="num">Infrastructure <span class="sort-arrow">▲▼</span></th>
+      <th data-col="score" data-type="num">Overall <span class="sort-arrow">▲▼</span></th>
+    </tr></thead>
+    <tbody id="areaBody"></tbody>
+  </table>
+</div>
+
+<!-- Table 2 & 3: Developer + Projects -->
+<div class="grid-2">
+  <div class="card" style="overflow-x:auto;">
+    <h2><span class="icon">🏢</span> Developer Scorecard</h2>
+    <table id="devTable">
+      <thead><tr>
+        <th data-col="name">Developer <span class="sort-arrow">▲▼</span></th>
+        <th data-col="tier">Tier <span class="sort-arrow">▲▼</span></th>
+        <th data-col="ontime" data-type="num">On-Time % <span class="sort-arrow">▲▼</span></th>
+        <th data-col="service" data-type="num">Svc Chg (AED/sqft) <span class="sort-arrow">▲▼</span></th>
+        <th data-col="quality" data-type="num">Quality <span class="sort-arrow">▲▼</span></th>
+        <th data-col="payment" data-type="num">Payment Plan <span class="sort-arrow">▲▼</span></th>
+      </tr></thead>
+      <tbody id="devBody"></tbody>
+    </table>
+  </div>
+  <div class="card" style="overflow-x:auto;">
+    <h2><span class="icon">🎯</span> Project Shortlist</h2>
+    <table id="projectTable">
+      <thead><tr>
+        <th data-col="name">Project <span class="sort-arrow">▲▼</span></th>
+        <th data-col="developer">Developer <span class="sort-arrow">▲▼</span></th>
+        <th data-col="area">Area <span class="sort-arrow">▲▼</span></th>
+        <th data-col="price" data-type="num">Price (AED) <span class="sort-arrow">▲▼</span></th>
+        <th data-col="handover">Handover <span class="sort-arrow">▲▼</span></th>
+        <th data-col="yield" data-type="num">Yield % <span class="sort-arrow">▲▼</span></th>
+        <th data-col="plan">Payment <span class="sort-arrow">▲▼</span></th>
+        <th data-col="score" data-type="num">Score <span class="sort-arrow">▲▼</span></th>
+      </tr></thead>
+      <tbody id="projectBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Table 4 & 5: Cost Breakdown + Tax -->
+<div class="grid-2" style="margin-top:20px;">
+  <div class="card">
+    <h2><span class="icon">💰</span> Cost Breakdown & Net Yield</h2>
+    <div class="cost-grid">
+      <div class="cost-section">
+        <h3>Purchase Costs</h3>
+        <div class="cost-line"><span>Property Price</span><span class="amount">AED 750,000</span></div>
+        <div class="cost-line"><span>DLD Fee (4%)</span><span class="amount">AED 30,000</span></div>
+        <div class="cost-line"><span>DLD Admin Fee</span><span class="amount">AED 580</span></div>
+        <div class="cost-line"><span>Oqood Fee</span><span class="amount">AED 3,000</span></div>
+        <div class="cost-line"><span>Agency Commission (2%)</span><span class="amount">AED 15,000</span></div>
+        <div class="cost-line"><span>Trustee Office Fee</span><span class="amount">AED 4,200</span></div>
+        <div class="cost-line"><span>NOC Fee</span><span class="amount">AED 3,000</span></div>
+        <div class="cost-line"><span>Furnishing</span><span class="amount">AED 22,000</span></div>
+        <div class="cost-total"><span>Total Acquisition</span><span class="amount">AED 827,780</span></div>
+      </div>
+      <div class="cost-section">
+        <h3>Annual Operating Costs</h3>
+        <div class="cost-line"><span>Service Charges</span><span class="amount">AED 6,800</span></div>
+        <div class="cost-line"><span>Maintenance Reserve</span><span class="amount">AED 2,500</span></div>
+        <div class="cost-line"><span>Property Management (7%)</span><span class="amount">AED 3,150</span></div>
+        <div class="cost-line"><span>Vacancy (~1 month)</span><span class="amount">AED 3,750</span></div>
+        <div class="cost-total"><span>Total Annual Costs</span><span class="amount">AED 16,200</span></div>
+        <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px;">
+          <div class="cost-line"><span>Gross Annual Rent</span><span class="amount" style="color:var(--accent-green)">AED 45,000</span></div>
+          <div class="cost-line"><span>Net Operating Income</span><span class="amount" style="color:var(--accent-blue)">AED 28,800</span></div>
+          <div class="cost-line"><span><strong>Gross Yield</strong></span><span class="amount" style="color:var(--accent-green)"><strong>6.0%</strong></span></div>
+          <div class="cost-line"><span><strong>Net Yield</strong></span><span class="amount" style="color:var(--accent-blue)"><strong>3.8%</strong></span></div>
+          <div class="cost-line"><span><strong>Net Yield (on purchase only)</strong></span><span class="amount" style="color:var(--accent-cyan)"><strong>3.5%</strong></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <h2><span class="icon">🇮🇱</span> Israeli Tax Impact — Gross vs Net Returns</h2>
+    <div style="margin-bottom:16px;">
+      <h3 style="font-size:0.9em;color:var(--accent-orange);margin-bottom:8px;">5-Year Rental Income</h3>
+      <div class="cost-line"><span>Gross Rental (5yr)</span><span class="amount">AED 245,500</span></div>
+      <div class="cost-line"><span>Operating Costs (5yr)</span><span class="amount" style="color:var(--accent-red)">-AED 82,500</span></div>
+      <div class="cost-line"><span>Net Before Tax</span><span class="amount">AED 163,000</span></div>
+      <div class="cost-line"><span>Israeli Tax (~25%)</span><span class="amount" style="color:var(--accent-red)">-AED 40,750</span></div>
+      <div class="cost-total"><span>Net After Israeli Tax</span><span class="amount">AED 122,250</span></div>
+      <div class="tax-bar" style="margin-top:10px;">
+        <div class="segment" style="width:49.8%;background:var(--accent-green);">Net Income</div>
+        <div class="segment" style="width:16.6%;background:var(--accent-red);">Tax</div>
+        <div class="segment" style="width:33.6%;background:var(--text-muted);">Costs</div>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--accent-green)"></div>Net Income (49.8%)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--accent-red)"></div>Israeli Tax (16.6%)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--text-muted)"></div>Costs (33.6%)</div>
+      </div>
+    </div>
+    <div style="border-top:1px solid var(--border);padding-top:14px;">
+      <h3 style="font-size:0.9em;color:var(--accent-orange);margin-bottom:8px;">Capital Gains (5-Year Base Case)</h3>
+      <div class="cost-line"><span>Appreciation</span><span class="amount">AED 207,365</span></div>
+      <div class="cost-line"><span>Capital Gains Tax (25%)</span><span class="amount" style="color:var(--accent-red)">-AED 51,841</span></div>
+      <div class="cost-total"><span>Net Capital Gain</span><span class="amount">AED 155,524</span></div>
+      <div style="margin-top:12px;padding:10px;background:rgba(248,113,113,0.08);border-radius:8px;border:1px solid rgba(248,113,113,0.2);">
+        <div class="cost-line"><span><strong>Total 5yr Return (Before Tax)</strong></span><span class="amount" style="color:var(--accent-green)"><strong>AED 370,365</strong></span></div>
+        <div class="cost-line"><span><strong>Total 5yr Return (After IL Tax)</strong></span><span class="amount" style="color:var(--accent-orange)"><strong>AED 277,774</strong></span></div>
+        <div class="cost-line"><span><strong>Effective 5yr ROI (After Tax)</strong></span><span class="amount" style="color:var(--accent-orange)"><strong>33.5%</strong></span></div>
+        <div class="cost-line"><span><strong>Annualized ROI (After Tax)</strong></span><span class="amount" style="color:var(--accent-orange)"><strong>6.7%</strong></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== INFRASTRUCTURE & GOVERNMENT PROJECTS ===================== -->
+<div style="margin-top:40px;margin-bottom:20px;">
+  <h2 style="font-size:1.6em;font-weight:700;text-align:center;background:linear-gradient(135deg,var(--accent-cyan),var(--accent-blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
+    🏗️ Infrastructure & Government Projects
+  </h2>
+  <p style="text-align:center;color:var(--text-secondary);font-size:0.95em;margin-top:6px;">Major infrastructure investments impacting investment areas (2024-2035)</p>
+</div>
+
+<!-- Infrastructure Timeline -->
+<div class="card" style="margin-bottom:20px;overflow-x:auto;">
+  <h2><span class="icon">📅</span> Infrastructure Timeline (2024-2035)</h2>
+  <div class="chart-container">
+    <canvas id="infraTimelineChart" height="340"></canvas>
+  </div>
+  <div class="legend" style="margin-top:12px;">
+    <div class="legend-item"><div class="legend-dot" style="background:#34d399"></div> Completed</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#60a5fa"></div> Under Construction</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#fbbf24"></div> Planning / Approved</div>
+  </div>
+</div>
+
+<!-- Infrastructure Impact Table + Radar -->
+<div class="grid-2">
+  <div class="card" style="overflow-x:auto;">
+    <h2><span class="icon">🏥</span> Infrastructure Impact Score by Area</h2>
+    <table id="infraTable">
+      <thead><tr>
+        <th>Area</th>
+        <th>Metro Now</th>
+        <th>Planned Metro</th>
+        <th>Nearest Mall</th>
+        <th>Healthcare</th>
+        <th>Schools</th>
+        <th>Free Zone</th>
+        <th>Infra Score</th>
+      </tr></thead>
+      <tbody id="infraBody"></tbody>
+    </table>
+  </div>
+  <div class="card">
+    <h2><span class="icon">📡</span> Government Investment Intensity</h2>
+    <div class="chart-container">
+      <canvas id="govRadarChart" height="400"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PIP'S RECOMMENDATIONS ===================== -->
+<div style="margin-top:40px;margin-bottom:20px;">
+  <h2 style="font-size:1.6em;font-weight:700;text-align:center;background:linear-gradient(135deg,var(--accent-orange),var(--accent-pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">
+    🦊 Pip's Investment Recommendations
+  </h2>
+  <p style="text-align:center;color:var(--text-secondary);font-size:0.95em;margin-top:6px;">Direct, opinionated picks for Michael's 750K AED budget</p>
+</div>
+
+<div class="grid-3" style="margin-bottom:20px;">
+  <!-- Pick #1 -->
+  <div class="card" style="border:1px solid rgba(52,211,153,0.4);background:linear-gradient(180deg,rgba(52,211,153,0.06) 0%,var(--bg-card) 100%);">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+      <span style="font-size:1.4em;">🥇</span>
+      <div>
+        <div style="font-size:1.1em;font-weight:700;color:var(--accent-green);">Motor City Ready Studio</div>
+        <div style="font-size:0.8em;color:var(--text-secondary);">~AED 550,000 • Pip's #1 Pick</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+      <span class="pill pill-green">10%+ Yield</span>
+      <span class="pill pill-green">Low Supply Risk</span>
+      <span class="pill pill-blue">Ready Now</span>
+    </div>
+    <div style="font-size:0.85em;color:var(--text-secondary);line-height:1.7;">
+      <div>✅ Immediate rental income — no waiting</div>
+      <div>✅ 600-880 sqft — spacious units</div>
+      <div>✅ AED 200K saved → emergency fund</div>
+      <div>✅ Built-out community, low competition</div>
+      <div style="margin-top:6px;color:var(--accent-orange);">⚠️ No metro • Lower appreciation</div>
+    </div>
+    <div style="margin-top:12px;padding:8px;background:rgba(52,211,153,0.08);border-radius:6px;font-size:0.8em;color:var(--accent-green);font-weight:600;text-align:center;">
+      Strategy: Buy ready → rent immediately → bank reserves
+    </div>
+  </div>
+  <!-- Pick #2 -->
+  <div class="card" style="border:1px solid rgba(96,165,250,0.4);background:linear-gradient(180deg,rgba(96,165,250,0.06) 0%,var(--bg-card) 100%);">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+      <span style="font-size:1.4em;">🥈</span>
+      <div>
+        <div style="font-size:1.1em;font-weight:700;color:var(--accent-blue);">Business Bay Off-Plan</div>
+        <div style="font-size:0.8em;color:var(--text-secondary);">~AED 750,000 • Best Appreciation</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+      <span class="pill pill-blue">7% Yield</span>
+      <span class="pill pill-yellow">Medium Supply</span>
+      <span class="pill pill-green">Metro Access</span>
+    </div>
+    <div style="font-size:0.85em;color:var(--text-secondary);line-height:1.7;">
+      <div>✅ Prime location — next to Downtown</div>
+      <div>✅ Metro access, corporate demand</div>
+      <div>✅ Best capital appreciation potential</div>
+      <div>✅ Short-term rental opportunity</div>
+      <div style="margin-top:6px;color:var(--accent-orange);">⚠️ Top of budget • Smaller units • Parking</div>
+    </div>
+    <div style="margin-top:12px;padding:8px;background:rgba(96,165,250,0.08);border-radius:6px;font-size:0.8em;color:var(--accent-blue);font-weight:600;text-align:center;">
+      Strategy: Off-plan Danube/Binghatti → holiday home license
+    </div>
+  </div>
+  <!-- Pick #3 -->
+  <div class="card" style="border:1px solid rgba(251,191,36,0.4);background:linear-gradient(180deg,rgba(251,191,36,0.06) 0%,var(--bg-card) 100%);">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+      <span style="font-size:1.4em;">🥉</span>
+      <div>
+        <div style="font-size:1.1em;font-weight:700;color:var(--accent-orange);">JVC Off-Plan</div>
+        <div style="font-size:0.8em;color:var(--text-secondary);">~AED 650,000 • Highest Yield Risk</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+      <span class="pill pill-green">8-9% Yield</span>
+      <span class="pill pill-red">High Supply Risk</span>
+      <span class="pill pill-yellow">Metro Coming</span>
+    </div>
+    <div style="font-size:0.85em;color:var(--text-secondary);line-height:1.7;">
+      <div>✅ Highest yield potential (8-9%)</div>
+      <div>✅ Blue Line metro 2028-2030</div>
+      <div>✅ Central location, growing amenities</div>
+      <div>✅ AED 100K under budget</div>
+      <div style="margin-top:6px;color:var(--accent-red);">🔴 15,000+ units coming — oversupply real</div>
+    </div>
+    <div style="margin-top:12px;padding:8px;background:rgba(251,191,36,0.08);border-radius:6px;font-size:0.8em;color:var(--accent-orange);font-weight:600;text-align:center;">
+      Strategy: Tier 1-2 dev only → early handover → price low
+    </div>
+  </div>
+</div>
+
+<!-- Pip's Warnings Card -->
+<div class="card" style="margin-bottom:20px;border:1px solid rgba(248,113,113,0.3);background:linear-gradient(180deg,rgba(248,113,113,0.04) 0%,var(--bg-card) 100%);">
+  <h2><span class="icon">⚠️</span> Pip's Key Warnings</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;font-size:0.88em;">
+    <div>
+      <div style="color:var(--accent-red);font-weight:700;margin-bottom:4px;">🇮🇱 Israeli Tax Drag</div>
+      <div style="color:var(--text-secondary);">25% on capital gains + marginal rate on rental income. Factor into ALL return calculations. "Tax-free Dubai" doesn't apply to Israeli tax residents.</div>
+    </div>
+    <div>
+      <div style="color:var(--accent-orange);font-weight:700;margin-bottom:4px;">💰 Real Budget = AED 830K+</div>
+      <div style="color:var(--text-secondary);">DLD 4% + agent + trustee + furnishing + reserves. Your actual property budget is ~AED 650-670K if 750K is your max.</div>
+    </div>
+    <div>
+      <div style="color:var(--accent-orange);font-weight:700;margin-bottom:4px;">🛂 Visa ≠ Golden Visa</div>
+      <div style="color:var(--text-secondary);">750K gets 2-year renewable visa only. Golden Visa needs AED 2M. Don't buy just for the visa.</div>
+    </div>
+    <div>
+      <div style="color:var(--accent-orange);font-weight:700;margin-bottom:4px;">⏳ Plan for 12-Month Delay</div>
+      <div style="color:var(--text-secondary);">60-80% of projects are delayed. Budget for zero rental income for 12 months after the promised date.</div>
+    </div>
+    <div>
+      <div style="color:var(--accent-orange);font-weight:700;margin-bottom:4px;">📊 Cycle Position: Late</div>
+      <div style="color:var(--text-secondary);">5 years into bull run. Record transactions. 70K+ units coming. Expect possible 10-20% correction 2027-2029. Hold 7+ years.</div>
+    </div>
+    <div>
+      <div style="color:var(--accent-green);font-weight:700;margin-bottom:4px;">🏦 Keep 6 Months Reserves</div>
+      <div style="color:var(--text-secondary);">Minimum AED 28K in reserves for service charges, vacancy, and maintenance. Non-negotiable.</div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /dashboard -->
+
+<div class="tooltip" id="globalTooltip"></div>
+
+<script>
+// ===================== DATA =====================
+const areas = [
+  { area:'JVC', price:600000, rent:46500, yield:8.35, appreciation:50, occupancy:90, supply:'Very High', supplyRisk:'high', infra:6.5, score:7.8, color:'#60a5fa' },
+  { area:'DSO', price:450000, rent:36000, yield:8.75, appreciation:40, occupancy:87, supply:'Medium', supplyRisk:'medium', infra:5.5, score:6.8, color:'#a78bfa' },
+  { area:'Sports City', price:400000, rent:32000, yield:8.50, appreciation:35, occupancy:84, supply:'Medium', supplyRisk:'medium', infra:4.0, score:5.5, color:'#f472b6' },
+  { area:'Al Furjan', price:575000, rent:41500, yield:7.50, appreciation:45, occupancy:90, supply:'Low', supplyRisk:'low', infra:7.5, score:7.5, color:'#fbbf24' },
+  { area:'Arjan', price:600000, rent:42500, yield:8.00, appreciation:47, occupancy:87, supply:'High', supplyRisk:'high', infra:5.5, score:7.2, color:'#34d399' },
+  { area:'Dubai South', price:475000, rent:34000, yield:8.00, appreciation:40, occupancy:80, supply:'Medium', supplyRisk:'medium', infra:5.0, score:6.0, color:'#22d3ee' },
+  { area:'Business Bay', price:925000, rent:57500, yield:7.00, appreciation:57, occupancy:92, supply:'Medium', supplyRisk:'medium', infra:9.0, score:8.5, color:'#f87171' },
+  { area:'Dubai Marina', price:1100000, rent:70000, yield:6.50, appreciation:50, occupancy:94, supply:'Very Low', supplyRisk:'low', infra:9.5, score:8.0, color:'#818cf8' },
+  { area:'JLT', price:725000, rent:51000, yield:7.50, appreciation:45, occupancy:92, supply:'Very Low', supplyRisk:'low', infra:8.5, score:8.2, color:'#fb923c' },
+  { area:'MBR City', price:800000, rent:50000, yield:7.00, appreciation:62, occupancy:87, supply:'Medium', supplyRisk:'medium', infra:6.5, score:7.0, color:'#e879f9' },
+  { area:'JVT', price:650000, rent:54000, yield:8.30, appreciation:40, occupancy:89, supply:'High', supplyRisk:'high', infra:7.0, score:7.5, color:'#2dd4bf' },
+  { area:'Motor City', price:550000, rent:56000, yield:10.20, appreciation:30, occupancy:91, supply:'Low', supplyRisk:'low', infra:6.0, score:7.3, color:'#facc15' },
+];
+
+const developers = [
+  { name:'Emaar', tier:'Tier 1', ontime:75, service:18.5, quality:5.0, payment:5 },
+  { name:'Sobha', tier:'Tier 1', ontime:80, service:17, quality:5.0, payment:6 },
+  { name:'Ellington', tier:'Tier 2', ontime:75, service:19, quality:5.0, payment:6 },
+  { name:'DAMAC', tier:'Tier 2', ontime:55, service:23, quality:3.0, payment:7 },
+  { name:'Azizi', tier:'Tier 2', ontime:50, service:15, quality:3.0, payment:5 },
+  { name:'Danube', tier:'Tier 3', ontime:60, service:15, quality:3.0, payment:9 },
+  { name:'Samana', tier:'Tier 3', ontime:65, service:17, quality:3.5, payment:8 },
+  { name:'Binghatti', tier:'Tier 3', ontime:65, service:14.5, quality:3.5, payment:7 },
+  { name:'Vincitore', tier:'Tier 4', ontime:55, service:16, quality:3.0, payment:7 },
+  { name:'Tiger', tier:'Tier 4', ontime:55, service:12.5, quality:2.0, payment:5 },
+  { name:'Wadan', tier:'Tier 4', ontime:0, service:0, quality:0, payment:7, unknown:true },
+];
+
+const projects = [
+  { name:'Barari Views 2', developer:'Samana', area:'Arjan', price:715000, handover:'Q4 2026', yield:8.0, plan:'20/50/30', score:9.0 },
+  { name:'Bayz 101', developer:'Danube', area:'Business Bay', price:775000, handover:'Q2-Q3 2026', yield:7.0, plan:'1% Monthly', score:8.7 },
+  { name:'Ghost', developer:'Binghatti', area:'JVC', price:685000, handover:'Q3-Q4 2026', yield:8.0, plan:'20/60/20', score:8.3 },
+  { name:'Golf Avenue', developer:'Samana', area:'Sports City', price:625000, handover:'Q1-Q2 2026', yield:8.5, plan:'20/50/30', score:8.0 },
+  { name:'Fashionz', developer:'Danube', area:'JVC', price:715000, handover:'Q1-Q2 2026', yield:8.0, plan:'1% Monthly', score:7.8 },
+  { name:'Skyrise', developer:'Binghatti', area:'Business Bay', price:765000, handover:'Q4 2026', yield:7.0, plan:'20/60/20', score:7.5 },
+  { name:'Volare', developer:'Vincitore', area:'Arjan', price:650000, handover:'Q2-Q3 2026', yield:8.0, plan:'20/50/30', score:7.2 },
+  { name:'Riviera', developer:'Azizi', area:'MBR City', price:650000, handover:'Q2-Q4 2026', yield:7.5, plan:'60/40', score:7.0 },
+  { name:'JLT Ready Studio', developer:'Secondary', area:'JLT', price:675000, handover:'Immediate', yield:7.5, plan:'Full Payment', score:8.1 },
+  { name:'Luxuria JVT', developer:'Binghatti', area:'JVT', price:766000, handover:'Jul 2027', yield:7.5, plan:'20/50/30', score:7.3 },
+  { name:'⚠️ Tresora', developer:'Wadan', area:'JVC', price:670000, handover:'Jan 2028', yield:8.0, plan:'20/30/50', score:4.0, warning:true },
+];
+
+// ROI projection data (cumulative %)
+const roiData = {
+  years: [0, 1, 2, 3, 4, 5],
+  optimistic: [0, 13.0, 23.6, 32.4, 44.8, 58.7],
+  base:       [0, 9.5, 17.2, 25.4, 34.6, 44.6],
+  pessimistic:[0, 4.5, 7.5, 11.0, 15.4, 20.4]
+};
+
+// ===================== FILTER STATE =====================
+let activeFilter = 'all';
+
+function filterArea(area) {
+  activeFilter = area;
+  document.querySelectorAll('#filterBar .filter-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  highlightTables(area);
+  drawYieldChart();
+  drawScatterChart();
+}
+
+function highlightTables(area) {
+  document.querySelectorAll('#areaBody tr, #projectBody tr').forEach(tr => {
+    const areaCell = tr.getAttribute('data-area');
+    if (area === 'all') { tr.classList.remove('highlight'); tr.style.opacity = '1'; }
+    else if (areaCell === area) { tr.classList.add('highlight'); tr.style.opacity = '1'; }
+    else { tr.classList.remove('highlight'); tr.style.opacity = '0.35'; }
+  });
+}
+
+// ===================== TABLE SORTING =====================
+function setupSortable(tableId) {
+  const table = document.getElementById(tableId);
+  const headers = table.querySelectorAll('thead th');
+  headers.forEach((th, idx) => {
+    th.addEventListener('click', () => {
+      const tbody = table.querySelector('tbody');
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      const isNum = th.getAttribute('data-type') === 'num';
+      const currentDir = th.getAttribute('data-dir') || 'asc';
+      const newDir = currentDir === 'asc' ? 'desc' : 'asc';
+      headers.forEach(h => { h.classList.remove('sorted'); h.removeAttribute('data-dir'); });
+      th.classList.add('sorted');
+      th.setAttribute('data-dir', newDir);
+      rows.sort((a, b) => {
+        let aVal = a.children[idx].getAttribute('data-val') || a.children[idx].textContent.trim();
+        let bVal = b.children[idx].getAttribute('data-val') || b.children[idx].textContent.trim();
+        if (isNum) { aVal = parseFloat(aVal) || 0; bVal = parseFloat(bVal) || 0; }
+        if (newDir === 'asc') return aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
+        return aVal < bVal ? 1 : aVal > bVal ? -1 : 0;
+      });
+      rows.forEach(r => tbody.appendChild(r));
+    });
+  });
+}
+
+// ===================== POPULATE TABLES =====================
+function populateAreaTable() {
+  const tbody = document.getElementById('areaBody');
+  const supplyPill = s => {
+    if (s === 'Very High' || s === 'High') return `<span class="pill pill-red">${s}</span>`;
+    if (s === 'Medium') return `<span class="pill pill-yellow">${s}</span>`;
+    return `<span class="pill pill-green">${s}</span>`;
+  };
+  const scorePill = s => {
+    if (s >= 8) return `<span class="pill pill-green">${s.toFixed(1)}</span>`;
+    if (s >= 7) return `<span class="pill pill-blue">${s.toFixed(1)}</span>`;
+    return `<span class="pill pill-yellow">${s.toFixed(1)}</span>`;
+  };
+  tbody.innerHTML = areas.map(a => `<tr data-area="${a.area}">
+    <td style="font-weight:600;color:${a.color}">${a.area}</td>
+    <td data-val="${a.price}">${(a.price/1000).toFixed(0)}K</td>
+    <td data-val="${a.rent}">${(a.rent/1000).toFixed(1)}K</td>
+    <td data-val="${a.yield}" style="color:var(--accent-green);font-weight:600">${a.yield.toFixed(1)}%</td>
+    <td data-val="${a.appreciation}">+${a.appreciation}%</td>
+    <td data-val="${a.occupancy}">${a.occupancy}%</td>
+    <td data-val="${a.supply}">${supplyPill(a.supply)}</td>
+    <td data-val="${a.infra}">${a.infra.toFixed(1)}/10</td>
+    <td data-val="${a.score}">${scorePill(a.score)}</td>
+  </tr>`).join('');
+}
+
+function populateDevTable() {
+  const tbody = document.getElementById('devBody');
+  const tierPill = t => {
+    if (t === 'Tier 1') return `<span class="pill pill-green">${t}</span>`;
+    if (t === 'Tier 2') return `<span class="pill pill-blue">${t}</span>`;
+    if (t === 'Tier 3') return `<span class="pill pill-yellow">${t}</span>`;
+    return `<span class="pill pill-red">${t}</span>`;
+  };
+  const stars = n => '★'.repeat(Math.round(n)) + '☆'.repeat(5 - Math.round(n));
+  tbody.innerHTML = developers.map(d => {
+    const rowStyle = d.unknown ? 'background:rgba(248,113,113,0.1);border-left:3px solid var(--accent-red);' : '';
+    const nameStyle = d.unknown ? 'font-weight:600;color:var(--accent-red)' : 'font-weight:600';
+    const ontimeDisplay = d.unknown ? '❓' : d.ontime + '%';
+    const serviceDisplay = d.unknown ? '❓' : d.service;
+    const qualityDisplay = d.unknown ? '<span style="color:var(--accent-red)">❓ Unknown</span>' : '<span style="color:var(--accent-orange);font-size:0.85em;">' + stars(d.quality) + '</span>';
+    const ontimeColor = d.unknown ? 'var(--accent-red)' : (d.ontime >= 70 ? 'var(--accent-green)' : d.ontime >= 60 ? 'var(--accent-orange)' : 'var(--accent-red)');
+    return `<tr style="${rowStyle}">
+    <td style="${nameStyle}">${d.name}${d.unknown ? ' 🚩' : ''}</td>
+    <td>${tierPill(d.tier)}</td>
+    <td data-val="${d.ontime}" style="color:${ontimeColor}">${ontimeDisplay}</td>
+    <td data-val="${d.service}">${serviceDisplay}</td>
+    <td data-val="${d.quality}">${qualityDisplay}</td>
+    <td data-val="${d.payment}">${d.payment}/10</td>
+  </tr>`;
+  }).join('');
+}
+
+function populateProjectTable() {
+  const tbody = document.getElementById('projectBody');
+  const areaColor = a => (areas.find(x => x.area === a) || {}).color || '#9aa0a6';
+  tbody.innerHTML = projects.map(p => {
+    const rowStyle = p.warning ? 'background:rgba(248,113,113,0.1);border-left:3px solid var(--accent-red);' : '';
+    const nameStyle = p.warning ? 'font-weight:600;color:var(--accent-red)' : 'font-weight:600';
+    const scoreColor = p.warning ? 'var(--accent-red)' : (p.score >= 8 ? 'var(--accent-green)' : p.score >= 7 ? 'var(--accent-blue)' : 'var(--accent-orange)');
+    return `<tr data-area="${p.area}" style="${rowStyle}">
+    <td style="${nameStyle}">${p.name}</td>
+    <td>${p.developer}</td>
+    <td style="color:${areaColor(p.area)}">${p.area}</td>
+    <td data-val="${p.price}">${(p.price/1000).toFixed(0)}K</td>
+    <td>${p.handover}</td>
+    <td data-val="${p.yield}" style="color:var(--accent-green)">${p.yield}%</td>
+    <td><span class="pill ${p.warning ? 'pill-red' : 'pill-blue'}">${p.plan}</span></td>
+    <td data-val="${p.score}" style="font-weight:700;color:${scoreColor}">${p.score.toFixed(1)}${p.warning ? ' ⚠️' : ''}</td>
+  </tr>`;
+  }).join('');
+}
+
+// ===================== CHARTS =====================
+function drawYieldChart() {
+  const canvas = document.getElementById('yieldChart');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = 320 * dpr;
+  ctx.scale(dpr, dpr);
+  const W = rect.width, H = 320;
+  ctx.clearRect(0, 0, W, H);
+
+  const sorted = [...areas].sort((a, b) => b.yield - a.yield);
+  const filtered = activeFilter === 'all' ? sorted : sorted;
+  const pad = { top: 30, right: 20, bottom: 50, left: 50 };
+  const chartW = W - pad.left - pad.right;
+  const chartH = H - pad.top - pad.bottom;
+  const barW = Math.min(chartW / filtered.length * 0.65, 45);
+  const gap = chartW / filtered.length;
+  const maxY = 10;
+
+  // Grid
+  ctx.strokeStyle = 'rgba(42,46,58,0.8)';
+  ctx.lineWidth = 0.5;
+  for (let i = 0; i <= 5; i++) {
+    const y = pad.top + (i / 5) * chartH;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+    ctx.fillStyle = '#6b7280'; ctx.font = '11px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText((maxY - i * 2).toFixed(0) + '%', pad.left - 8, y + 4);
+  }
+
+  filtered.forEach((a, i) => {
+    const x = pad.left + i * gap + gap / 2 - barW / 2;
+    const h = (a.yield / maxY) * chartH;
+    const y = pad.top + chartH - h;
+    const isActive = activeFilter === 'all' || a.area === activeFilter;
+    ctx.globalAlpha = isActive ? 1 : 0.2;
+
+    // Bar gradient
+    const grad = ctx.createLinearGradient(x, y, x, pad.top + chartH);
+    grad.addColorStop(0, a.color);
+    grad.addColorStop(1, a.color + '44');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    const r = 4;
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + barW - r, y);
+    ctx.quadraticCurveTo(x + barW, y, x + barW, y + r);
+    ctx.lineTo(x + barW, pad.top + chartH);
+    ctx.lineTo(x, pad.top + chartH);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.fill();
+
+    // Value
+    ctx.fillStyle = isActive ? '#e8eaed' : '#6b7280';
+    ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(a.yield.toFixed(1) + '%', x + barW / 2, y - 6);
+
+    // Label
+    ctx.save();
+    ctx.translate(x + barW / 2, pad.top + chartH + 10);
+    ctx.rotate(-0.45);
+    ctx.fillStyle = isActive ? '#9aa0a6' : '#4b5563';
+    ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(a.area, 0, 0);
+    ctx.restore();
+    ctx.globalAlpha = 1;
+  });
+
+  // Tooltip handling
+  canvas.onmousemove = e => {
+    const tooltip = document.getElementById('yieldTooltip');
+    const bRect = canvas.getBoundingClientRect();
+    const mx = e.clientX - bRect.left;
+    const idx = Math.floor((mx - pad.left) / gap);
+    if (idx >= 0 && idx < sorted.length) {
+      const a = sorted[idx];
+      tooltip.style.display = 'block';
+      tooltip.style.left = (e.clientX - canvas.parentElement.getBoundingClientRect().left + 15) + 'px';
+      tooltip.style.top = (e.clientY - canvas.parentElement.getBoundingClientRect().top - 30) + 'px';
+      tooltip.innerHTML = `<strong>${a.area}</strong><br>Yield: ${a.yield.toFixed(1)}% | Rent: ${(a.rent/1000).toFixed(1)}K | Occ: ${a.occupancy}%`;
+    } else { tooltip.style.display = 'none'; }
+  };
+  canvas.onmouseleave = () => { document.getElementById('yieldTooltip').style.display = 'none'; };
+}
+
+function drawScatterChart() {
+  const canvas = document.getElementById('scatterChart');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = 320 * dpr;
+  ctx.scale(dpr, dpr);
+  const W = rect.width, H = 320;
+  ctx.clearRect(0, 0, W, H);
+
+  const pad = { top: 20, right: 30, bottom: 45, left: 55 };
+  const chartW = W - pad.left - pad.right;
+  const chartH = H - pad.top - pad.bottom;
+  const minX = 300000, maxX = 1200000;
+  const minY = 5.5, maxY = 11.0;
+
+  // Grid
+  ctx.strokeStyle = 'rgba(42,46,58,0.8)'; ctx.lineWidth = 0.5;
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.top + (i / 4) * chartH;
+    const val = maxY - (i / 4) * (maxY - minY);
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+    ctx.fillStyle = '#6b7280'; ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(val.toFixed(1) + '%', pad.left - 8, y + 3);
+  }
+  for (let i = 0; i <= 4; i++) {
+    const x = pad.left + (i / 4) * chartW;
+    const val = minX + (i / 4) * (maxX - minX);
+    ctx.beginPath(); ctx.moveTo(x, pad.top); ctx.lineTo(x, pad.top + chartH); ctx.stroke();
+    ctx.fillStyle = '#6b7280'; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText((val / 1000).toFixed(0) + 'K', x, pad.top + chartH + 16);
+  }
+
+  // Axis labels
+  ctx.fillStyle = '#9aa0a6'; ctx.font = '11px sans-serif'; ctx.textAlign = 'center';
+  ctx.fillText('Avg Studio Price (AED)', pad.left + chartW / 2, H - 5);
+  ctx.save(); ctx.translate(12, pad.top + chartH / 2); ctx.rotate(-Math.PI / 2);
+  ctx.fillText('Gross Rental Yield %', 0, 0); ctx.restore();
+
+  areas.forEach(a => {
+    const px = pad.left + ((a.price - minX) / (maxX - minX)) * chartW;
+    const py = pad.top + ((maxY - a.yield) / (maxY - minY)) * chartH;
+    const r = (a.occupancy - 70) / 2.5 + 6;
+    const isActive = activeFilter === 'all' || a.area === activeFilter;
+    ctx.globalAlpha = isActive ? 0.75 : 0.15;
+    ctx.fillStyle = a.color;
+    ctx.beginPath(); ctx.arc(px, py, r, 0, Math.PI * 2); ctx.fill();
+    ctx.globalAlpha = isActive ? 1 : 0.15;
+    ctx.strokeStyle = a.color; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(px, py, r, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = isActive ? '#e8eaed' : '#4b5563';
+    ctx.font = '9px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(a.area, px, py - r - 5);
+    ctx.globalAlpha = 1;
+  });
+
+  canvas.onmousemove = e => {
+    const tooltip = document.getElementById('scatterTooltip');
+    const bRect = canvas.getBoundingClientRect();
+    const mx = e.clientX - bRect.left, my = e.clientY - bRect.top;
+    let found = null;
+    areas.forEach(a => {
+      const px = pad.left + ((a.price - minX) / (maxX - minX)) * chartW;
+      const py = pad.top + ((maxY - a.yield) / (maxY - minY)) * chartH;
+      const r = (a.occupancy - 70) / 2.5 + 6;
+      if (Math.hypot(mx - px, my - py) < r + 5) found = a;
+    });
+    if (found) {
+      tooltip.style.display = 'block';
+      tooltip.style.left = (e.clientX - canvas.parentElement.getBoundingClientRect().left + 15) + 'px';
+      tooltip.style.top = (e.clientY - canvas.parentElement.getBoundingClientRect().top - 30) + 'px';
+      tooltip.innerHTML = `<strong>${found.area}</strong><br>Price: ${(found.price/1000).toFixed(0)}K | Yield: ${found.yield.toFixed(1)}% | Occupancy: ${found.occupancy}%`;
+    } else { tooltip.style.display = 'none'; }
+  };
+  canvas.onmouseleave = () => { document.getElementById('scatterTooltip').style.display = 'none'; };
+}
+
+function drawROIChart() {
+  const canvas = document.getElementById('roiChart');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = 280 * dpr;
+  ctx.scale(dpr, dpr);
+  const W = rect.width, H = 280;
+  ctx.clearRect(0, 0, W, H);
+
+  const pad = { top: 20, right: 20, bottom: 35, left: 50 };
+  const chartW = W - pad.left - pad.right;
+  const chartH = H - pad.top - pad.bottom;
+  const maxY = 65;
+
+  // Grid
+  ctx.strokeStyle = 'rgba(42,46,58,0.8)'; ctx.lineWidth = 0.5;
+  for (let i = 0; i <= 5; i++) {
+    const y = pad.top + (i / 5) * chartH;
+    const val = maxY - (i / 5) * maxY;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+    ctx.fillStyle = '#6b7280'; ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(val.toFixed(0) + '%', pad.left - 8, y + 3);
+  }
+  for (let i = 0; i < 6; i++) {
+    const x = pad.left + (i / 5) * chartW;
+    ctx.fillStyle = '#6b7280'; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('Y' + i, x, pad.top + chartH + 16);
+  }
+
+  function drawLine(data, color, lineWidth) {
+    ctx.strokeStyle = color; ctx.lineWidth = lineWidth;
+    ctx.beginPath();
+    data.forEach((v, i) => {
+      const x = pad.left + (i / 5) * chartW;
+      const y = pad.top + ((maxY - v) / maxY) * chartH;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+    // Dots
+    data.forEach((v, i) => {
+      const x = pad.left + (i / 5) * chartW;
+      const y = pad.top + ((maxY - v) / maxY) * chartH;
+      ctx.fillStyle = color;
+      ctx.beginPath(); ctx.arc(x, y, 3.5, 0, Math.PI * 2); ctx.fill();
+    });
+    // End label
+    const lastV = data[data.length - 1];
+    const lx = pad.left + chartW;
+    const ly = pad.top + ((maxY - lastV) / maxY) * chartH;
+    ctx.fillStyle = color; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'left';
+    ctx.fillText(lastV.toFixed(1) + '%', lx + 5, ly + 4);
+  }
+
+  // Fill between optimistic and pessimistic
+  ctx.fillStyle = 'rgba(96,165,250,0.06)';
+  ctx.beginPath();
+  roiData.optimistic.forEach((v, i) => {
+    const x = pad.left + (i / 5) * chartW;
+    const y = pad.top + ((maxY - v) / maxY) * chartH;
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  });
+  for (let i = roiData.pessimistic.length - 1; i >= 0; i--) {
+    const x = pad.left + (i / 5) * chartW;
+    const y = pad.top + ((maxY - roiData.pessimistic[i]) / maxY) * chartH;
+    ctx.lineTo(x, y);
+  }
+  ctx.closePath(); ctx.fill();
+
+  drawLine(roiData.optimistic, '#34d399', 2.5);
+  drawLine(roiData.base, '#60a5fa', 2.5);
+  drawLine(roiData.pessimistic, '#f87171', 2);
+
+  canvas.onmousemove = e => {
+    const tooltip = document.getElementById('roiTooltip');
+    const bRect = canvas.getBoundingClientRect();
+    const mx = e.clientX - bRect.left;
+    const yearIdx = Math.round(((mx - pad.left) / chartW) * 5);
+    if (yearIdx >= 0 && yearIdx <= 5) {
+      tooltip.style.display = 'block';
+      tooltip.style.left = (e.clientX - canvas.parentElement.getBoundingClientRect().left + 15) + 'px';
+      tooltip.style.top = (e.clientY - canvas.parentElement.getBoundingClientRect().top - 40) + 'px';
+      tooltip.innerHTML = `<strong>Year ${yearIdx}</strong><br>
+        🟢 Optimistic: ${roiData.optimistic[yearIdx].toFixed(1)}%<br>
+        🔵 Base: ${roiData.base[yearIdx].toFixed(1)}%<br>
+        🔴 Pessimistic: ${roiData.pessimistic[yearIdx].toFixed(1)}%`;
+    } else { tooltip.style.display = 'none'; }
+  };
+  canvas.onmouseleave = () => { document.getElementById('roiTooltip').style.display = 'none'; };
+}
+
+function drawHeatmap() {
+  const container = document.getElementById('heatmap');
+  const sorted = [...areas].sort((a, b) => b.appreciation - a.appreciation);
+  const maxApp = 70;
+  container.innerHTML = sorted.map(a => {
+    const pct = (a.appreciation / maxApp) * 100;
+    // Color: green for high, yellow for mid, red for low
+    let color;
+    if (a.appreciation >= 55) color = '#34d399';
+    else if (a.appreciation >= 45) color = '#fbbf24';
+    else if (a.appreciation >= 35) color = '#fb923c';
+    else color = '#f87171';
+    return `<div style="display:flex;align-items:center;gap:8px;">
+      <div style="width:90px;font-size:0.8em;color:${a.color};font-weight:600;text-align:right;flex-shrink:0;">${a.area}</div>
+      <div style="flex:1;background:rgba(42,46,58,0.5);border-radius:4px;height:22px;overflow:hidden;">
+        <div style="width:${pct}%;height:100%;background:${color};border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;font-size:0.75em;font-weight:700;color:#0f1117;">+${a.appreciation}%</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function drawGauges() {
+  const container = document.getElementById('gaugeRow');
+  const riskAreas = areas.filter(a => activeFilter === 'all' || a.area === activeFilter);
+  container.innerHTML = riskAreas.map(a => {
+    const riskClass = a.supplyRisk;
+    const riskLabel = riskClass.toUpperCase();
+    return `<div class="gauge-item">
+      <div class="gauge-circle ${riskClass}">${riskLabel}</div>
+      <div class="label">${a.area}</div>
+    </div>`;
+  }).join('');
+}
+
+// ===================== YIELD SORTED BAR CHART =====================
+function drawYieldSortedChart() {
+  const canvas = document.getElementById('yieldSortedChart');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = 360 * dpr;
+  ctx.scale(dpr, dpr);
+  const W = rect.width, H = 360;
+  ctx.clearRect(0, 0, W, H);
+
+  const sorted = [...areas].sort((a, b) => b.yield - a.yield);
+  const pad = { top: 30, right: 20, bottom: 60, left: 50 };
+  const chartW = W - pad.left - pad.right;
+  const chartH = H - pad.top - pad.bottom;
+  const barW = Math.min(chartW / sorted.length * 0.6, 40);
+  const gap = chartW / sorted.length;
+  const maxY = 12;
+
+  // Grid
+  ctx.strokeStyle = 'rgba(42,46,58,0.8)'; ctx.lineWidth = 0.5;
+  for (let i = 0; i <= 6; i++) {
+    const y = pad.top + (i / 6) * chartH;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+    ctx.fillStyle = '#6b7280'; ctx.font = '11px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText((maxY - i * 2).toFixed(0) + '%', pad.left - 8, y + 4);
+  }
+
+  // Blue color scheme for yield
+  const yieldColors = ['#1e40af','#1d4ed8','#2563eb','#3b82f6','#60a5fa','#93c5fd','#3b82f6','#2563eb','#1d4ed8','#1e40af','#60a5fa','#93c5fd'];
+
+  sorted.forEach((a, i) => {
+    const x = pad.left + i * gap + gap / 2 - barW / 2;
+    const h = (a.yield / maxY) * chartH;
+    const y = pad.top + chartH - h;
+    const isActive = activeFilter === 'all' || a.area === activeFilter;
+    ctx.globalAlpha = isActive ? 1 : 0.2;
+
+    const grad = ctx.createLinearGradient(x, y, x, pad.top + chartH);
+    const baseColor = yieldColors[i % yieldColors.length];
+    grad.addColorStop(0, baseColor);
+    grad.addColorStop(1, baseColor + '55');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    const r = 4;
+    ctx.moveTo(x + r, y); ctx.lineTo(x + barW - r, y);
+    ctx.quadraticCurveTo(x + barW, y, x + barW, y + r);
+    ctx.lineTo(x + barW, pad.top + chartH); ctx.lineTo(x, pad.top + chartH);
+    ctx.lineTo(x, y + r); ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.fill();
+
+    // Value label on bar
+    ctx.fillStyle = isActive ? '#e8eaed' : '#6b7280';
+    ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(a.yield.toFixed(1) + '%', x + barW / 2, y - 6);
+
+    // Area label
+    ctx.save();
+    ctx.translate(x + barW / 2, pad.top + chartH + 10);
+    ctx.rotate(-0.5);
+    ctx.fillStyle = isActive ? '#9aa0a6' : '#4b5563';
+    ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(a.area, 0, 0);
+    ctx.restore();
+    ctx.globalAlpha = 1;
+  });
+
+  canvas.onmousemove = e => {
+    const tooltip = document.getElementById('yieldSortedTooltip');
+    const bRect = canvas.getBoundingClientRect();
+    const mx = e.clientX - bRect.left;
+    const idx = Math.floor((mx - pad.left) / gap);
+    if (idx >= 0 && idx < sorted.length) {
+      const a = sorted[idx];
+      tooltip.style.display = 'block';
+      tooltip.style.left = (e.clientX - canvas.parentElement.getBoundingClientRect().left + 15) + 'px';
+      tooltip.style.top = (e.clientY - canvas.parentElement.getBoundingClientRect().top - 30) + 'px';
+      tooltip.innerHTML = `<strong>${a.area}</strong><br>Yield: ${a.yield.toFixed(1)}% | Price: ${(a.price/1000).toFixed(0)}K | Rent: ${(a.rent/1000).toFixed(1)}K`;
+    } else { tooltip.style.display = 'none'; }
+  };
+  canvas.onmouseleave = () => { document.getElementById('yieldSortedTooltip').style.display = 'none'; };
+}
+
+// ===================== APPRECIATION BAR CHART =====================
+function drawAppreciationChart() {
+  const canvas = document.getElementById('appreciationChart');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = 360 * dpr;
+  ctx.scale(dpr, dpr);
+  const W = rect.width, H = 360;
+  ctx.clearRect(0, 0, W, H);
+
+  const sorted = [...areas].sort((a, b) => b.appreciation - a.appreciation);
+  const pad = { top: 30, right: 20, bottom: 60, left: 50 };
+  const chartW = W - pad.left - pad.right;
+  const chartH = H - pad.top - pad.bottom;
+  const barW = Math.min(chartW / sorted.length * 0.6, 40);
+  const gap = chartW / sorted.length;
+  const maxY = 70;
+
+  // Grid
+  ctx.strokeStyle = 'rgba(42,46,58,0.8)'; ctx.lineWidth = 0.5;
+  for (let i = 0; i <= 7; i++) {
+    const y = pad.top + (i / 7) * chartH;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+    ctx.fillStyle = '#6b7280'; ctx.font = '11px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText((maxY - i * 10).toFixed(0) + '%', pad.left - 8, y + 4);
+  }
+
+  // Green/teal color scheme for appreciation
+  const appColors = ['#059669','#0d9488','#14b8a6','#2dd4bf','#34d399','#5eead4','#6ee7b7','#a7f3d0','#0d9488','#059669','#14b8a6','#2dd4bf'];
+
+  sorted.forEach((a, i) => {
+    const x = pad.left + i * gap + gap / 2 - barW / 2;
+    const h = (a.appreciation / maxY) * chartH;
+    const y = pad.top + chartH - h;
+    const isActive = activeFilter === 'all' || a.area === activeFilter;
+    ctx.globalAlpha = isActive ? 1 : 0.2;
+
+    const grad = ctx.createLinearGradient(x, y, x, pad.top + chartH);
+    const baseColor = appColors[i % appColors.length];
+    grad.addColorStop(0, baseColor);
+    grad.addColorStop(1, baseColor + '44');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    const r = 4;
+    ctx.moveTo(x + r, y); ctx.lineTo(x + barW - r, y);
+    ctx.quadraticCurveTo(x + barW, y, x + barW, y + r);
+    ctx.lineTo(x + barW, pad.top + chartH); ctx.lineTo(x, pad.top + chartH);
+    ctx.lineTo(x, y + r); ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.fill();
+
+    // Value label
+    ctx.fillStyle = isActive ? '#e8eaed' : '#6b7280';
+    ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('+' + a.appreciation + '%', x + barW / 2, y - 6);
+
+    // Area label
+    ctx.save();
+    ctx.translate(x + barW / 2, pad.top + chartH + 10);
+    ctx.rotate(-0.5);
+    ctx.fillStyle = isActive ? '#9aa0a6' : '#4b5563';
+    ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(a.area, 0, 0);
+    ctx.restore();
+    ctx.globalAlpha = 1;
+  });
+
+  canvas.onmousemove = e => {
+    const tooltip = document.getElementById('appreciationTooltip');
+    const bRect = canvas.getBoundingClientRect();
+    const mx = e.clientX - bRect.left;
+    const idx = Math.floor((mx - pad.left) / gap);
+    if (idx >= 0 && idx < sorted.length) {
+      const a = sorted[idx];
+      tooltip.style.display = 'block';
+      tooltip.style.left = (e.clientX - canvas.parentElement.getBoundingClientRect().left + 15) + 'px';
+      tooltip.style.top = (e.clientY - canvas.parentElement.getBoundingClientRect().top - 30) + 'px';
+      tooltip.innerHTML = `<strong>${a.area}</strong><br>Appreciation: +${a.appreciation}% (5yr) | Price: ${(a.price/1000).toFixed(0)}K | Score: ${a.score.toFixed(1)}`;
+    } else { tooltip.style.display = 'none'; }
+  };
+  canvas.onmouseleave = () => { document.getElementById('appreciationTooltip').style.display = 'none'; };
+}
+
+// ===================== INFRASTRUCTURE DATA =====================
+const infraProjects = [
+  { name:'Blue Line Metro', start:2028, end:2030, status:'planning', areas:['JVC','DSO','Arjan'], color:'#fbbf24' },
+  { name:'Al Maktoum Airport Exp.', start:2026, end:2035, status:'construction', areas:['Dubai South'], color:'#60a5fa' },
+  { name:'Palm Jebel Ali', start:2023, end:2030, status:'construction', areas:['Coastal'], color:'#60a5fa' },
+  { name:'Meydan One Mall', start:2024, end:2028, status:'construction', areas:['MBR City'], color:'#60a5fa' },
+  { name:'Expo City Corp. District', start:2023, end:2027, status:'construction', areas:['Dubai South'], color:'#60a5fa' },
+  { name:'Dubai Islands', start:2022, end:2029, status:'construction', areas:['Deira'], color:'#60a5fa' },
+  { name:'Circle Mall', start:2022, end:2024, status:'completed', areas:['JVC'], color:'#34d399' },
+  { name:'Silicon Central Mall', start:2021, end:2023, status:'completed', areas:['DSO'], color:'#34d399' },
+  { name:'Dubai Hills Mall', start:2020, end:2022, status:'completed', areas:['Arjan','MBR City'], color:'#34d399' },
+  { name:'Route 2020 (Expo Metro)', start:2016, end:2021, status:'completed', areas:['Al Furjan','Dubai South'], color:'#34d399' },
+];
+
+const infraScores = [
+  { area:'JVC', metro:'❌', metroPlanned:'Blue Line (2028-30)', mall:'Circle Mall', healthcare:'Clinics', schools:'3+', freeZone:'—', score:6.5 },
+  { area:'Arjan', metro:'❌', metroPlanned:'Blue Line (potential)', mall:'Dubai Hills Mall', healthcare:'Mediclinic Parkview', schools:'2+', freeZone:'—', score:5.5 },
+  { area:'Business Bay', metro:'✅', metroPlanned:'—', mall:'Bay Avenue/Dubai Mall', healthcare:'Multiple clinics', schools:'Limited', freeZone:'DIFC nearby', score:9.0 },
+  { area:'JLT', metro:'✅', metroPlanned:'—', mall:'JLT Cluster retail', healthcare:'Clinics', schools:'Limited', freeZone:'DMCC', score:8.5 },
+  { area:'DSO', metro:'❌', metroPlanned:'Blue Line (2028-30)', mall:'Silicon Central', healthcare:'NMC Hospital', schools:'Academic City', freeZone:'DSO Auth.', score:5.5 },
+  { area:'Motor City', metro:'❌', metroPlanned:'None confirmed', mall:'Auto Mall/nearby', healthcare:'Mediclinic nearby', schools:'2+', freeZone:'—', score:6.0 },
+  { area:'MBR City', metro:'❌', metroPlanned:'Future (unconfirmed)', mall:'Meydan One (2028)', healthcare:'Limited', schools:'2+', freeZone:'—', score:6.5 },
+  { area:'Al Furjan', metro:'✅', metroPlanned:'—', mall:'Ibn Battuta nearby', healthcare:'Clinics', schools:'3+', freeZone:'—', score:7.5 },
+  { area:'Dubai South', metro:'✅ (limited)', metroPlanned:'Purple Line (post-2030)', mall:'Limited', healthcare:'Planned', schools:'1+', freeZone:'Dubai South FZ', score:5.0 },
+  { area:'Sports City', metro:'❌', metroPlanned:'None confirmed', mall:'Limited', healthcare:'Limited', schools:'1+', freeZone:'—', score:4.0 },
+  { area:'JVT', metro:'❌', metroPlanned:'None confirmed', mall:'JVC Circle Mall', healthcare:'Clinics nearby', schools:'2+', freeZone:'—', score:7.0 },
+  { area:'Dubai Marina', metro:'✅', metroPlanned:'—', mall:'Marina Mall/JBR', healthcare:'Multiple', schools:'Limited', freeZone:'DMCC/DIC', score:9.5 },
+];
+
+// Government investment intensity per area (0-10 scale)
+const govInvestment = [
+  { area:'Dubai South', transport:9, retail:4, healthcare:5, education:3, housing:7, freeZone:8 },
+  { area:'Business Bay', transport:8, retail:9, healthcare:7, education:5, housing:6, freeZone:7 },
+  { area:'MBR City', transport:5, retail:8, healthcare:5, education:6, housing:8, freeZone:4 },
+  { area:'JVC', transport:7, retail:6, healthcare:5, education:4, housing:5, freeZone:3 },
+  { area:'DSO', transport:7, retail:6, healthcare:6, education:9, housing:5, freeZone:8 },
+  { area:'Dubai Marina', transport:8, retail:8, healthcare:7, education:4, housing:3, freeZone:7 },
+  { area:'Motor City', transport:3, retail:4, healthcare:5, education:4, housing:3, freeZone:2 },
+  { area:'Al Furjan', transport:7, retail:5, healthcare:4, education:5, housing:5, freeZone:3 },
+];
+
+// ===================== DRAW INFRA TIMELINE =====================
+function drawInfraTimeline() {
+  const canvas = document.getElementById('infraTimelineChart');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = 340 * dpr;
+  ctx.scale(dpr, dpr);
+  const W = rect.width, H = 340;
+  ctx.clearRect(0, 0, W, H);
+
+  const pad = { top: 30, right: 30, bottom: 40, left: 180 };
+  const chartW = W - pad.left - pad.right;
+  const chartH = H - pad.top - pad.bottom;
+  const minYear = 2020, maxYear = 2036;
+  const yearRange = maxYear - minYear;
+  const barH = 22;
+  const gap = (chartH - infraProjects.length * barH) / (infraProjects.length + 1);
+
+  // Year grid lines
+  ctx.strokeStyle = 'rgba(42,46,58,0.8)'; ctx.lineWidth = 0.5;
+  ctx.fillStyle = '#6b7280'; ctx.font = '10px sans-serif'; ctx.textAlign = 'center';
+  for (let y = minYear; y <= maxYear; y++) {
+    const x = pad.left + ((y - minYear) / yearRange) * chartW;
+    ctx.beginPath(); ctx.moveTo(x, pad.top - 5); ctx.lineTo(x, pad.top + chartH); ctx.stroke();
+    if (y % 2 === 0) ctx.fillText(y.toString(), x, pad.top + chartH + 16);
+  }
+
+  // "Now" line
+  const nowX = pad.left + ((2026 - minYear) / yearRange) * chartW;
+  ctx.strokeStyle = 'rgba(248,113,113,0.5)'; ctx.lineWidth = 1.5;
+  ctx.setLineDash([4,4]);
+  ctx.beginPath(); ctx.moveTo(nowX, pad.top); ctx.lineTo(nowX, pad.top + chartH); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = '#f87171'; ctx.font = 'bold 10px sans-serif';
+  ctx.fillText('NOW', nowX, pad.top - 10);
+
+  // Draw bars
+  infraProjects.forEach((p, i) => {
+    const y = pad.top + gap + i * (barH + gap);
+    const x1 = pad.left + ((Math.max(p.start, minYear) - minYear) / yearRange) * chartW;
+    const x2 = pad.left + ((p.end - minYear) / yearRange) * chartW;
+    const bw = Math.max(x2 - x1, 8);
+
+    // Bar
+    const grad = ctx.createLinearGradient(x1, y, x2, y);
+    grad.addColorStop(0, p.color + 'dd');
+    grad.addColorStop(1, p.color + '88');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    const r = 4;
+    ctx.moveTo(x1 + r, y); ctx.lineTo(x1 + bw - r, y);
+    ctx.quadraticCurveTo(x1 + bw, y, x1 + bw, y + r);
+    ctx.lineTo(x1 + bw, y + barH - r);
+    ctx.quadraticCurveTo(x1 + bw, y + barH, x1 + bw - r, y + barH);
+    ctx.lineTo(x1 + r, y + barH);
+    ctx.quadraticCurveTo(x1, y + barH, x1, y + barH - r);
+    ctx.lineTo(x1, y + r);
+    ctx.quadraticCurveTo(x1, y, x1 + r, y);
+    ctx.fill();
+
+    // Bar label (areas)
+    if (bw > 40) {
+      ctx.fillStyle = '#0f1117'; ctx.font = 'bold 9px sans-serif'; ctx.textAlign = 'left';
+      ctx.fillText(p.areas.join(', '), x1 + 6, y + barH / 2 + 3);
+    }
+
+    // Project name (left)
+    ctx.fillStyle = p.color; ctx.font = '11px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText(p.name, pad.left - 8, y + barH / 2 + 4);
+  });
+}
+
+// ===================== POPULATE INFRA TABLE =====================
+function populateInfraTable() {
+  const tbody = document.getElementById('infraBody');
+  const scorePill = s => {
+    if (s >= 8) return `<span class="pill pill-green">${s.toFixed(1)}/10</span>`;
+    if (s >= 6) return `<span class="pill pill-blue">${s.toFixed(1)}/10</span>`;
+    if (s >= 4) return `<span class="pill pill-yellow">${s.toFixed(1)}/10</span>`;
+    return `<span class="pill pill-red">${s.toFixed(1)}/10</span>`;
+  };
+  const metroPill = m => m === '✅' ? `<span class="pill pill-green">✅ Yes</span>` :
+    m === '✅ (limited)' ? `<span class="pill pill-yellow">⚠️ Limited</span>` : `<span class="pill pill-red">❌ No</span>`;
+
+  tbody.innerHTML = infraScores.sort((a,b) => b.score - a.score).map(a => {
+    const areaData = areas.find(x => x.area === a.area);
+    const color = areaData ? areaData.color : '#9aa0a6';
+    return `<tr>
+      <td style="font-weight:600;color:${color}">${a.area}</td>
+      <td>${metroPill(a.metro)}</td>
+      <td style="font-size:0.8em">${a.metroPlanned}</td>
+      <td style="font-size:0.8em">${a.mall}</td>
+      <td style="font-size:0.8em">${a.healthcare}</td>
+      <td style="font-size:0.8em">${a.schools}</td>
+      <td style="font-size:0.8em">${a.freeZone}</td>
+      <td>${scorePill(a.score)}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ===================== DRAW GOV RADAR CHART =====================
+function drawGovRadar() {
+  const canvas = document.getElementById('govRadarChart');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = 400 * dpr;
+  ctx.scale(dpr, dpr);
+  const W = rect.width, H = 400;
+  ctx.clearRect(0, 0, W, H);
+
+  const cx = W / 2, cy = H / 2 - 10;
+  const maxR = Math.min(W, H) / 2 - 60;
+  const cats = ['Transport', 'Retail', 'Healthcare', 'Education', 'Housing', 'Free Zones'];
+  const numCats = cats.length;
+  const angleStep = (Math.PI * 2) / numCats;
+
+  // Draw grid rings
+  for (let ring = 2; ring <= 10; ring += 2) {
+    const r = (ring / 10) * maxR;
+    ctx.strokeStyle = 'rgba(42,46,58,0.6)'; ctx.lineWidth = 0.5;
+    ctx.beginPath();
+    for (let i = 0; i <= numCats; i++) {
+      const angle = i * angleStep - Math.PI / 2;
+      const px = cx + Math.cos(angle) * r;
+      const py = cy + Math.sin(angle) * r;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.closePath(); ctx.stroke();
+    // Ring label
+    ctx.fillStyle = '#4b5563'; ctx.font = '9px sans-serif'; ctx.textAlign = 'left';
+    ctx.fillText(ring.toString(), cx + 3, cy - (ring / 10) * maxR + 3);
+  }
+
+  // Draw axes
+  for (let i = 0; i < numCats; i++) {
+    const angle = i * angleStep - Math.PI / 2;
+    const px = cx + Math.cos(angle) * maxR;
+    const py = cy + Math.sin(angle) * maxR;
+    ctx.strokeStyle = 'rgba(42,46,58,0.8)'; ctx.lineWidth = 0.5;
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(px, py); ctx.stroke();
+    // Label
+    const lx = cx + Math.cos(angle) * (maxR + 20);
+    const ly = cy + Math.sin(angle) * (maxR + 20);
+    ctx.fillStyle = '#9aa0a6'; ctx.font = '11px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(cats[i], lx, ly + 4);
+  }
+
+  // Draw each area polygon
+  const radarColors = ['#f87171','#60a5fa','#e879f9','#34d399','#a78bfa','#818cf8','#facc15','#fbbf24'];
+  const showAreas = govInvestment.slice(0, 4); // Top 4 for readability
+
+  showAreas.forEach((g, gi) => {
+    const vals = [g.transport, g.retail, g.healthcare, g.education, g.housing, g.freeZone];
+    ctx.strokeStyle = radarColors[gi]; ctx.lineWidth = 2;
+    ctx.fillStyle = radarColors[gi] + '20';
+    ctx.beginPath();
+    vals.forEach((v, i) => {
+      const angle = i * angleStep - Math.PI / 2;
+      const r = (v / 10) * maxR;
+      const px = cx + Math.cos(angle) * r;
+      const py = cy + Math.sin(angle) * r;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    });
+    ctx.closePath(); ctx.fill(); ctx.stroke();
+
+    // Dots
+    vals.forEach((v, i) => {
+      const angle = i * angleStep - Math.PI / 2;
+      const r = (v / 10) * maxR;
+      const px = cx + Math.cos(angle) * r;
+      const py = cy + Math.sin(angle) * r;
+      ctx.fillStyle = radarColors[gi];
+      ctx.beginPath(); ctx.arc(px, py, 3, 0, Math.PI * 2); ctx.fill();
+    });
+  });
+
+  // Legend
+  const legY = H - 30;
+  const legStart = (W - showAreas.length * 120) / 2;
+  showAreas.forEach((g, i) => {
+    const x = legStart + i * 120;
+    ctx.fillStyle = radarColors[i];
+    ctx.fillRect(x, legY, 10, 10);
+    ctx.fillStyle = '#9aa0a6'; ctx.font = '10px sans-serif'; ctx.textAlign = 'left';
+    ctx.fillText(g.area, x + 14, legY + 9);
+  });
+}
+
+// ===================== INIT =====================
+function init() {
+  populateAreaTable();
+  populateDevTable();
+  populateProjectTable();
+  setupSortable('areaTable');
+  setupSortable('devTable');
+  setupSortable('projectTable');
+  drawYieldChart();
+  drawScatterChart();
+  drawROIChart();
+  drawHeatmap();
+  drawGauges();
+  drawYieldSortedChart();
+  drawAppreciationChart();
+  drawInfraTimeline();
+  populateInfraTable();
+  drawGovRadar();
+}
+
+window.addEventListener('load', init);
+window.addEventListener('resize', () => {
+  drawYieldChart();
+  drawScatterChart();
+  drawROIChart();
+  drawYieldSortedChart();
+  drawAppreciationChart();
+  drawInfraTimeline();
+  drawGovRadar();
+});
+</script>
+</body>
+</html>
